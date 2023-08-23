@@ -67,7 +67,7 @@ import java.util.stream.Collectors;
         // 对所有请求的地址检测都通过
         System.out.println("执行1.5");
         log.info("request:{},{}", request.getMethod(), request.getRequestURI());
-        // TODO 测试和开发时不拦截任何请求
+        // TODO 关闭权限校验
         return new AuthorizationDecision(true);
 //        return check(authentication.get(), request);
     }

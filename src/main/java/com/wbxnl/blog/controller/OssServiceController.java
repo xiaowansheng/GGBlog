@@ -7,6 +7,7 @@ import com.aliyun.oss.model.MatchMode;
 import com.aliyun.oss.model.PolicyConditions;
 import com.wbxnl.blog.annotation.Api;
 import com.wbxnl.blog.common.Result;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ import java.util.Map;
 @RestController
 @Slf4j
 @RequestMapping("/upload")
-@Api("OSS操作")
+@Tag(name = "OssServiceController",description = "阿里云OSS模块")
 public class OssServiceController {
 
     @Value("${alibaba.cloud.access-key}")
