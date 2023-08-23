@@ -1,0 +1,87 @@
+config:
+  author: xiaowansheng
+  version: 2.0
+
+debug: true
+
+# 文档地址
+# swagger-ui custom path
+springdoc:
+  swagger-ui:
+    path: /document
+  # 扁平化参数：使用对象接收查询参数时，可以省去写@ParameterObject注解。
+  # 会导致文档的所有的参数都变成请求的参数
+#  default-flat-param-object: true
+
+
+server:
+  port: 8081
+#  servlet:
+#    context-path: /api
+spring:
+  application:
+    name: gg-blog
+  datasource:
+    #    druid:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #      driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ggblog?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: XXXX
+    password: XXXX
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  #  redis??
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password: root
+  mail:
+    host: smtp.qq.com
+    username: XXXXXXXXXX@foxmail.com
+    password: XXXXXXXXXXX
+    default-encoding: utf-8
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
+            fallback: false
+          starttls:
+            enable: true
+            required: true
+  # rabbitMQ
+#  rabbitmq:
+#    host: XXX:XXX:XXX:XXX
+#    port: 5672
+#    username: guest
+#    password: guest
+#    listener:
+#      simple:
+#        retry:
+#          enabled: true
+#          max-attempts: 3 #??????
+#          initial-interval: 3000 #????????????
+# mybatis-plus
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+alibaba:
+  cloud:
+    access-key: XXXXXXXX
+    secret-key: XXXXXXXX
+    oss:
+      endpoint: XXXXXXXXX
+      bucket: XXXXX
+      dir: XXXXX
+

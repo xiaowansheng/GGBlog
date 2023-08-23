@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wbxnl.blog.dao.TalkDao">
+
+    <!-- 通用查询映射结果 -->
+<!--    <resultMap id="BaseResultMap" type="com.wbxnl.blog.model.entity.Talk">-->
+<!--        <id column="id" property="id" />-->
+<!--        <result column="user_auth_id" property="userAuthId" />-->
+<!--        <result column="content" property="content" />-->
+<!--        <result column="images" property="images" />-->
+<!--        <result column="ip_address" property="ipAddress" />-->
+<!--        <result column="ip_source" property="ipSource" />-->
+<!--        <result column="device" property="device" />-->
+<!--        <result column="browser" property="browser" />-->
+<!--        <result column="status" property="status" />-->
+<!--        <result column="top" property="top" />-->
+<!--        <result column="create_time" property="createTime" />-->
+<!--        <result column="update_time" property="updateTime" />-->
+<!--        <result column="deleted" property="deleted" />-->
+<!--    </resultMap>-->
+
+<!--    &lt;!&ndash; 通用查询结果列 &ndash;&gt;-->
+<!--    <sql id="Base_Column_List">-->
+<!--        id, user_auth_id, content, images,ip_address,ip_source,device,browser, status, top, create_time, update_time, deleted-->
+<!--    </sql>-->
+</mapper>

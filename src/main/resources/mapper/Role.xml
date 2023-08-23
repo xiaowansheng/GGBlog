@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wbxnl.blog.dao.RoleDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wbxnl.blog.model.entity.Role">
+        <id column="id" property="id" />
+        <result column="role_name" property="roleName" />
+        <result column="role_label" property="roleLabel" />
+        <result column="role_detail" property="roleDetail" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="disable" property="disable" />
+        <result column="deleted" property="deleted" />
+    </resultMap>
+
+    <!--    映射到的SystemSourceDto-->
+    <resultMap id="BaseDtoResultMap" type="com.wbxnl.blog.model.dto.SystemResourceDto">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="path" property="path" />
+        <result column="request_method" property="requestMethod" />
+        <result column="parent_id" property="parentId" />
+        <result column="perms" property="perms" />
+        <result column="open" property="open" />
+        <result column="description" property="description" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+<!--    角色资源-->
+    <resultMap id="BaseRoleSourcesResultMap" type="com.wbxnl.blog.model.entity.Role">
+        <id column="id" property="id" />
+        <result column="role_name" property="roleName" />
+        <result column="role_label" property="roleLabel" />
+        <result column="role_detail" property="roleDetail" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="disable" property="disable" />
+        <result column="deleted" property="deleted" />
+        <collection property="sources" resultMap="BaseDtoResultMap"></collection>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, role_name, role_detail, role_label, create_time, update_time, disable, deleted
+    </sql>
+
+    <select id="roleSources" resultMap="BaseRoleSourcesResultMap">
+        select
+            id, role_name, role_label, role_detail, create_time, update_time, disable, deleted,
+            id, name, path, request_method, parent_id, perms, open, description, create_time, update_time
+        from t_role r
+            left join system_sources s on r.source_id=s.id
+        where
+            parent_id is NOT NULL
+            and
+            r.open=0
+    </select>
+</mapper>

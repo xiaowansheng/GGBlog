@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wbxnl.blog.dao.GuestbookDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wbxnl.blog.model.entity.Guestbook">
+        <id column="id" property="id" />
+        <result column="user_auth_id" property="userAuthId" />
+        <result column="content" property="content" />
+        <result column="ip_address" property="ipAddress" />
+        <result column="ip_source" property="ipSource" />
+        <result column="device" property="device" />
+        <result column="browser" property="browser" />
+        <result column="type" property="type" />
+        <result column="nickname" property="nickname" />
+        <result column="email" property="email" />
+        <result column="qq" property="qq" />
+        <result column="hidden" property="hidden" />
+        <result column="review" property="review" />
+        <result column="review_state" property="reviewState" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="deleted" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, user_auth_id, content, ip_address, ip_source,device,browser, type, nickname, email, qq, hidden, review, review_state, create_time, update_time, deleted
+    </sql>
+
+</mapper>

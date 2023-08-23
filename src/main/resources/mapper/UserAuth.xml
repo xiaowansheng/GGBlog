@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wbxnl.blog.dao.UserAuthDao">
+
+<!--    &lt;!&ndash; 通用查询映射结果 &ndash;&gt;-->
+<!--    <resultMap id="BaseResultMap" type="com.wbxnl.blog.model.entity.UserAuth">-->
+<!--        <id column="id" property="id"/>-->
+<!--        <result column="user_info_id" property="userInfoId"/>-->
+<!--        <result column="username" property="username"/>-->
+<!--        <result column="password" property="password"/>-->
+<!--        <result column="login_type" property="loginType"/>-->
+<!--        <result column="ip_address_signup" property="ipAddressSignup"/>-->
+<!--        <result column="ip_source_signup" property="ipSourceSignup"/>-->
+<!--        <result column="ip_address_login" property="ipAddressLogin"/>-->
+<!--        <result column="ip_source_login" property="ipSourceLogin"/>-->
+<!--        <result column="last_login_time" property="lastLoginTime"/>-->
+<!--        <result column="create_time" property="createTime"/>-->
+<!--        <result column="update_time" property="updateTime"/>-->
+<!--        <result column="deleted" property="deleted"/>-->
+<!--        <result column="disable" property="disable"/>-->
+<!--    </resultMap>-->
+
+    <!-- 通用查询结果列 -->
+<!--    <sql id="Base_Column_List">-->
+<!--        id ,-->
+<!--        user_info_id,-->
+<!--        username,-->
+<!--        password,-->
+<!--        login_type,-->
+<!--        ip_address_signup,-->
+<!--        ip_source_signup,-->
+<!--        create_time,-->
+<!--        update_time,-->
+<!--        disable,-->
+<!--        deleted-->
+<!--    </sql>-->
+
+    <!--    UserAuthDto-->
+    <resultMap id="BaseDtoMap" type="com.wbxnl.blog.model.dto.UserAuthDto">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="login_type" property="loginType"/>
+        <result column="ip_address_signup" property="ipAddressSignup"/>
+        <result column="ip_source_signup" property="ipSourceSignup"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="disable" property="disable"/>
+        <association property="userInfoDto" javaType="com.wbxnl.blog.model.dto.UserInfoDto">
+            <id column="info_id" property="id"/>
+            <result column="email" property="email"/>
+            <result column="nickname" property="nickname"/>
+            <result column="avatar" property="avatar"/>
+            <result column="signature" property="signature"/>
+            <result column="introduction" property="introduction"/>
+            <result column="website" property="website"/>
+            <result column="info_create_time" property="createTime"/>
+            <result column="info_update_time" property="updateTime"/>
+        </association>
+        <collection property="roleNames" javaType="java.lang.String">
+            <constructor>
+                <arg column="roleName"/>
+            </constructor>
+        </collection>
+    </resultMap>
+    <select id="getUserList" resultMap="BaseDtoMap">
+        select
+        auth.id,
+        user_info_id,
+        username,
+        login_type,
+        third_party_id,
+        third_party_profile,
+        auth.disable,
+        ip_address_signup,
+        ip_source_signup,
+
+        role.name roleName,
+
+        info.id as info_id,
+        email,
+        nickname,
+        avatar,
+        signature,
+        introduction,
+        website,
+        info.create_time as info_create_time,
+        info.update_time as info_update_time
+        from
+        t_user_auth auth
+        left join t_user_info info on auth.user_info_id=info.id
+        left join t_user_role ur on auth.id=ur.user_auth_id
+        left join t_role role on role.id=ur.role_id
+        where
+        (auth.deleted is null or auth.deleted=0)
+        and
+        (info.deleted is null or info.deleted=0)
+        and
+        (role.deleted is null or role.deleted=0)
+
+        <if test="userAuthParams.username!=null">
+            and auth.username like concat('%',#{userAuthParams.username},'%')
+        </if>
+        <if test="userAuthParams.nickname!=null">
+            and info.nickname like concat('%',#{userAuthParams.nickname},'%')
+        </if>
+        <if test="userAuthParams.loginType!=null">
+            and auth.login_type =#{userAuthParams.loginType}
+        </if>
+        <if test="userAuthParams.disable!=null">
+            and auth.disable = #{userAuthParams.disable}
+        </if>
+        <if test="userAuthParams.roleId!=null">
+            and role.id = #{userAuthParams.roleId}
+        </if>
+        order
+        by info.update_time desc
+        limit #{current},#{size}
+    </select>
+
+    <select id="getCount" resultType="Long">
+        select
+            count(auth.id) as count
+        from
+        t_user_auth auth
+        left join t_user_info info on auth.user_info_id=info.id
+        left join t_user_role ur on auth.id=ur.user_auth_id
+        left join t_role role on role.id=ur.role_id
+        where
+        (auth.deleted is null or auth.deleted=0)
+        and
+        (info.deleted is null or info.deleted=0)
+        and
+        (role.deleted is null or role.deleted=0)
+
+        <if test="userAuthParams.username!=null">
+            and auth.username like concat('%',#{userAuthParams.username},'%')
+        </if>
+        <if test="userAuthParams.nickname!=null">
+            and info.nickname like concat('%',#{userAuthParams.nickname},'%')
+        </if>
+        <if test="userAuthParams.loginType!=null">
+            and auth.login_type =#{userAuthParams.loginType}
+        </if>
+        <if test="userAuthParams.disable!=null">
+            and auth.disable = #{userAuthParams.disable}
+        </if>
+        <if test="userAuthParams.roleId!=null">
+            and role.id = #{userAuthParams.roleId}
+        </if>
+    </select>
+</mapper>

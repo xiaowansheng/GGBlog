@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wbxnl.blog.dao.LogErrorDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wbxnl.blog.model.entity.LogError">
+        <id column="id" property="id" />
+        <result column="user_auth_id" property="userAuthId" />
+        <result column="user_name" property="userName" />
+        <result column="request_param" property="requestParam" />
+        <result column="error_name" property="errorName" />
+        <result column="error_message" property="errorMessage" />
+        <result column="request_url" property="requestUrl" />
+        <result column="request_method" property="requestMethod" />
+        <result column="ip_address" property="ipAddress" />
+        <result column="ip_source" property="ipSource" />
+        <result column="version" property="version" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="deleted" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, user_auth_id, user_name, request_param, error_name, error_message, request_url, request_method, ip_address, ip_source, version, create_time, update_time, deleted
+    </sql>
+
+</mapper>

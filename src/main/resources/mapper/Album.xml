@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wbxnl.blog.dao.AlbumDao">
+
+<!--    &lt;!&ndash; 通用查询映射结果 &ndash;&gt;-->
+<!--    <resultMap id="BaseResultMap" type="com.wbxnl.blog.model.entity.Album">-->
+<!--        <id column="id" property="id" />-->
+<!--        <result column="user_auth_id" property="userAuthId" />-->
+<!--        <result column="name" property="name" />-->
+<!--        <result column="description" property="description" />-->
+<!--        <result column="cover" property="cover" />-->
+<!--        <result column="status" property="status" />-->
+<!--        <result column="create_time" property="createTime" />-->
+<!--        <result column="update_time" property="updateTime" />-->
+<!--        <result column="deleted" property="deleted" />-->
+<!--    </resultMap>-->
+
+<!--    &lt;!&ndash; 通用查询结果列 &ndash;&gt;-->
+<!--    <sql id="Base_Column_List">-->
+<!--        id, user_auth_id, name, description, cover, status, create_time, update_time, deleted-->
+<!--    </sql>-->
+
+</mapper>

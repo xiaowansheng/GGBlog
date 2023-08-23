@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wbxnl.blog.dao.ArticleDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wbxnl.blog.model.entity.Article">
+        <id column="id" property="id"/>
+        <result column="user_auth_id" property="userAuthId"/>
+        <result column="category_id" property="categoryId"/>
+        <result column="cover" property="cover"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="type" property="type"/>
+        <result column="original_author" property="originalAuthor"/>
+        <result column="original_title" property="originalTitle"/>
+        <result column="original_url" property="originalUrl"/>
+        <result column="note" property="note"/>
+        <result column="top" property="top"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="deleted" property="deleted"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id
+        , user_auth_id, category_id, cover, title, content, type, original_author, original_title, original_url, note, top, status, create_time, update_time, deleted
+    </sql>
+
+    <!--    dto-->
+    <resultMap id="BaseDtoMap" type="com.wbxnl.blog.model.dto.ArticleDto">
+        <id column="id" property="id"/>
+        <result column="user_auth_id" property="userAuthId"/>
+        <result column="cover" property="cover"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="type" property="type"/>
+        <result column="original_author" property="originalAuthor"/>
+        <result column="original_title" property="originalTitle"/>
+        <result column="original_url" property="originalUrl"/>
+        <result column="note" property="note"/>
+        <result column="top" property="top"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="deleted" property="deleted"/>
+        <association property="categoryDto" javaType="com.wbxnl.blog.model.dto.CategoryDto">
+            <id column="c_id" property="id"/>
+            <result column="c_name" property="name"/>
+            <result column="c_hidden" property="hidden"/>
+        </association>
+        <collection property="tagDtos" ofType="com.wbxnl.blog.model.dto.TagDto" javaType="java.util.List">
+            <id column="t_id" property="id"/>
+            <result column="t_name" property="name"/>
+            <result column="t_hidden" property="hidden"/>
+        </collection>
+    </resultMap>
+    <!--    TODO 可能以下的SQL代码还能优化，先放着-->
+
+
+    <!--    TODO tag标签隐藏还会有其它标签让文章查询到，可跳过-->
+    <!--    用户相关查询-->
+    <select id="getPageByUser" resultMap="BaseDtoMap">
+        select
+        a.id,
+        a.user_auth_id,
+        a.category_id,
+        a.title,
+        left(a.content,300) as content,
+        a.cover,
+        a.type,
+        a.original_author,
+        a.original_title,
+        a.original_url,
+        a.note,
+        a.top,
+        a.status,
+        a.create_time,
+        a.update_time,
+        a.deleted,
+
+        c.id as c_id,
+        c.name as c_name,
+        c.hidden as c_hidden,
+
+        t.id as t_id,
+        t.name as t_name,
+        t.hidden as t_hidden
+        from
+        (
+        select a.id as id from t_article a
+
+        left join t_category c on c.id=a.category_id
+        where
+        a.deleted=0
+        and
+        a.status=1
+        and
+        a.type!=0
+        and
+        (c.deleted is null or (c.deleted =0 and c.hidden=0))
+        <if test="article.categoryId!=null and article.categoryId!=''">
+            and c.id=#{article.categoryId}
+        </if>
+        order by top desc, a.update_time desc
+        limit #{current},#{limit}
+        ) as sa,
+        t_article a
+        left join t_category c on c.id=a.category_id
+        left join t_article_tag at on at.article_id=a.id
+        left join t_tag t on t.id=at.tag_id
+        where
+        a.id=sa.id and
+        (t.deleted is null or (t.deleted=0 and t.hidden=0))
+        <if test="article.tagId!=null and article.tagId!=''">
+            and at.tag_id=#{article.tagId}
+        </if>
+    </select>
+    <!--    用户根据条件查询文章数量-->
+    <select id="getCountByUser" resultType="Long">
+        select distinct count(id) from
+        (select distinct
+        a.id
+        from
+        t_article a
+        left join t_category c on c.id=a.category_id
+        left join t_article_tag at on at.article_id=a.id
+        left join t_tag t on t.id=at.tag_id
+        where
+        a.deleted=0
+        and
+        a.status=1
+        and
+        a.type!=0
+        and
+        (c.deleted is null or (c.deleted =0 and c.hidden=0))
+        and
+        (t.deleted is null or (t.deleted=0 and t.hidden=0))
+        <if test="article.categoryId !=null">
+            and c.id=#{categoryId}
+        </if>
+        <if test="article.tagId !=null">
+            and t.id=#{tagId}
+        </if>) as ids
+    </select>
+    <!--    用户根据ID查询文章详细信息-->
+    <select id="getArticleDtoByUser" resultMap="BaseDtoMap">
+        select a.id,
+               a.user_auth_id,
+               a.category_id,
+               a.title,
+               a.content,
+               a.cover,
+               a.type,
+               a.original_author,
+               a.original_title,
+               a.original_url,
+               a.note,
+               a.top,
+               a.status,
+               a.create_time,
+               a.update_time,
+
+               c.id     as c_id,
+               c.name   as c_name,
+               c.hidden as c_hidden,
+
+               t.id     as t_id,
+               t.name   as t_name,
+               t.hidden as t_hidden
+        from t_article a
+                 left join t_category c on c.id = a.category_id
+                 left join t_article_tag at
+        on at.article_id=a.id
+            left join t_tag t on t.id= at.tag_id
+        where
+            a.deleted=0
+          and
+            a.id=#{id}
+          and
+            a.type!=0
+          and
+            a.status=1
+          and
+            (c.deleted is null
+           or (c.deleted =0
+          and c.hidden=0))
+          and
+            (t.deleted is null
+           or (t.deleted=0
+          and t.hidden=0))
+    </select>
+    <!--    文章归档-->
+    <select id="getArchiveByUser" resultMap="BaseDtoMap">
+        select distinct a.id,
+                        a.user_auth_id,
+                        a.category_id,
+                        a.title,
+                        a.cover,
+                        a.type,
+                        a.original_author,
+                        a.original_title,
+                        a.original_url,
+                        a.note,
+                        a.top,
+                        a.status,
+                        a.create_time,
+                        a.update_time,
+                        a.deleted,
+
+                        c.id     as c_id,
+                        c.name   as c_name,
+                        c.hidden as c_hidden
+        from t_article a
+                 left join t_category c on c.id = a.category_id
+                 left join t_article_tag at
+        on at.article_id=a.id
+            left join t_tag t on t.id= at.tag_id
+        where
+            a.deleted=0
+          and
+            a.status=1
+          and
+            a.type!=0
+          and
+            (c.deleted is null
+           or (c.deleted =0
+          and c.hidden=0))
+          and
+            (t.deleted is null
+           or (t.deleted=0
+          and t.hidden=0))
+        order by a.create_time desc
+            limit #{current}, #{limit}
+    </select>
+    <!--    管理员查询文章归档信息-->
+    <!--    TODO-->
+    <select id="getArchive" resultMap="BaseDtoMap">
+        select a.id,
+               a.user_auth_id,
+               a.category_id,
+               a.title,
+               a.cover,
+               a.type,
+               a.original_author,
+               a.original_title,
+               a.original_url,
+               a.note,
+               a.top,
+               a.status,
+               a.create_time,
+               a.update_time,
+               a.deleted,
+               c.id     as c_id,
+               c.name   as c_name,
+               c.hidden as c_hidden,
+               t.id     as t_id,
+               t.name   as t_name,
+               t.hidden as t_hidden
+        from (select a.id as id
+              from t_article a
+                       left join t_category c
+                                 on c.id = a.category_id
+              where a.deleted = 0
+                and (c.deleted is null
+                  or c.deleted = 0)
+              order by a.update_time desc
+                  limit #{current}, #{limit}) as sa,
+             t_article a
+                 left join t_category c
+                           on c.id = a.category_id
+                 left join t_article_tag at
+        on at.article_id=a.id
+            left join t_tag t on t.id= at.tag_id
+        where
+            sa.id=a.id
+          and
+            (t.deleted is null
+           or t.deleted=0)
+        order by a.create_time desc
+    </select>
+    <!--    管理员分页查询-->
+    <select id="getPage" resultMap="BaseDtoMap">
+        select a.id,
+        a.user_auth_id,
+        a.category_id,
+        a.title,
+        a.cover,
+        a.type,
+        a.original_author,
+        a.original_title,
+        a.original_url,
+        a.note,
+        a.top,
+        a.status,
+        a.create_time,
+        a.update_time,
+        a.deleted,
+        c.id as c_id,
+        c.name as c_name,
+        c.hidden as c_hidden,
+        t.id as t_id,
+        t.name as t_name,
+        t.hidden as t_hidden
+        from (
+        select a.id as id from
+        t_article a
+        left join t_category c
+        on c.id=a.category_id
+        where
+        a.deleted=0
+        <if test="article.title!=null and article.title!=''">
+            and a.title like concat('%',#{article.title},'%')
+        </if>
+        <if test="article.type!=null">
+            and a.type=#{article.type}
+        </if>
+        <if test="article.status!=null">
+            and a.status=#{article.status}
+        </if>
+        <if test="article.categoryId!=null">
+            and c.id=#{article.categoryId}
+        </if>
+
+        <if test="article.top!=null">
+            and a.top=#{article.top}
+        </if>
+        and
+        (c.deleted is null
+        or c.deleted =0)
+        order by a.update_time desc
+        limit #{current}, #{limit}
+        ) as sa,
+        t_article a
+        left join t_category c
+        on c.id=a.category_id
+        left join t_article_tag at on at.article_id=a.id
+        left join t_tag t on t.id= at.tag_id
+        where
+        sa.id=a.id
+        and
+        (t.deleted is null
+        or t.deleted=0)
+        <if test="article.tagId!=null">
+            and at.tag_id=#{article.tagId}
+        </if>
+        order by a.update_time desc
+    </select>
+    <!--    根据条件查询数量-->
+    <select id="getCount" resultType="Long">
+        select count(id) from
+        (select
+        distinct
+        a.id
+        from (
+        select a.id as id from
+        t_article a
+        left join t_category c
+        on c.id=a.category_id
+        where
+        a.deleted=0
+        and
+        (c.deleted is null
+        or c.deleted =0)
+        <if test="article.title!=null and article.title!=''">
+            and a.title like concat('%',#{article.title},'%')
+        </if>
+        <if test="article.type!=null">
+            and a.type=#{article.type}
+        </if>
+        <if test="article.status!=null">
+            and a.status=#{article.status}
+        </if>
+        <if test="article.categoryId!=null">
+            and c.id=#{article.categoryId}
+        </if>
+
+        <if test="article.top!=null">
+            and a.top=#{article.top}
+        </if>
+        ) as sa,
+        t_article a
+        left join t_category c
+        on c.id=a.category_id
+        left join t_article_tag at on at.article_id=a.id
+        left join t_tag t on t.id= at.tag_id
+        where
+        sa.id=a.id
+        <if test="article.tagId!=null">
+            and at.tag_id=#{article.tagId}
+        </if>
+        and
+        (t.deleted is null
+        or t.deleted=0)) as article
+    </select>
+    <!--    管理员详细查询-->
+    <select id="getArticleDto" resultMap="BaseDtoMap">
+        select a.id,
+               a.user_auth_id,
+               a.category_id,
+               a.title,
+               a.content,
+               a.cover,
+               a.type,
+               a.original_author,
+               a.original_title,
+               a.original_url,
+               a.note,
+               a.top,
+               a.status,
+               a.create_time,
+               a.update_time,
+               a.deleted,
+
+               c.id     as c_id,
+               c.name   as c_name,
+               c.hidden as c_hidden,
+
+               t.id     as t_id,
+               t.name   as t_name,
+               t.hidden as t_hidden
+        from t_article a
+                 left join t_category c on c.id = a.category_id
+                 left join t_article_tag at
+        on at.article_id=a.id
+            left join t_tag t on t.id= at.tag_id
+        where
+            a.deleted=0
+          and
+            a.id=#{id}
+          and
+            (c.deleted is null
+           or c.deleted =0)
+          and
+            (t.deleted is null
+           or t.deleted=0)
+    </select>
+
+</mapper>

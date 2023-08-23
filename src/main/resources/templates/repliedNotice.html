@@ -1,0 +1,101 @@
+<div
+  style="
+    color: #666;
+    font-size: 14px;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+    padding: 5px 8px;
+  "
+>
+  <div
+    class="box-content"
+    style="width: 80%; margin: 20px auto; max-width: 700px; min-width: 500px"
+  >
+    <!--    <div class="header-tip" style="font-size: 12px;-->
+    <!--                                   color: #aaa;-->
+    <!--                                   text-align: right;-->
+    <!--                                   padding-right: 25px;-->
+    <!--                                   padding-bottom: 10px;">-->
+    <!--        Confidential - Scale Alarm Use Only-->
+    <!--    </div>-->
+    <div
+      class="info-top"
+      style="
+        padding: 15px 25px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        /*background: {0};*/
+        /*color: #fff;*/
+        background-color: rgb(173, 220, 232);
+        overflow: hidden;
+        line-height: 32px;
+      "
+    >
+      <!--        <img src="" style="float: left; margin: 0 10px 0 0; width: 32px;"/>-->
+      <div style="color: #010e07; font-size: 20px">
+        <strong
+          >尊敬的用户【<span
+            style="color: rgb(11, 42, 101); font-size: 22px"
+            th:text="${targetName}"
+            >张三</span
+          >】，你的评论有新的回复了哦~</strong
+        >
+      </div>
+    </div>
+    <div
+      class="info-wrap"
+      style="
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        border: 1px solid #ddd;
+        overflow: hidden;
+        padding: 10px 15px;
+      "
+    >
+      <div class="tips">
+        <p style="font-size: 18px; padding: 0; margin: 0">
+          <br />您的评论： “<span th:text="targetComment"
+            >哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</span
+          >
+          ”
+        </p>
+        <p style="margin: 15px 0">
+          <span style="font-size: 18px">被回复的具体信息如下：</span>
+        </p>
+        <table
+          style="
+            border: 2px solid rgb(174, 220, 220);
+            font-size: 18px;
+            border-radius: 15px;
+            margin: 10px auto;
+            padding: 15px;
+          "
+        >
+          <tr>
+            <td style="width: 100px"><span>用户昵称：</span></td>
+            <td th:text="${sourceName}">王二麻子</td>
+          </tr>
+          <tr>
+            <td style="width: 100px">话题名称：</td>
+            <td th:text="${topicName}">文章</td>
+          </tr>
+          <tr>
+            <td style="width: 100px">评论内容：</td>
+            <td th:text="${sourceComment}">
+              哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 100px">内容链接：</td>
+            <td><a th:href="${url}">点击跳转到话题页面</a></td>
+          </tr>
+        </table>
+      </div>
+      <div
+        class="time"
+        style="text-align: right; color: #999; padding: 10px 15px 0"
+      >
+        <span th:text="${datetime}">2023-08-18 23:52:00</span>
+      </div>
+    </div>
+  </div>
+</div>

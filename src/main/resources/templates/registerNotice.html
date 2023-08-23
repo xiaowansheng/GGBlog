@@ -1,0 +1,87 @@
+<div
+  style="
+    color: #666;
+    font-size: 14px;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+    padding: 5px 8px;
+  "
+>
+  <div
+    class="box-content"
+    style="width: 80%; margin: 20px auto; max-width: 600px; min-width: 400px"
+  >
+    <!--    <div class="header-tip" style="font-size: 12px;-->
+    <!--                                   color: #aaa;-->
+    <!--                                   text-align: right;-->
+    <!--                                   padding-right: 25px;-->
+    <!--                                   padding-bottom: 10px;">-->
+    <!--        Confidential - Scale Alarm Use Only-->
+    <!--    </div>-->
+    <div
+      class="info-top"
+      style="
+        padding: 15px 25px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        /*background: {0};*/
+        /*color: #fff;*/
+        background-color: rgb(173, 220, 232);
+        overflow: hidden;
+        line-height: 32px;
+      "
+    >
+      <!--        <img src="" style="float: left; margin: 0 10px 0 0; width: 32px;"/>-->
+      <div style="color: #010e07; font-size: 20px">
+        <strong th:text="${title}">嘿，你的网站又有了新的用户哦~~</strong>
+      </div>
+    </div>
+    <div
+      class="info-wrap"
+      style="
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        border: 1px solid #ddd;
+        overflow: hidden;
+        padding: 10px 15px;
+      "
+    >
+      <div class="tips" style="padding: 15px">
+        <p style="margin: 0px 10px 10px">
+          <span style="font-size: 18px">以下是新用户的基本信息：</span>
+        </p>
+        <table
+          style="
+            border: 2px solid rgb(174, 220, 220);
+            font-size: 18px;
+            border-radius: 15px;
+            margin: 10px auto;
+            padding: 15px;
+          "
+        >
+          <tr>
+            <td  style="width: 100px">用户邮箱：</td>
+            <td th:text="${email}">xxxxxxxxxx@gmail.com</td>
+          </tr>
+          <tr>
+            <td style="width: 100px">用户昵称：</td>
+            <td th:text="${nickname}">祝憨憨</td>
+          </tr>
+          <tr>
+            <td style="width: 100px">IP 地址：</td>
+            <td th:text="${ipAddress}">xxxx:xxxx:xxxx:xxxx</td>
+          </tr>
+          <tr>
+            <td style="width: 100px">IP 来源：</td>
+            <td th:text="${ipSource}">AAAABBBBCCCCDDDD</td>
+          </tr>
+        </table>
+      </div>
+      <div
+        class="time"
+        style="text-align: right; color: #999; padding: 10px 15px 0"
+      >
+        <span th:text="${datetime}">2023-08-18 23:52:00</span>
+      </div>
+    </div>
+  </div>
+</div>

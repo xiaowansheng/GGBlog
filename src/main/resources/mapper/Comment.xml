@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wbxnl.blog.dao.CommentDao">
+
+    <!--    &lt;!&ndash; 通用查询映射结果 &ndash;&gt;-->
+    <!--    <resultMap id="BaseResultMap" type="com.wbxnl.blog.model.entity.Comment">-->
+    <!--        <id column="id" property="id"/>-->
+    <!--        <result column="user_auth_id" property="userAuthId"/>-->
+    <!--        <result column="topic_type" property="topicType"/>-->
+    <!--        <result column="topic_id" property="topicId"/>-->
+    <!--        <result column="root_id" property="rootId"/>-->
+    <!--        <result column="content" property="content"/>-->
+    <!--        <result column="ip_address" property="ipAddress"/>-->
+    <!--        <result column="ip_source" property="ipSource"/>-->
+    <!--        <result column="device" property="device"/>-->
+    <!--        <result column="browser" property="browser"/>-->
+    <!--        <result column="point" property="point"/>-->
+    <!--        <result column="location" property="location"/>-->
+    <!--        <result column="parent_id" property="parentId"/>-->
+    <!--        <result column="type" property="type"/>-->
+    <!--        <result column="nickname" property="nickname"/>-->
+    <!--        <result column="email" property="email"/>-->
+    <!--        <result column="qq" property="qq"/>-->
+    <!--        <result column="hidden" property="hidden"/>-->
+    <!--        <result column="review" property="review"/>-->
+    <!--        <result column="create_time" property="createTime"/>-->
+    <!--        <result column="update_time" property="updateTime"/>-->
+    <!--        <result column="deleted" property="deleted"/>-->
+    <!--    </resultMap>-->
+
+    <!--    &lt;!&ndash; 通用查询结果列 &ndash;&gt;-->
+    <!--    <sql id="Base_Column_List">-->
+    <!--        id , user_auth_id, topic_type, topic_id, root_id, content, ip_address, ip_source,device,browser,point,location, parent_id, type, nickname, email, qq, hidden, review, create_time, update_time, deleted-->
+    <!--    </sql>-->
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseDtoMap" type="com.wbxnl.blog.model.dto.CommentDto">
+        <id column="id" property="id"/>
+        <result column="user_auth_id" property="userAuthId"/>
+        <result column="topic_type" property="topicType"/>
+        <result column="topic_id" property="topicId"/>
+        <result column="infoName" property="infoName"/>
+        <result column="infoAvatar" property="infoAvatar"/>
+        <result column="infoEmail" property="infoEmail"/>
+        <result column="infoWebsite" property="infoWebsite"/>
+        <result column="introduction" property="introduction"/>
+        <result column="roleId" property="roleId"/>
+        <result column="roleName" property="roleLabel"/>
+        <result column="content" property="content"/>
+        <result column="ip_address" property="ipAddress"/>
+        <result column="ip_source" property="ipSource"/>
+        <result column="device" property="device"/>
+        <result column="browser" property="browser"/>
+        <result column="point" property="point"/>
+        <result column="location" property="location"/>
+        <result column="root_id" property="rootId"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="type" property="type"/>
+        <result column="nickname" property="nickname"/>
+        <result column="email" property="email"/>
+        <result column="qq" property="qq"/>
+        <result column="hidden" property="hidden"/>
+        <result column="review" property="review"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="deleted" property="deleted"/>
+    </resultMap>
+    <!--    用户分页查询数据-->
+    <!--    TODO 还能优化-->
+    <select id="getPageByUser" resultMap="BaseDtoMap">
+        select
+        c.id,
+        c.user_auth_id,
+        c.topic_type,
+        c.topic_id,
+        c.content,
+        c.ip_address,
+        c.ip_source,
+        c.device,
+        c.browser,
+        c.point,
+        c.location,
+        c.root_id,
+        c.parent_id,
+        c.type,
+        c.nickname,
+        c.email,
+        c.qq,
+        c.hidden,
+        c.review,
+        c.create_time,
+        c.update_time,
+        c.deleted,
+        info.nickname as infoName,
+        info.avatar as infoAvatar,
+        info.email as infoEmail,
+        info.website as infoWebsite,
+        info.introduction as introduction,
+        r.id as roleId,
+        r.name as roleName
+        from (select co.id
+        from (
+        select r.id as id from t_comment r
+        where
+        r.topic_type=#{comment.topicType}
+        <if test="comment.topicId !=null">
+            and c.topicId=#{comment.topicId}
+        </if>
+        and
+        r.parent_id=0
+        and
+        r.deleted=0
+        and
+        r.hidden=0
+        and
+        c.review=1
+        order by create_time asc
+        limit #{current},#{limit}
+        ) as r,t_comment co
+        where
+        r.id=co.id
+        ) as root
+        left join t_comment as c on root.id=c.id
+        left join t_user_auth auth on c.user_auth_id = auth.id
+        left join t_user_info info on auth.user_info_id=info.id
+        left join t_user_role ur on auth.id=ur.user_auth_id
+        left join t_role r on r.id=ur.role_id
+        order by c.create_time asc
+    </select>
+    <!--    获取评论数（根评论不加子评论数）-->
+    <!--    TODO 还能优化-->
+    <select id="getRootCountByUser" resultType="Long">
+        select count(c.id) as count from t_comment c
+        where
+        c.topic_type=#{commentVo.topicType}
+        <if test="comment.topicId !=null">
+            and c.topicId=#{comment.topicId}
+        </if>
+        and
+        c.deleted=0
+        and
+        c.hidden=0
+        and
+        c.parent_id=0
+        and
+        c.review=1
+    </select>
+    <!--    根评论加子评论-->
+    <!--    TODO 还能优化-->
+    <select id="getCountByUser" resultType="Long">
+        select count(c.id) as count from t_comment c
+        where
+        c.topic_type=#{comment.topicType}
+        <if test="comment.topicId !=null">
+            and c.topicId=#{comment.topicId}
+        </if>
+        and
+        c.deleted=0
+        and
+        c.hidden=0
+        and
+        c.review_state!=-1
+        <if test="commentVo.review !=null and commentVo.review ==1">
+            and c.review=1
+            and c.review_state=1
+        </if>
+    </select>
+    <!--管理员分页查询评论列表-->
+    <!--    TODO 还能优化-->
+    <select id="getPage" resultMap="BaseDtoMap">
+        select
+        c.id,
+        c.user_auth_id,
+        c.topic_type,
+        c.topic_id,
+        c.content,
+        c.ip_address,
+        c.ip_source,
+        c.device,
+        c.browser,
+        c.point,
+        c.location,
+        c.root_id,
+        c.parent_id,
+        c.type,
+        c.nickname,
+        c.email,
+        c.qq,
+        c.hidden,
+        c.review,
+        c.create_time,
+        c.update_time,
+        info.nickname as infoName
+        from
+        t_comment as c
+        left join t_user_auth auth on c.user_auth_id = auth.id
+        left join t_user_info info on auth.user_info_id=info.id
+        where
+        c.deleted=0
+        <if test="comment.id !=null">
+            and c.id=#{comment.id}
+        </if>
+        <if test="comment.userAuthId !=null">
+            and c.userAuthId=#{comment.userAuthId}
+        </if>
+        <if test="comment.topicType!=null and comment.topicType!=''">
+            and c.topic_type=#{comment.topicType}
+        </if>
+        <if test="comment.topicId !=null">
+            and c.topicId=#{comment.topicId}
+        </if>
+        <if test="comment.content!=null and comment.content!=''">
+            and c.content like concat('%',#{comment.content},'%')
+        </if>
+        <if test="comment.content!=null and comment.content!=''">
+            and c.content like concat('%',#{comment.content},'%')
+        </if>
+        <if test="comment.location!=null and comment.location!=''">
+            and (c.location like concat('%',#{comment.location},'%') or c.ipSource like
+            concat('%',#{comment.location},'%'))
+        </if>
+        <if test="comment.rootId !=null">
+            and c.rootId=#{comment.rootId}
+        </if>
+        <if test="comment.email!=null and comment.email!=''">
+            and c.email like concat('%',#{comment.email},'%')
+        </if>
+        <if test="comment.qq!=null and comment.qq!=''">
+            and c.qq like concat('%',#{comment.qq},'%')
+        </if>
+        <if test="comment.hidden !=null">
+            and c.hidden=#{comment.hidden}
+        </if>
+        <if test="comment.type!=null and comment.type!=''">
+            and c.type=#{comment.type}
+        </if>
+        <if test="comment.nickname!=null and comment.nickname!=''">
+            and (c.nickname like concat('%',#{comment.nickname},'%') or info.nickname like
+            concat('%',#{comment.nickname},'%'))
+        </if>
+        <if test="comment.review !=null">
+            and c.review=#{comment.review}
+        </if>
+        <if test="comment.beginDate !=null and comment.endDate !=null">
+            and c.create_time between #{comment.endDate} and #{comment.beginDate}
+        </if>
+        order by c.create_time desc
+        limit #{current},#{limit}
+    </select>
+    <!--    根据条件查询评论总数-->
+    <!--    TODO 还能优化-->
+    <select id="getCount" resultType="Long">
+        select
+        count(c.id) as count
+        from
+        t_comment as c
+        left join t_user_auth auth on c.user_auth_id = auth.id
+        left join t_user_info info on auth.user_info_id=info.id
+        where
+        c.deleted=0
+        <if test="comment.id !=null">
+            and c.id=#{comment.id}
+        </if>
+        <if test="comment.userAuthId !=null">
+            and c.userAuthId=#{comment.userAuthId}
+        </if>
+        <if test="comment.topicType!=null and comment.topicType!=''">
+            and c.topic_type=#{comment.topicType}
+        </if>
+        <if test="comment.topicId !=null">
+            and c.topicId=#{comment.topicId}
+        </if>
+        <if test="comment.content!=null and comment.content!=''">
+            and c.content like concat('%',#{comment.content},'%')
+        </if>
+        <if test="comment.content!=null and comment.content!=''">
+            and c.content like concat('%',#{comment.content},'%')
+        </if>
+        <if test="comment.location!=null and comment.location!=''">
+            and (c.location like concat('%',#{comment.location},'%') or c.ipSource like
+            concat('%',#{comment.location},'%'))
+        </if>
+        <if test="comment.rootId !=null">
+            and c.rootId=#{comment.rootId}
+        </if>
+        <if test="comment.email!=null and comment.email!=''">
+            and c.email like concat('%',#{comment.email},'%')
+        </if>
+        <if test="comment.qq!=null and comment.qq!=''">
+            and c.qq like concat('%',#{comment.qq},'%')
+        </if>
+        <if test="comment.hidden !=null">
+            and c.hidden=#{comment.hidden}
+        </if>
+        <if test="comment.type!=null and comment.type!=''">
+            and c.type=#{comment.type}
+        </if>
+        <if test="comment.nickname!=null and comment.nickname!=''">
+            and (c.nickname like concat('%',#{comment.nickname},'%') or info.nickname like
+            concat('%',#{comment.nickname},'%'))
+        </if>
+        <if test="comment.review !=null">
+            and c.review=#{comment.review}
+        </if>
+        <if test="comment.beginDate !=null and comment.endDate !=null">
+            and c.create_time between #{comment.endDate} and #{comment.beginDate}
+        </if>
+    </select>
+
+    <!--    根据ID查询详细信息-->
+    <!--    TODO 还能优化-->
+    <select id="getComment" resultMap="BaseDtoMap">
+        select c.id,
+               c.user_auth_id,
+               c.topic_type,
+               c.topic_id,
+               c.content,
+               c.ip_address,
+               c.ip_source,
+               c.point,
+               c.location,
+               c.device,
+               c.browser,
+               c.root_id,
+               c.parent_id,
+               c.type,
+               c.nickname,
+               c.email,
+               c.qq,
+               c.hidden,
+               c.review,
+               c.create_time,
+               c.update_time,
+               c.deleted,
+               info.nickname     as infoName,
+               info.avatar       as infoAvatar,
+               info.email        as infoEmail,
+               info.website      as infoWebsite,
+               info.introduction as introduction,
+               r.id              as roleId,
+               r.name            as roleName
+        from t_comment as c
+                 left join t_user_auth auth on c.user_auth_id = auth.id
+                 left join t_user_info info on auth.user_info_id = info.id
+                 left join t_user_role ur on auth.id = ur.user_auth_id
+                 left join t_role r on r.id = ur.role_id
+        where c.deleted = 0
+          and c.hidden = 0
+          and c.id = #{id}
+    </select>
+</mapper>

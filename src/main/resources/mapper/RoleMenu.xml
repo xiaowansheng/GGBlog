@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wbxnl.blog.dao.RoleMenuDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wbxnl.blog.model.entity.RoleMenu">
+        <id column="id" property="id" />
+        <result column="role_id" property="roleId" />
+        <result column="menu_id" property="menuId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, role_id, menu_id
+    </sql>
+
+
+    <resultMap id="BaseRouteMap" type="com.wbxnl.blog.model.dto.RouterDto">
+        <result column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="path" property="path" />
+        <result column="redirect" property="redirect" />
+        <result column="component" property="component" />
+        <result column="sort" property="sort" />
+        <result column="parent_id" property="parentId" />
+        <result column="perms" property="perms" />
+        <association property="meta" javaType="com.wbxnl.blog.model.dto.Meta">
+            <result column="title" property="title" />
+            <result column="icon" property="icon" />
+            <result column="hidden" property="hideMenu" />
+        </association>
+    </resultMap>
+    <select id="getRoutes" resultMap="BaseRouteMap">
+        select
+            m.id,
+            m.title,
+            m.name,
+            m.redirect,
+            m.path,
+            m.component,
+            m.icon,
+            m.hidden,
+            m.sort,
+            m.parent_id,
+            m.perms
+        from
+            system_menu m left join t_role_menu rm on rm.menu_id=m.id
+        where
+                    m.deleted=0
+                and
+                    rm.role_id=#{roleId}
+           or
+                m.id
+                in
+                (select distinct parent_id
+                 from
+                     system_menu m
+                         left join t_role_menu rm on rm.menu_id=m.id
+                 where
+                     m.deleted=0
+                   and
+                     rm.role_id=#{roleId})
+    </select>
+
+
+<!--    <resultMap id="BaseDtoMap" type="com.wbxnl.blog.model.entity.RoleMenu">-->
+<!--        <id column="id" property="id" />-->
+<!--        <result column="role_id" property="roleId" />-->
+<!--        <result column="menu_id" property="menuId" />-->
+<!--    </resultMap>-->
+<!--    查询的是子菜单，不查询root菜单的数据-->
+<!--    <select id="getRoleMenus" resultMap="BaseDtoMap">-->
+<!--        select-->
+<!--            rm.id,-->
+<!--            rm.role_id,-->
+<!--            rm.menu_id-->
+<!--        from-->
+<!--            t_role_menu rm-->
+<!--                left join system_menu m on rm.menu_id=m.id-->
+<!--        where-->
+<!--            rm.role_id=#{roleId}-->
+<!--            and-->
+<!--            m.deleted=0-->
+<!--            and-->
+<!--            m.parent_id!=0-->
+<!--    </select>-->
+</mapper>

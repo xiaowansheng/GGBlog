@@ -1,0 +1,122 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.1.1'
+    id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'com.wbxnl.blog'
+version = '2.0'
+
+java {
+    sourceCompatibility = '17'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+//repositories {
+//    mavenCentral()
+//}
+repositories {
+    maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
+    maven { url 'https://maven.aliyun.com/nexus/content/repositories/jcenter' }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-aop
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    // 邮件服务
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    // 配置提示生成
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-configuration-processor
+    implementation 'org.springframework.boot:spring-boot-configuration-processor'
+
+//    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.2'
+    // mybatis增强
+    // https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter
+    implementation 'com.baomidou:mybatis-plus-boot-starter:3.5.3.2'
+    // 德鲁伊数据库连接池
+    // https://mvnrepository.com/artifact/com.alibaba/druid-spring-boot-starter
+    implementation 'com.alibaba:druid-spring-boot-starter:1.2.18'
+    // jdbc
+    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    implementation 'mysql:mysql-connector-java:8.0.28'
+
+    // token生成
+    // https://mvnrepository.com/artifact/com.auth0/java-jwt
+    implementation 'com.auth0:java-jwt:4.4.0'
+    //上面的jwt包的依赖
+    // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+
+    // 浏览器解析工具
+// https://mvnrepository.com/artifact/eu.bitwalker/UserAgentUtils
+    implementation 'eu.bitwalker:UserAgentUtils:1.21'
+    // 阿里云oss
+    // 不知道有没有用
+    // https://mvnrepository.com/artifact/com.alibaba.cloud/aliyun-oss-spring-boot-starter
+    // implementation 'com.alibaba.cloud:aliyun-oss-spring-boot-starter:1.0.0'
+    // https://mvnrepository.com/artifact/com.aliyun.oss/aliyun-sdk-oss
+    implementation 'com.aliyun.oss:aliyun-sdk-oss:3.17.0'
+    // 敏感词检测工具
+    // https://mvnrepository.com/artifact/com.github.houbb/sensitive-word
+    implementation 'com.github.houbb:sensitive-word:0.8.0'
+    // 文档工具
+    // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
+
+    // 动态代理包，实体转换工具
+    // map 转实体需要 import net.sf.cglib.beans.BeanMap;
+    // https://mvnrepository.com/artifact/cglib/cglib
+//    implementation 'cglib:cglib:3.3.0'
+
+
+
+    // xTODO springboot3.0+会报错，该工具暂时没有适配3.0貌似是这样 =====》已修复，选用springdoc作为文档工具
+    // https://mvnrepository.com/artifact/com.github.xiaoymin/knife4j-spring-boot-starte
+//        implementation 'com.github.xiaoymin:knife4j-spring-boot-starter:3.0.3'
+    // https://mvnrepository.com/artifact/io.swagger.core.v3/swagger-annotations
+//    implementation 'io.swagger.core.v3:swagger-annotations:2.2.15'
+// https://mvnrepository.com/artifact/io.swagger.core.v3/swagger-jaxrs2
+//    implementation 'io.swagger.core.v3:swagger-jaxrs2:2.2.15'
+
+
+    // 项目热部署
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools
+    implementation 'org.springframework.boot:spring-boot-devtools:3.1.1'
+    // 转为fastjson2
+    // https://mvnrepository.com/artifact/com.alibaba/fastjson
+//    implementation 'com.alibaba:fastjson:2.0.35'// https://mvnrepository.com/artifact/com.alibaba.fastjson2/fastjson2
+    implementation 'com.alibaba.fastjson2:fastjson2:2.0.39'
+
+
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    // TODO 暂不使用docker
+//    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.2'
+//    testImplementation 'org.springframework.amqp:spring-rabbit-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    // 模板引擎
+    // 用来设计邮件模板
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:3.1.2'
+
+
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
