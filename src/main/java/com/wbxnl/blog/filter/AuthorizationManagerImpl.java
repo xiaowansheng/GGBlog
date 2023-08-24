@@ -68,7 +68,7 @@ public class AuthorizationManagerImpl implements AuthorizationManager<HttpServle
 
         Authentication testAuthenticationToken = SecurityContextHolder.getContext().getAuthentication();
 
-        if (testAuthenticationToken!= null && "anonymousUser".equals(testAuthenticationToken.getPrincipal())) {
+        if (testAuthenticationToken == null || "anonymousUser".equals(testAuthenticationToken.getPrincipal())) {
             return new AuthorizationDecision(true);
         }
 
