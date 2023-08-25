@@ -9,12 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.CollectionUtils;
@@ -30,7 +28,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Component
-public class AuthorizationManagerImpl implements AuthorizationManager<HttpServletRequest> {
+    public class AuthorizationManagerImpl implements AuthorizationManager<HttpServletRequest> {
 
     /**
      * 资源角色列表
@@ -63,21 +61,15 @@ public class AuthorizationManagerImpl implements AuthorizationManager<HttpServle
         resourceRoleList = null;
     }
 
+
     @Override
     public AuthorizationDecision check(Supplier<Authentication> authentication, HttpServletRequest request) {
-
-        Authentication testAuthenticationToken = SecurityContextHolder.getContext().getAuthentication();
-
-        if (testAuthenticationToken == null || "anonymousUser".equals(testAuthenticationToken.getPrincipal())) {
-            return new AuthorizationDecision(true);
-        }
-
         // 对所有请求的地址检测都通过
         System.out.println("执行1.5");
         log.info("request:{},{}", request.getMethod(), request.getRequestURI());
         // TODO 关闭权限校验
-//        return new AuthorizationDecision(true);
-        return check(authentication.get(), request);
+        return new AuthorizationDecision(true);
+//        return check(authentication.get(), request);
     }
 
     /**
