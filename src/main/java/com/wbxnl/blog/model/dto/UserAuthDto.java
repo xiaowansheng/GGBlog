@@ -13,6 +13,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonFormat;
 //import io.swagger.annotations.ApiModel;
 //import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -33,7 +34,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-//@ApiModel(value = "UserAuthDto对象", description = "用户账号")
+@Schema(name = "UserAuthDto",title = "UserAuthDto",description = "响应的用户账号和个人的信息")
 public class UserAuthDto implements Serializable {
 
     private static final long serialVersionUID = 1L;

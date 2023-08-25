@@ -65,7 +65,7 @@ public class UserAuthController extends AbstractController<UserAuthService, User
 
     @GetMapping("/page")
     @Operation(summary = "分页查询用户详细信息")
-    public Result getUserList(@Validated @ParameterObject PageParams pageParams,@ParameterObject UserAuthParams userAuthParams) {
+    public Result<PageData<UserAuthDto>> getUserList(@Validated @ParameterObject PageParams pageParams,@ParameterObject UserAuthParams userAuthParams) {
         PageData<UserAuthDto> pageData = userAuthService.getPage(pageParams, userAuthParams);
         return new Result<PageData<UserAuthDto>>().ok(pageData);
     }
@@ -95,14 +95,14 @@ public class UserAuthController extends AbstractController<UserAuthService, User
 
     @GetMapping("")
     @Operation(summary = "查询当前登录用户账号信息")
-    public Result getUserAuth() {
+    public Result<UserAuthDto> getUserAuth() {
         UserAuthDto dto = userAuthService.getDto(SecurityUtils.getUserAuthId());
         return new Result().ok(dto);
     }
 
     @GetMapping("/login/type")
     @Operation(summary = "获取所有的登录类型")
-    public Result getAllLoginType() {
+    public Result<List<NameLabelDto>> getAllLoginType() {
         LoginTypeEmus[] typeEmus = LoginTypeEmus.values();
         List<NameLabelDto> mapList = Arrays.stream(typeEmus)
                 .map(loginTypeEmus -> new NameLabelDto(loginTypeEmus.getName(), loginTypeEmus.getLabel()))

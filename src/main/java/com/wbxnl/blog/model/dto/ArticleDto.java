@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 //import io.swagger.annotations.ApiModel;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Builder;
@@ -29,7 +30,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-//@ApiModel(value = "ArticleDto对象", description = "博客文章")
+@Schema(name = "ArticleDto",title = "ArticleDto",description = "响应的文章内容信息")
 public class ArticleDto implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 
 //import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -24,7 +25,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-//@ApiModel(value = "RoleResourceDto对象", description = "角色资源")
+@Schema(name = "RoleResourceDto",title = "RoleResourceDto",description = "响应的角色资源信息")
 public class RoleResourceDto implements Serializable {
 
     private static final long serialVersionUID = 1L;

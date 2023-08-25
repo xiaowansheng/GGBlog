@@ -42,7 +42,7 @@ public class SystemConfigController extends AbstractController<SystemConfigServi
 
     @GetMapping("/config/list")
     @Operation(summary = "用户获取所有配置信息")
-    public Result getConfigList(){
+    public Result<List<NameValueDto>> getConfigList(){
         List<NameValueDto> list=systemConfigService.getConfigList();
         return new Result().ok(list);
     }
@@ -55,7 +55,7 @@ public class SystemConfigController extends AbstractController<SystemConfigServi
 //    }
     @GetMapping("/config/covers")
     @Operation(summary = "获取主页菜单封面图")
-    public Result getCovers(){
+    public Result<SystemConfigDto> getCovers(){
         SystemConfig config = systemConfigService.getSystemConfig(Cover.KEY, Cover.DEFAULT_CONFIG);
         return new Result().ok(ConvertUtils.sourceToTarget(config,SystemConfigDto.class));
     }
@@ -69,7 +69,7 @@ public class SystemConfigController extends AbstractController<SystemConfigServi
 
     @GetMapping("/config/menu")
     @Operation(summary = "获取网站菜单显示信息")
-    public Result getMenuShow(){
+    public Result<SystemConfigDto> getMenuShow(){
         SystemConfig config = systemConfigService.getSystemConfig(Menu.KEY, Menu.DEFAULT_CONFIG);
         return new Result().ok(ConvertUtils.sourceToTarget(config,SystemConfigDto.class));
     }
@@ -83,7 +83,7 @@ public class SystemConfigController extends AbstractController<SystemConfigServi
 
     @GetMapping("/config/author/info")
     @Operation(summary = "获取作者信息")
-    public Result getAuthorInformation(){
+    public Result<SystemConfigDto> getAuthorInformation(){
         SystemConfig config = systemConfigService.getSystemConfig(Author.KEY, Author.DEFAULT_CONFIG);
         return new Result().ok(ConvertUtils.sourceToTarget(config,SystemConfigDto.class));
     }
@@ -97,7 +97,7 @@ public class SystemConfigController extends AbstractController<SystemConfigServi
 
     @GetMapping("/config/author/contact")
     @Operation(summary = "获取作者社交账号")
-    public Result getAuthorContact(){
+    public Result<SystemConfigDto> getAuthorContact(){
         SystemConfig config = systemConfigService.getSystemConfig(SocialAccount.KEY, SocialAccount.DEFAULT_CONFIG);
         return new Result().ok(ConvertUtils.sourceToTarget(config,SystemConfigDto.class));
     }
@@ -110,7 +110,7 @@ public class SystemConfigController extends AbstractController<SystemConfigServi
 
     @GetMapping("/config/information")
     @Operation(summary = "获取网站信息")
-    public Result getWebSitInformation(){
+    public Result<SystemConfigDto> getWebSitInformation(){
         SystemConfig config = systemConfigService.getSystemConfig(Website.KEY, Website.DEFAULT_CONFIG);
         return new Result().ok(ConvertUtils.sourceToTarget(config,SystemConfigDto.class));
     }
@@ -124,7 +124,7 @@ public class SystemConfigController extends AbstractController<SystemConfigServi
 
     @GetMapping("/config/login/thirdparty")
     @Operation(summary = "获取网站第三方登录信息")
-    public Result getThirdPartyLogin(){
+    public Result<SystemConfigDto> getThirdPartyLogin(){
         SystemConfig config = systemConfigService.getSystemConfig(ThirdPartyLogin.KEY, ThirdPartyLogin.DEFAULT_CONFIG);
         return new Result().ok(ConvertUtils.sourceToTarget(config,SystemConfigDto.class));
     }
@@ -138,7 +138,7 @@ public class SystemConfigController extends AbstractController<SystemConfigServi
 
     @GetMapping("/config/component")
     @Operation(summary = "获取网站功能模块显示信息")
-    public Result getModuleShow(){
+    public Result<SystemConfigDto> getModuleShow(){
         SystemConfig config = systemConfigService.getSystemConfig(Component.KEY, Component.DEFAULT_CONFIG);
         return new Result().ok(ConvertUtils.sourceToTarget(config,SystemConfigDto.class));
     }
@@ -152,14 +152,14 @@ public class SystemConfigController extends AbstractController<SystemConfigServi
 
     @GetMapping("/config/privacy")
     @Operation(summary = "获取网站隐私设置信息")
-    public Result getPrivacySet(){
+    public Result<SystemConfigDto> getPrivacySet(){
         SystemConfig config = systemConfigService.getSystemConfig(PrivacyAndSecurity.KEY, PrivacyAndSecurity.DEFAULT_CONFIG);
         return new Result().ok(ConvertUtils.sourceToTarget(config,SystemConfigDto.class));
     }
 
     @GetMapping("/about")
     @Operation(summary = "用户获取作者和网站介绍")
-    public Result getAboutByUser(){
+    public Result<SystemConfigDto> getAboutByUser(){
         Object config = systemConfigService.getJsonObjectOfConfig(About.KEY, About.DEFAULT_CONFIG);
         // 添加访客记录
         if(ObjectUtils.isNotNull(config)){
@@ -170,7 +170,7 @@ public class SystemConfigController extends AbstractController<SystemConfigServi
 
     @GetMapping("/config/about")
     @Operation(summary = "获取作者和网站介绍")
-    public Result getAbout(){
+    public Result<SystemConfigDto> getAbout(){
         SystemConfig config = systemConfigService.getSystemConfig(About.KEY, About.DEFAULT_CONFIG);
         return new Result().ok(ConvertUtils.sourceToTarget(config,SystemConfigDto.class));
     }
@@ -184,7 +184,7 @@ public class SystemConfigController extends AbstractController<SystemConfigServi
 //    }
     @GetMapping("/config/avatar")
     @Operation(summary = "获取网站头像配置")
-    public Result getAvatar(){
+    public Result<SystemConfigDto> getAvatar(){
         SystemConfig config = systemConfigService.getSystemConfig(Avatar.KEY, Avatar.DEFAULT_CONFIG);
         return new Result().ok(ConvertUtils.sourceToTarget(config,SystemConfigDto.class));
     }
@@ -198,14 +198,14 @@ public class SystemConfigController extends AbstractController<SystemConfigServi
 
     @GetMapping("/config/reward")
     @Operation(summary = "获取网站打赏配置")
-    public Result getReward(){
+    public Result<SystemConfigDto> getReward(){
         SystemConfig config = systemConfigService.getSystemConfig(Reward.KEY, Reward.DEFAULT_CONFIG);
         return new Result().ok(ConvertUtils.sourceToTarget(config,SystemConfigDto.class));
     }
 
     @GetMapping("/config/notice")
     @Operation(summary = "获取网站通知设置配置")
-    public Result getNotice(){
+    public Result<SystemConfigDto> getNotice(){
         SystemConfigDto systemConfigDto=systemConfigService.getNoticeConfig();
         return new Result().ok(systemConfigDto);
     }

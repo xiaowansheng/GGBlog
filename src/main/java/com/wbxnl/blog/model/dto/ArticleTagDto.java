@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 //import io.swagger.annotations.ApiModel;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Builder;
@@ -28,7 +29,7 @@ import lombok.Data;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-//@ApiModel(value = "ArticleTagDto对象", description = "文章对应标签")
+@Schema(name = "ArticleTagDto",title = "ArticleTagDto",description = "响应的文章标签信息")
 public class ArticleTagDto implements Serializable {
 
     private static final long serialVersionUID = 1L;

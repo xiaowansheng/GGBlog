@@ -37,7 +37,7 @@ public class SystemResourceController extends AbstractController<SystemResourceS
     private SystemResourceService systemResourceService;
     @GetMapping("/tree")
     @Operation(summary = "获取接口资源树形结构数据")
-    public Result getMenuTree(){
+    public Result<List<SystemResourceDto>> getMenuTree(){
         List<SystemResourceDto> tree= systemResourceService.getResourceTree();
         return new Result<List<SystemResourceDto>>().ok(tree);
     }

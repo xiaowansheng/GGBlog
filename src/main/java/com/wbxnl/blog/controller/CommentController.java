@@ -51,14 +51,14 @@ public class CommentController extends AbstractController<CommentService, Commen
 
     @GetMapping("/review/page")
     @Operation(summary = "获取需要审核的评论列表")
-    public Result getReview(@ParameterObject PageParams pageParams, @ParameterObject CommentParams commentParams) {
+    public Result<PageData<CommentDto>> getReview(@ParameterObject PageParams pageParams, @ParameterObject CommentParams commentParams) {
         PageData<CommentDto> review = commentService.getReviews(pageParams, commentParams);
         return new Result().ok(review);
     }
 
     @GetMapping("/user/type")
     @Operation(summary = "获取用户评论类型列表")
-    public Result getUserCommentType() {
+    public Result<List<NameLabelDto>> getUserCommentType() {
         List<NameLabelDto> list = Arrays.stream(UserTypeEums.values())
                 .map(topicTypeEums -> new NameLabelDto(topicTypeEums.getName(), topicTypeEums.getLabel()))
                 .collect(Collectors.toList());
@@ -67,7 +67,7 @@ public class CommentController extends AbstractController<CommentService, Commen
 
     @GetMapping("/topic/type")
     @Operation(summary = "获取话题类型列表")
-    public Result getTopic() {
+    public Result<List<NameLabelDto>> getTopic() {
         List<NameLabelDto> list = Arrays.stream(TopicTypeEums.values())
                 .map(topicTypeEums -> new NameLabelDto(topicTypeEums.getName(), topicTypeEums.getLabel()))
                 .collect(Collectors.toList());
@@ -76,7 +76,7 @@ public class CommentController extends AbstractController<CommentService, Commen
 
     @GetMapping("/info/count")
     @Operation(summary = "用户获取评论数")
-    public Result getCountByUser(@Parameter(description = "话题类型") @NotBlank(message = "话题类型不能为空") @TopicType @RequestParam(value = "topicType", required = true) String topicType,
+    public Result<Long> getCountByUser(@Parameter(description = "话题类型") @NotBlank(message = "话题类型不能为空") @TopicType @RequestParam(value = "topicType", required = true) String topicType,
                                  @Parameter(description = "话题编号") @RequestParam(value = "topicId", required = false) Integer topicId) {
         Long count = commentService.getCountByUser(topicType, topicId);
         return new Result().ok(count);
@@ -84,7 +84,7 @@ public class CommentController extends AbstractController<CommentService, Commen
 
     @GetMapping("/info/page")
     @Operation(summary = "用户分页获取评论列表", description = "获取的评论列表树形结构")
-    public Result getPageByUser(@ParameterObject PageParams params,
+    public Result<PageData<CommentDto>> getPageByUser(@ParameterObject PageParams params,
                                 @Parameter(description = "话题类型") @NotBlank(message = "话题类型不能为空") @TopicType @RequestParam(value = "topicType", required = true) String topicType,
                                 @Parameter(description = "话题编号") @RequestParam(value = "topicId", required = false) Integer topicId) {
         CommentParams commentParams = new CommentParams();
@@ -96,7 +96,7 @@ public class CommentController extends AbstractController<CommentService, Commen
 
     @GetMapping("/page")
     @Operation(summary = "分页查询评论信息")
-    public Result getPage(@ParameterObject PageParams params, @ParameterObject CommentParams commentParams) {
+    public Result<PageData<CommentDto>> getPage(@ParameterObject PageParams params, @ParameterObject CommentParams commentParams) {
         PageData<CommentDto> pageData = commentService.getPage(params, commentParams);
         return new Result().ok(pageData);
     }
@@ -106,7 +106,7 @@ public class CommentController extends AbstractController<CommentService, Commen
     @PostMapping("")
     @Operation(summary = "用户添加评论信息")
     @Log(type = OperationType.ADD, desc = "添加数据")
-    public Result save(@Validated(Add.class) @RequestBody CommentVo vo) {
+    public Result<CommentDto> save(@Validated(Add.class) @RequestBody CommentVo vo) {
         CommentDto commentDto = commentService.saveVoByUser(vo);
         return new Result().ok(commentDto);
     }

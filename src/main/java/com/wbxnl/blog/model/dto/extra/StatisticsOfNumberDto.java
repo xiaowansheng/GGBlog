@@ -7,13 +7,14 @@ import lombok.NoArgsConstructor;
 
 /**
  * 主页展示的博客数据统计
+ *
  * @Author xiaowansheng
  * @Date 2023/8/13 0:13
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(title = "StatisticsOfNumberDto",description = "文章、分类、标签数量统计")
+@Schema(name = "StatisticsOfNumberDto", title = "StatisticsOfNumberDto", description = "文章、分类、标签数量统计")
 public class StatisticsOfNumberDto {
     @Schema(title = "文章数量")
     private Long article;

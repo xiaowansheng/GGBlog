@@ -12,6 +12,7 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 //import io.swagger.annotations.ApiModel;
 //import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -29,7 +30,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-//@ApiModel(value = "AlbumDto对象", description = "相册")
+@Schema(name = "AlbumDto",title = "AlbumDto",description = "响应的相册信息")
 public class AlbumDto implements Serializable {
 
 

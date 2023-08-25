@@ -71,11 +71,10 @@ public class WebSecurityConfig {
         //配置登录和注销路径
         httpSecurity
                 // 跨站保护保护
-//                .csrf(httpSecurityCsrfConfigurer -> {
-                // 关闭
-//                    httpSecurityCsrfConfigurer.disable();
-//                })
-                .csrf(Customizer.withDefaults())
+                .csrf(httpSecurityCsrfConfigurer -> {
+                    httpSecurityCsrfConfigurer.disable();
+                })
+//                .csrf(Customizer.withDefaults())
                 // 跨域资源共享
                 .cors(Customizer.withDefaults())
                 .formLogin(new Customizer<FormLoginConfigurer<HttpSecurity>>() {
@@ -91,10 +90,6 @@ public class WebSecurityConfig {
                             .requestMatchers(HttpMethod.OPTIONS).permitAll()
                             .requestMatchers("/**/login").anonymous()
                             .requestMatchers("/**/logout").authenticated()
-                            // 无效
-                            .requestMatchers("/**/document").permitAll()
-                            .requestMatchers("/**/swagger-ui/**").permitAll()
-                            .requestMatchers("/error").permitAll()
                             .anyRequest().permitAll();
                 })
                 .exceptionHandling(httpSecurityExceptionHandlingConfigurer -> {

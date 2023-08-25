@@ -2,6 +2,7 @@ package com.wbxnl.blog.model.dto;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,6 +22,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
+@Schema(name = "LoginLogDto",title = "LoginLogDto",description = "响应的登录日志信息")
 public class LoginLogDto implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -50,7 +50,7 @@ public class FriendController extends AbstractController<FriendService, Friend, 
 
     @GetMapping("/user/page")
     @Operation(summary = "用户分页查询友链数据")
-    public Result getPageByUser(@ParameterObject PageParams pageParams){
+    public Result<PageData<FriendDto>> getPageByUser(@ParameterObject PageParams pageParams){
         PageData<FriendDto> pageData = friendService.getPageByUser(pageParams,new CommentParams());
         // 添加访客记录
         if(pageParams.getPage()==1){
@@ -61,7 +61,7 @@ public class FriendController extends AbstractController<FriendService, Friend, 
 
     @GetMapping("/page")
     @Operation(summary = "分页查询友链数据")
-    public Result getPage(@ParameterObject PageParams pageParams,@ParameterObject FriendParams friendParams){
+    public Result<PageData<FriendDto>> getPage(@ParameterObject PageParams pageParams,@ParameterObject FriendParams friendParams){
         PageData<FriendDto> pageData = friendService.getPage(pageParams,friendParams);
         return new Result().ok(pageData);
     }

@@ -9,6 +9,7 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 //import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import lombok.experimental.Accessors;
 //import io.swagger.annotations.ApiModelProperty;
@@ -27,7 +28,7 @@ import lombok.Data;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-//@ApiModel(value = "LogOperationDto对象", description = "操作日志")
+@Schema(name = "LogOperationDto",title = "LogOperationDto",description = "响应的操作日志信息")
 public class LogOperationDto implements Serializable {
 
     private static final long serialVersionUID = 1L;

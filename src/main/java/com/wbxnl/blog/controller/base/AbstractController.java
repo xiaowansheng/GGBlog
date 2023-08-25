@@ -46,7 +46,7 @@ public abstract class AbstractController<S extends BaseService<E,T,V>,E,T, V> {
 
     @GetMapping("/{id}")
     @Operation(summary = "根据id查询数据")
-    public Result get(@PathVariable("id")Integer id){
+    public Result<T> get(@PathVariable("id")Integer id){
         T dto = service.getDto(id);
         return new Result<T>().ok(dto);
     }
@@ -54,49 +54,49 @@ public abstract class AbstractController<S extends BaseService<E,T,V>,E,T, V> {
     @PostMapping("")
     @Log(type = OperationType.ADD,desc ="添加数据")
     @Operation(summary = "保存数据")
-    public Result save(@Validated(Add.class) @RequestBody V vo) throws IllegalAccessException {
+    public Result<T> save(@Validated(Add.class) @RequestBody V vo) throws IllegalAccessException {
         service.saveVo(vo);
-        return new Result().ok("保存成功！");
+        return new Result().setMessage("保存成功！");
     }
 
     @PostMapping("/batch")
     @Log(type = OperationType.ADD_PATCH,desc ="批量添加数据")
     @Operation(summary = "批量保存数据")
-    public Result save(@Validated(Add.class) @RequestBody List<V> vos){
+    public Result<String> save(@Validated(Add.class) @RequestBody List<V> vos){
         service.saveVoBatch(vos);
-        return new Result().ok("批量保存成功！");
+        return new Result().setMessage("批量保存成功！");
     }
     @PutMapping("")
     @Log(type = OperationType.UPDATE,desc ="修改数据")
     @Operation(summary = "修改数据")
-    public Result update(@Validated(Update.class) @RequestBody V vo) throws IllegalAccessException {
+    public Result<String> update(@Validated(Update.class) @RequestBody V vo) throws IllegalAccessException {
         service.update(vo);
-        return new Result().ok("修改成功！");
+        return new Result().setMessage("修改成功！");
     }
 
     @PutMapping("/batch")
     @Log(type = OperationType.UPDATE_PATCH,desc ="批量修改数据")
     @Operation(summary = "批量修改数据")
-    public Result update(@Validated(Update.class) @RequestBody List<V> vos){
+    public Result<String> update(@Validated(Update.class) @RequestBody List<V> vos){
         service.updateBatch(vos);
-        return new Result().ok("修改成功！");
+        return new Result().setMessage("修改成功！");
     }
     @DeleteMapping("/{id}")
     @Log(type = OperationType.DELETE,desc ="删除数据")
     @Operation(summary = "根据id删除对应数据")
     //@ApiImplicitParam(name = "id", value = "对象id", paramType = "delete", required = true, dataType="int")
-    public Result delete(@PathVariable("id") Integer id){
+    public Result<String> delete(@PathVariable("id") Integer id){
         service.deleteById(id);
-        return new Result().ok("删除成功！");
+        return new Result().setMessage("删除成功！");
     }
 
     @DeleteMapping("/batch")
     @Log(type = OperationType.DELETE_PATCH,desc ="批量删除数据")
     @Operation(summary = "根据id批量删除对应数据")
     //@ApiImplicitParam(name ="ids", value = "对象的id数组", paramType = "delete", required = true, dataType="int")
-    public Result delete(@RequestBody List<Integer> ids){
+    public Result<String> delete(@RequestBody List<Integer> ids){
         log.info("删除的id集合："+Arrays.toString(ids.toArray()));
         service.deleteBatchByIds(ids);
-        return new Result().ok("批量删除成功！");
+        return new Result().setMessage("批量删除成功！");
     }
 }

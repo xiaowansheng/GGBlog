@@ -52,6 +52,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             //检测token有效性
             if (!JwtUtil2.checkToken(token)) {
 //                throw new BlogException(OperationStateCode.TOKEN_EXPIRE);
+                log.error("Token:{}",token);
                 throw new AccessDeniedException("Token已过期！");
             } else {
                 String username = null;

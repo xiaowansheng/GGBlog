@@ -53,11 +53,11 @@ public class Result<T> implements Serializable {
         return this;
     }
 
-    public Result<T> ok(String message) {
-//        this.setCode();
-        this.setMessage(message);
-        return this;
-    }
+//    public Result<T> ok(String message) {
+////        this.setCode();
+//        this.setMessage(message);
+//        return this;
+//    }
 
     public Result<T> ok(String message, T data) {
         this.setMessage(message);

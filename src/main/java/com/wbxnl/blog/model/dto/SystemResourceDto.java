@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 //import io.swagger.annotations.ApiModel;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -33,7 +34,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-//@ApiModel(value = "SystemResourceDto对象", description = "资源菜单")
+@Schema(name = "SystemResourceDto",title = "SystemResourceDto",description = "响应的资源信息")
 public class SystemResourceDto implements Serializable {
 
     private static final long serialVersionUID = 1L;

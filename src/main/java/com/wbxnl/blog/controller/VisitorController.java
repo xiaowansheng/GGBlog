@@ -35,7 +35,7 @@ public class VisitorController extends AbstractController<VisitorService, Visito
 
     @GetMapping("/page")
     @Operation(summary = "分页获取游客访问信息列表")
-    public Result getPage(@ParameterObject PageParams pageParams, @ParameterObject VisitorParams visitorParams){
+    public Result<PageData<VisitorDto>> getPage(@ParameterObject PageParams pageParams, @ParameterObject VisitorParams visitorParams){
         PageData<VisitorDto> pageData = visitorService.getPage(pageParams, visitorParams);
         return new Result().ok(pageData);
     }

@@ -38,7 +38,7 @@ public class SystemMenuController extends AbstractController<SystemMenuService, 
 
     @GetMapping("/tree")
     @Operation(summary = "获取菜单树形结构数据")
-    public Result getMenuTree(){
+    public Result<List<SystemMenuDto>> getMenuTree(){
         List<SystemMenuDto> tree=systemMenuService.getMenuTree();
         return new Result<List<SystemMenuDto>>().ok(tree);
     }

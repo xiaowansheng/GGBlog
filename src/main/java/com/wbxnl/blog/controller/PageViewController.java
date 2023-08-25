@@ -42,7 +42,7 @@ public class PageViewController extends AbstractController<PageViewService, Page
 
     @GetMapping("/type/list")
     @Operation(summary = "获取所有的访问的视图类型")
-    public Result getViewTypes(){
+    public Result<List<NameLabelDto>> getViewTypes(){
         List<NameLabelDto> list = Arrays.stream(ViewTypeEums.values())
                 .map(viewTypeEums -> new NameLabelDto(viewTypeEums.getName(), viewTypeEums.getLabel()))
                 .collect(Collectors.toList());
@@ -51,7 +51,7 @@ public class PageViewController extends AbstractController<PageViewService, Page
 
     @GetMapping("/page")
     @Operation(summary = "分页获取访问量数据")
-    public Result getPage(@ParameterObject PageParams pageParams, @ParameterObject PageViewParams pageViewParams) {
+    public Result< PageData<PageViewDto>> getPage(@ParameterObject PageParams pageParams, @ParameterObject PageViewParams pageViewParams) {
         PageData<PageViewDto> pageData = pageViewService.getPage(pageParams, pageViewParams);
         return new Result().ok(pageData);
     }

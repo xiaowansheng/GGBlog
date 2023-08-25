@@ -1,5 +1,6 @@
 package com.wbxnl.blog.model.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Schema(name = "LoginDataDto",title = "LoginDataDto",description = "响应的登录数据信息")
 public class LoginDataDto {
     /**
      * 用户名

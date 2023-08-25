@@ -48,38 +48,32 @@ public class ArticleController extends AbstractController<ArticleService, Articl
 
     @Autowired
     private ArticleService articleService;
-    @Autowired
-    private CategoryService categoryService;
-    @Autowired
-    private TagService tagService;
-    @Autowired
-    private TalkService talkService;
 
 
     @GetMapping("/detail/{id}")
     @Operation(summary = "游客查询文章详细数据")
-    public Result getDetailByUser(@PathVariable Integer id){
+    public Result<ArticleDto> getDetailByUser(@PathVariable Integer id){
         ArticleDto articleDtoByUser = articleService.getArticleDtoByUser(id);
         return new Result().ok(articleDtoByUser);
     }
 
     @GetMapping("/user/archive")
     @Operation(summary = "游客查询文章归档信息")
-    public Result getArchiveByUser(@ParameterObject PageParams pageParams){
+    public Result<PageData<ArticleDto>> getArchiveByUser(@ParameterObject PageParams pageParams){
         PageData<ArticleDto> archive = articleService.getArchiveByUser(pageParams);
         return new Result().ok(archive);
     }
 
     @GetMapping("/user/statistics/number")
     @Operation(summary = "用户查询文章、分类、标签等统计信息")
-    public Result getStatisticsOfNumberByUser(){
+    public Result<StatisticsOfNumberDto> getStatisticsOfNumberByUser(){
         StatisticsOfNumberDto statistics=articleService.getStatisticsOfCountByUser();
         return new Result().ok(statistics);
     }
 
     @GetMapping("/user/page")
     @Operation(summary = "用户分页查询文章列表",description = "主页文章列表展示,分类和标签详情展示")
-    public Result getPageByUser(@ParameterObject PageParams pageParams, @ParameterObject ArticleParams articleParams){
+    public Result<PageData<ArticleDto>> getPageByUser(@ParameterObject PageParams pageParams, @ParameterObject ArticleParams articleParams){
         PageData<ArticleDto> pageData=articleService.getPageByUser(pageParams,articleParams);
         return new Result().ok(pageData);
     }
@@ -87,21 +81,21 @@ public class ArticleController extends AbstractController<ArticleService, Articl
 
     @GetMapping("/statistics/number")
     @Operation(summary = "查询文章、分类、标签数量统计")
-    public Result getStatisticsOfNumber(){
+    public Result<StatisticsOfNumberDto> getStatisticsOfNumber(){
         StatisticsOfNumberDto statistics = articleService.getStatisticsOfCount();
         return new Result().ok(statistics);
     }
 
     @GetMapping("/archive")
     @Operation(summary = "查询文章归档信息",description = "展示文章的创造路线")
-    public Result getArchive(@ParameterObject PageParams pageParams){
+    public Result<PageData<ArticleDto>> getArchive(@ParameterObject PageParams pageParams){
         PageData<ArticleDto> pageData=articleService.getArchive(pageParams);
         return new Result().ok(pageData);
     }
 
     @GetMapping("/page")
     @Operation(summary = "分页查询文章列表")
-    public Result getPage(@ParameterObject PageParams pageParams, @ParameterObject ArticleParams articleParams){
+    public Result<PageData<ArticleDto>> getPage(@ParameterObject PageParams pageParams, @ParameterObject ArticleParams articleParams){
         PageData<ArticleDto> pageData=articleService.getPage(pageParams,articleParams);
         return new Result().ok(pageData);
     }
@@ -118,7 +112,7 @@ public class ArticleController extends AbstractController<ArticleService, Articl
     @PostMapping("/draft")
     @Log(type = OperationType.ADD,desc ="保存草稿")
     @Operation(summary = "快速保存文章草稿",description = "保存草稿信息并返回文章ID")
-    public Result saveDraft(@Validated(Add.class) @RequestBody ArticleVo articleVo){
+    public Result<ArticleDto> saveDraft(@Validated(Add.class) @RequestBody ArticleVo articleVo){
         ArticleDto articleDto=articleService.saveDraft(articleVo);
         // 只返回ID
         return new Result().ok(ArticleDto.builder().id(articleDto.getId()).build());

@@ -52,7 +52,7 @@ public class GuestbookController extends AbstractController<GuestbookService, Gu
 
     @GetMapping("/user/page")
     @Operation(summary = "用户分页查询留言数据")
-    public Result getPageByUser(@ParameterObject PageParams pageParams){
+    public Result<PageData<GuestbookDto>> getPageByUser(@ParameterObject PageParams pageParams){
         PageData<GuestbookDto> page = guestbookService.getPageByUser(pageParams,new GuestbookParams());
         // 添加访客记录
         if(pageParams.getPage()==1){
@@ -63,13 +63,13 @@ public class GuestbookController extends AbstractController<GuestbookService, Gu
 
     @GetMapping("/review/page")
     @Operation(summary = "获取需要审核的留言列表")
-    public Result getReview(@ParameterObject PageParams pageParams){
+    public Result<PageData<GuestbookDto>> getReview(@ParameterObject PageParams pageParams){
         PageData<GuestbookDto> review = guestbookService.getReviews(pageParams);
         return new Result().ok(review);
     }
     @GetMapping("/page")
     @Operation(summary = "分页查询留言数据")
-    public Result getPage(@ParameterObject PageParams pageParams, @ParameterObject GuestbookParams guestbookParams){
+    public Result<PageData<GuestbookDto>> getPage(@ParameterObject PageParams pageParams, @ParameterObject GuestbookParams guestbookParams){
         PageData<GuestbookDto> page = guestbookService.getPageByUser(pageParams,guestbookParams);
         return new Result().ok(page);
     }

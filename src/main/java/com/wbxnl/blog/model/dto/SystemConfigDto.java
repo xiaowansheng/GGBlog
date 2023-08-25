@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 //import io.swagger.annotations.ApiModel;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-//@ApiModel(value = "SystemWebconfigDto对象", description = "网站配置")
+@Schema(name = "SystemConfigDto",title = "SystemConfigDto",description = "响应的网站配置信息")
 public class SystemConfigDto implements Serializable {
 
     private static final long serialVersionUID = 1L;

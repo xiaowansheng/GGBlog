@@ -11,6 +11,7 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 //import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Builder;
@@ -32,7 +33,7 @@ import lombok.Data;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-//@ApiModel(value = "RoleDto对象", description = "用户角色")
+@Schema(name = "RoleDto",title = "RoleDto",description = "响应的角色信息")
 public class RoleDto implements Serializable {
 
     private static final long serialVersionUID = 1L;

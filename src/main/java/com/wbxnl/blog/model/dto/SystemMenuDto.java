@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 //import io.swagger.annotations.ApiModel;
 //import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -34,7 +35,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-//@ApiModel(value = "SystemMenuDto对象", description = "菜单目录")
+@Schema(name = "SystemMenuDto",title = "SystemMenuDto",description = "响应的菜单信息")
 public class SystemMenuDto implements Serializable {
 
     private static final long serialVersionUID = 1L;

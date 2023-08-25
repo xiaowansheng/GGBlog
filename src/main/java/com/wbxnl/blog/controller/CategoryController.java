@@ -40,14 +40,14 @@ public class CategoryController extends AbstractController<CategoryService, Cate
 
     @GetMapping("/user/list")
     @Operation(summary = "用户获取所有的博客分类")
-    public Result getAllListByUser() {
+    public Result<List<CategoryDto>> getAllListByUser() {
         List<CategoryDto> list = categoryService.getAllDetailByUser();
         return new Result().ok(list);
     }
 
     @GetMapping("/detail/page")
     @Operation(summary = "分页获取分类的详细信息")
-    public Result getDetailPage(@ParameterObject PageParams pageParams, @ParameterObject CategoryParams categoryParams){
+    public Result<PageData<CategoryDto>> getDetailPage(@ParameterObject PageParams pageParams, @ParameterObject CategoryParams categoryParams){
         PageData<CategoryDto> pageData =categoryService.getPage(pageParams,categoryParams);
         return new Result().ok(pageData);
     }
@@ -55,7 +55,7 @@ public class CategoryController extends AbstractController<CategoryService, Cate
 
     @GetMapping("/simple/list")
     @Operation(summary = "获取所有的博客分类简略数据")
-    public Result getSimpleList() {
+    public Result<List<IDNameDto>> getSimpleList() {
         List<Category> list = categoryService.lambdaQuery().select(Category::getId, Category::getName).list();
         List<IDNameDto> nameLabelDtos = list.stream().map(category -> new IDNameDto(category.getId(), category.getName())).collect(Collectors.toList());
         return new Result().ok(nameLabelDtos);

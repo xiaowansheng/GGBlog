@@ -37,21 +37,21 @@ public class LoginLogController extends AbstractController<LoginLogService, Logi
     private LoginLogService loginLogService;
     @GetMapping("/user")
     @Operation(summary = "用户查询自己的登录日志")
-    public Result getLoginLogByUser(@ParameterObject PageParams pageParams){
+    public Result<PageData<LoginLogDto>> getLoginLogByUser(@ParameterObject PageParams pageParams){
         PageData<LoginLogDto> pageData= loginLogService.getLoginLogByUser(pageParams);
         return new Result().ok(pageData);
     }
 
     @GetMapping("/user/{id}")
     @Operation(summary = "根据用户id查询用户的登录日志")
-    public Result getLoginLog(@ParameterObject PageParams pageParams,@Parameter(description = "用户编号") @PathVariable("id")Integer userAuthId){
+    public Result<PageData<LoginLogDto>> getLoginLog(@ParameterObject PageParams pageParams,@Parameter(description = "用户编号") @PathVariable("id")Integer userAuthId){
        PageData<LoginLogDto> pageData= loginLogService.getLoginLog(pageParams,userAuthId);
        return new Result().ok(pageData);
     }
 
     @GetMapping("/page")
     @Operation(summary = "分页查询登录日志")
-    public Result getPage(@ParameterObject PageParams pageParams, @ParameterObject LoginLogParams loginLogParams){
+    public Result<PageData<LoginLogDto>> getPage(@ParameterObject PageParams pageParams, @ParameterObject LoginLogParams loginLogParams){
         PageData<LoginLogDto> pageData = loginLogService.getPage(pageParams, loginLogParams);
         return new Result().ok(pageData);
     }

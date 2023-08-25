@@ -41,7 +41,7 @@ public class RoleController extends AbstractController<RoleService, Role, RoleDt
 
     @GetMapping("/list")
     @Operation(summary = "获取全部的角色全部信息")
-    public Result getAllRoles(){
+    public Result<List<RoleDto>> getAllRoles(){
         List<Role> list = roleService.list();
         List<RoleDto> dto = ConvertUtils.sourceToTarget(list, RoleDto.class);
         return new Result().ok(dto);
@@ -49,10 +49,9 @@ public class RoleController extends AbstractController<RoleService, Role, RoleDt
 
     @GetMapping("/simple/list")
     @Operation(summary = "获取全部的角色简略信息")
-    public Result getAllRolesSimple(){
+    public Result<List<NameLabelDto>> getAllRolesSimple(){
         List<Role> roleList = roleService.lambdaQuery().select(Role::getId,Role::getName,Role::getLabel).list();
         List<NameLabelDto> nameLabelDtoList = roleList.stream().map(role -> new NameLabelDto(role.getName(), role.getLabel())).collect(Collectors.toList());
-//        List<RoleDto> dto = ConvertUtils.sourceToTarget(list, RoleDto.class);
         return new Result().ok(nameLabelDtoList);
     }
 }

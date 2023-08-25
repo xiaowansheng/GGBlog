@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.Date;
 //import io.swagger.annotations.ApiModel;
 //import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Builder;
@@ -31,7 +32,7 @@ import lombok.Data;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-//@ApiModel(value = "PageViewDto对象", description = "访问量")
+@Schema(name = "PageViewDto",title = "PageViewDto",description = "响应的访问量信息")
 public class PageViewDto implements Serializable {
 
     private static final long serialVersionUID = 1L;

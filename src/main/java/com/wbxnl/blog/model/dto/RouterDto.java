@@ -3,6 +3,7 @@ package com.wbxnl.blog.model.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 //import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +23,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-//@ApiModel(value = "RouterDto对象", description = "菜单路由")
+@Schema(name = "RouterDto",title = "RouterDto",description = "响应的路由菜单信息")
 public class RouterDto implements Serializable {
 
         private static final long serialVersionUID = 1L;

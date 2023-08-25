@@ -38,21 +38,21 @@ public class AlbumController extends AbstractController<AlbumService, Album, Alb
 
     @GetMapping("/detail/{id}")
     @Operation(summary = "用户根据id查询相册详细数据")
-    public Result getAlbumByUser(@PathVariable("id")Integer id){
+    public Result<AlbumDto> getAlbumByUser(@PathVariable("id")Integer id){
         AlbumDto albumDto=albumService.getAlbumByUser(id);
         return new Result().ok(albumDto);
     }
 
     @GetMapping("/user/page")
     @Operation(summary = "用户分页查询相册信息")
-    public Result getPageByUser(@ParameterObject PageParams pageParams){
+    public Result<PageData<AlbumDto>> getPageByUser(@ParameterObject PageParams pageParams){
         PageData<AlbumDto> pageData = albumService.getPageByUser(pageParams,new AlbumParams());
         return new Result().ok(pageData);
     }
 
     @GetMapping("/page")
     @Operation(summary = "分页查询相册信息")
-    public Result getPage(@ParameterObject PageParams pageParams,@ParameterObject AlbumParams albumParams){
+    public Result<PageData<AlbumDto>> getPage(@ParameterObject PageParams pageParams,@ParameterObject AlbumParams albumParams){
         PageData<AlbumDto> pageData = albumService.getPage(pageParams, albumParams);
         return new Result().ok(pageData);
     }

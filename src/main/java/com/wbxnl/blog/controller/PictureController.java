@@ -43,14 +43,14 @@ public class PictureController extends AbstractController<PictureService, Pictur
 
     @GetMapping("/user/page")
     @Operation(summary = "用户分页查询照片")
-    public Result getPageByUser(@ParameterObject PageParams pageParams){
+    public Result<PageData<PictureDto>> getPageByUser(@ParameterObject PageParams pageParams){
         PageData<PictureDto> pageData =pictureService.getPageByUser(pageParams,new PictureParams());
         return new Result().ok(pageData);
     }
 
     @GetMapping("/page")
     @Operation(summary = "分页查询照片数据")
-    public Result getPage(@ParameterObject PageParams pageParams, @ParameterObject PictureParams pictureParams){
+    public Result<PageData<PictureDto>> getPage(@ParameterObject PageParams pageParams, @ParameterObject PictureParams pictureParams){
         PageData<PictureDto> pageData =pictureService.getPage(pageParams,pictureParams);
         return new Result().ok(pageData);
     }

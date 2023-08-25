@@ -31,32 +31,31 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 @RequestMapping("/tag")
-@io.swagger.v3.oas.annotations.tags.Tag(name = "TagController",description = "文章标签模块")
+@io.swagger.v3.oas.annotations.tags.Tag(name = "TagController", description = "文章标签模块")
 public class TagController extends AbstractController<TagService, Tag, TagDto, TagVo> {
     @Autowired
     private TagService tagService;
 
     @GetMapping("/user/list")
     @Operation(summary = "用户获取所有的博客标签详细信息")
-    public Result getAllDetailByUser() {
+    public Result<List<TagDto>> getAllDetailByUser() {
         List<TagDto> tagDtos = tagService.getAllDetailByUser();
         return new Result().ok(tagDtos);
     }
 
     @GetMapping("/page")
     @Operation(summary = "获取所有的博客标签详细信息")
-    public Result getDetailPage(@ParameterObject PageParams pageParams, @ParameterObject TagParams tagParams) {
-        PageData<TagDto> pageData = tagService.getPage(pageParams,tagParams);
+    public Result<PageData<TagDto>> getDetailPage(@ParameterObject PageParams pageParams, @ParameterObject TagParams tagParams) {
+        PageData<TagDto> pageData = tagService.getPage(pageParams, tagParams);
         return new Result().ok(pageData);
     }
 
 
     @GetMapping("/simple/list")
     @Operation(summary = "获取所有的标签简略信息")
-    public Result getSimpleList(){
+    public Result<List<IDNameDto>> getSimpleList() {
         List<Tag> tags = tagService.lambdaQuery().select(Tag::getId, Tag::getName).list();
         List<IDNameDto> nameDtos = tags.stream().map(tag -> new IDNameDto(tag.getId(), tag.getName())).collect(Collectors.toList());
-
         return new Result().ok(nameDtos);
     }
 

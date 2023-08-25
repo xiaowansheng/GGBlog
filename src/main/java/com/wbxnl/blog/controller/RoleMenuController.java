@@ -40,7 +40,7 @@ public class RoleMenuController extends AbstractController<RoleMenuService, Role
 
     @GetMapping("/list/{roleId}")
     @Operation(summary = "根据角色编号获取菜单权限信息")
-    public Result getMenuOfRole(@Parameter(description = "角色编号") @PathVariable("roleId") Integer roleId) {
+    public Result<List<RoleMenuDto>> getMenuOfRole(@Parameter(description = "角色编号") @PathVariable("roleId") Integer roleId) {
 //        List<RoleMenuDto> list =roleMenuService.getRoleMenus(roleId);
         List<RoleMenu> list = roleMenuService.lambdaQuery().eq(RoleMenu::getRoleId, roleId).list();
         List<RoleMenuDto> roleMenuDtos = ConvertUtils.sourceToTarget(list, RoleMenuDto.class);
@@ -49,7 +49,7 @@ public class RoleMenuController extends AbstractController<RoleMenuService, Role
 
     @GetMapping("/routes")
     @Operation(summary = "根据当前登录用户获取角色，根据角色查询路由菜单权限")
-    public Result getRoutes(){
+    public Result<List<RoleMenuDto>> getRoutes(){
         List<RouterDto> routers = roleMenuService.getRoutes();
         return new Result().ok(routers);
     }

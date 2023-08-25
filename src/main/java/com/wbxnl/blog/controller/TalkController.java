@@ -51,22 +51,22 @@ public class TalkController extends AbstractController<TalkService, Talk, TalkDt
 
     @GetMapping("/detail/{id}")
     @Operation(summary = "用户根据id查询说说信息")
-    public Result getTalkByUser(@PathVariable("id") Integer id) {
+    public Result<TalkDto> getTalkByUser(@PathVariable("id") Integer id) {
         TalkDto talkDto = talkService.getTalkByUser(id);
-        return new Result<>().ok(talkDto);
+        return new Result().ok(talkDto);
     }
 
     @GetMapping("/user/page")
     @Operation(summary = "用户分页查询说说列表")
-    public Result getPageByUser(@ParameterObject PageParams pageParams) {
+    public Result<PageData<TalkDto>> getPageByUser(@ParameterObject PageParams pageParams) {
         PageData<TalkDto> list = talkService.getPageByUser(pageParams, new TalkParams());
-        return new Result<>().ok(list);
+        return new Result().ok(list);
     }
 
     @GetMapping("/page")
     @Operation(summary = "分页查询说说列表")
-    public Result getPage(@ParameterObject PageParams pageParams, @ParameterObject TalkParams talkParams) {
+    public Result<PageData<TalkDto>> getPage(@ParameterObject PageParams pageParams, @ParameterObject TalkParams talkParams) {
         PageData<TalkDto> list = talkService.getPage(pageParams, talkParams);
-        return new Result<>().ok(list);
+        return new Result().ok(list);
     }
 }

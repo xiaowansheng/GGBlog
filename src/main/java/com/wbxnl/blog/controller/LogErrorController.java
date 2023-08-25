@@ -39,7 +39,7 @@ public class LogErrorController extends AbstractController<LogErrorService, LogE
     private LogErrorService logErrorService;
 
     @GetMapping("/page")
-    public Result getPage(@ParameterObject PageParams pageParams,@ParameterObject ErrorLogParams errorLogParams){
+    public Result<PageData<LogErrorDto>> getPage(@ParameterObject PageParams pageParams,@ParameterObject ErrorLogParams errorLogParams){
         PageData<LogErrorDto> pageData = logErrorService.getPage(pageParams, errorLogParams);
         return new Result().ok(pageData);
     }

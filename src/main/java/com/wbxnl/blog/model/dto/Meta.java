@@ -1,6 +1,7 @@
 package com.wbxnl.blog.model.dto;
 
 //import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +19,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-//@ApiModel(value = "Meta对象", description = "路由配置")
+@Schema(name = "Meta",title = "Meta",description = "响应的菜单路由配置信息")
 public class Meta  implements Serializable {
 
 

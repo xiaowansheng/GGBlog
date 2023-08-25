@@ -32,7 +32,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/role/interface")
-@Tag(name ="RoleResourceController" ,description = "角色和资源关系模块")
+@Tag(name = "RoleResourceController", description = "角色和资源关系模块")
 public class RoleResourceController extends AbstractController<RoleResourceService, RoleResource, RoleResourceDto, RoleResourceVo> {
 
     @Autowired
@@ -40,7 +40,7 @@ public class RoleResourceController extends AbstractController<RoleResourceServi
 
     @GetMapping("/list/{roleId}")
     @Operation(summary = "根据角色id获取该角色拥有的资源编号集合")
-    public Result getResourceOfRole(@Parameter(description = "角色编号") @PathVariable("roleId")Integer roleId){
+    public Result<List<RoleResource>> getResourceOfRole(@Parameter(description = "角色编号") @PathVariable("roleId") Integer roleId) {
         List<RoleResource> list = roleResourceService.lambdaQuery().eq(RoleResource::getRoleId, roleId).list();
         return new Result().ok(list);
     }

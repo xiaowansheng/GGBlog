@@ -12,6 +12,7 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 //import io.swagger.annotations.ApiModel;
 //import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -32,7 +33,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-//@ApiModel(value = "TagDto对象", description = "文章标签")
+@Schema(name = "TagDto",title = "TagDto",description = "响应的标签信息")
 public class TagDto implements Serializable {
 
     private static final long serialVersionUID = 1L;

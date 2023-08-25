@@ -38,7 +38,7 @@ public class LogOperationController extends AbstractController<LogOperationServi
 
 
     @GetMapping("/page")
-    public Result getPage(@ParameterObject PageParams pageParams, @ParameterObject OperationLogParams operationLogParams){
+    public Result<PageData<LogOperationDto>> getPage(@ParameterObject PageParams pageParams, @ParameterObject OperationLogParams operationLogParams){
         PageData<LogOperationDto> pageData = logOperationService.getPage(pageParams, operationLogParams);
         return new Result().ok(pageData);
     }

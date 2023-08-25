@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 //import io.swagger.annotations.ApiModel;
 //import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Builder;
@@ -28,7 +29,7 @@ import lombok.Data;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-//@ApiModel(value = "RoleMenuDto对象", description = "角色菜单")
+@Schema(name = "RoleMenuDto",title = "RoleMenuDto",description = "响应的角色菜单信息")
 public class RoleMenuDto implements Serializable {
 
     private static final long serialVersionUID = 1L;

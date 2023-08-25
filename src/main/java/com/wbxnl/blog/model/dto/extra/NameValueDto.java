@@ -1,5 +1,6 @@
 package com.wbxnl.blog.model.dto.extra;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(name = "NameValueDto",title = "NameValueDto",description = "响应的键值对信息")
 public class NameValueDto {
     /**
      * 名称

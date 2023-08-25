@@ -42,7 +42,7 @@ public class OssServiceController {
     private String dir;
 
     @GetMapping("/oss/access")
-    public Result getOss(){
+    public Result<Map<String, String>> getOss(){
         String accessId = this.accessid; // 请填写您的AccessKeyId。
         String accessKey = this.accessKey; // 请填写您的AccessKeySecret。
         String endpoint = this.endpoint; // 请填写您的 endpoint。

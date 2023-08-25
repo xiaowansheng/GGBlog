@@ -6,6 +6,7 @@ import java.util.List;
 
 //import io.swagger.annotations.ApiModel;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -26,7 +27,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-//@ApiModel(value = "UserRoleDto对象", description = "用户账号对应角色")
+@Schema(name = "UserRoleDto",title = "UserRoleDto",description = "响应的用户角色的信息")
 public class UserRoleDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
