@@ -35,7 +35,6 @@ import org.hibernate.validator.constraints.Range;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-//@ApiModel(value = "SystemResourceVo对象", description = "资源菜单")
 @Schema(name = "SystemResourceVo",title = "系统资源信息",description = "新增或修改资源信息时提交的数据")
 public class SystemResourceVo implements Serializable {
 

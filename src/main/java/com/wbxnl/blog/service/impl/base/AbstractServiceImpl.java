@@ -143,7 +143,7 @@ public abstract class AbstractServiceImpl<D extends BaseDao<E>,E,T,V> extends Se
     public PageData<T> getPage(PageParams pageParams,QueryParams queryParams) {
         Long page = pageParams.getPage();
         Long limit = pageParams.getLimit();
-        Page<E> ePage = new Page<>((page - 1) * limit, limit);
+        Page<E> ePage = new Page<>(page, limit);
         LambdaQueryWrapper<E> wrapper = getQueryWrapper(queryParams);
         return getPageData(ePage, wrapper);
     }

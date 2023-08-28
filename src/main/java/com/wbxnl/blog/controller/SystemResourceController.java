@@ -57,7 +57,9 @@ public class SystemResourceController extends AbstractController<SystemResourceS
     @Operation(summary = "改变资源的开放状态信息")
     @Log(type = OperationType.UPDATE,desc = "修改资源的开放状态")
     public Result updateStatus(@Validated({Update.class}) @RequestBody StatusVo statusVo){
-        systemResourceService.lambdaUpdate().eq(SystemResource::getId,statusVo.getId()).set(SystemResource::getOpen,statusVo.getStatus()).update();
+        systemResourceService.lambdaUpdate()
+                .eq(SystemResource::getId,statusVo.getId())
+                .set(SystemResource::getOpen,statusVo.getStatus()).update();
         return new Result();
     }
 }
