@@ -140,7 +140,7 @@ public class LogAspect {
             } catch (Exception ex) {
             }
             Integer id = 0;
-            String name = "【匿名用户】";
+            String name = "【未知用户】";
             if (userDto != null) {
                 id = userDto.getUserAuthId();
                 name = userDto.getUsername();

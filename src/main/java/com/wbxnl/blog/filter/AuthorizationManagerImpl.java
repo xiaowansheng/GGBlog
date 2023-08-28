@@ -13,6 +13,7 @@ import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.CollectionUtils;
@@ -28,7 +29,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Component
-    public class AuthorizationManagerImpl implements AuthorizationManager<HttpServletRequest> {
+    public class AuthorizationManagerImpl implements AuthorizationManager<RequestAuthorizationContext> {
 
     /**
      * 资源角色列表
@@ -61,16 +62,58 @@ import java.util.stream.Collectors;
         resourceRoleList = null;
     }
 
-
     @Override
-    public AuthorizationDecision check(Supplier<Authentication> authentication, HttpServletRequest request) {
+    public AuthorizationDecision check(Supplier<Authentication> authentication, RequestAuthorizationContext authorizationContext) {
+        HttpServletRequest request = authorizationContext.getRequest();
         // 对所有请求的地址检测都通过
-        System.out.println("执行1.5");
         log.info("request:{},{}", request.getMethod(), request.getRequestURI());
         // TODO 关闭权限校验
         return new AuthorizationDecision(true);
-//        return check(authentication.get(), request);
+//        return myCheck(authentication, request);
     }
+
+
+    /**
+     * 把接口所需角色，和当前用户的角色 进行匹配，看用户角色是否匹配
+     * 匹配则通过
+     * 不匹配，校验失败
+     *
+     * @param authentication 使用Supplier<Authentication> 延迟Authentication查找。它不需要为每个请求查找身份验证，而是仅在授权决策需要身份验证的请求中查找身份验证
+     * @param rolesOfNeed
+     * @return
+     */
+    public AuthorizationDecision match(Supplier<Authentication> authentication, List<String> rolesOfNeed) {
+        if (CollectionUtils.isEmpty(rolesOfNeed)) {
+//            return new AuthorizationDecision(false);
+            //如果可以访问的角色列表为空，则所有角色不允许访问
+            throw new AccessDeniedException("该资源未设置访问权限，暂不允许访问！");
+        }
+        // 获取用户权限列表
+        List<String> permissionRoleList = authentication.get().getAuthorities()
+                .stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
+        //查询用户角色是否和访问资源所需的角色匹配
+        for (String item : rolesOfNeed) {
+            //匹配放行
+            if (permissionRoleList.contains(item)) {
+                return new AuthorizationDecision(true);
+            }
+        }
+        //不匹配则拒绝访问
+//        return new AuthorizationDecision(false);
+        throw new AccessDeniedException("您没有操作权限哦！");
+
+    }
+
+    @Override
+    public void verify(Supplier<Authentication> authentication, RequestAuthorizationContext authorizationContext) {
+        AuthorizationDecision decision = check(authentication, authorizationContext);
+        if (decision != null && !decision.isGranted()) {
+            throw new AccessDeniedException("没有操作权限");
+        }
+    }
+
 
     /**
      * 给用户授权接口访问权限
@@ -79,8 +122,7 @@ import java.util.stream.Collectors;
      * @param request
      * @return
      */
-    public AuthorizationDecision check(Authentication authentication, HttpServletRequest request) {
-        System.out.println("执行2");
+    public AuthorizationDecision myCheck(Supplier<Authentication> authentication, HttpServletRequest request) {
         // 修改接口角色关系后重新加载
         if (CollectionUtils.isEmpty(resourceRoleList)) {
             this.loadDataSource();
@@ -118,48 +160,4 @@ import java.util.stream.Collectors;
 //        return SecurityConfig.createList(AccessFlagConstant.NO_SET);
 //        return new AuthorizationDecision(false);
     }
-
-    /**
-     * 把接口所需角色，和当前用户的角色 进行匹配，看用户角色是否匹配
-     * 匹配则通过
-     * 不匹配，校验失败
-     *
-     * @param authentication
-     * @param rolesOfNeed
-     * @return
-     */
-    public AuthorizationDecision match(Authentication authentication, List<String> rolesOfNeed) {
-        System.out.println("执行3");
-        if (CollectionUtils.isEmpty(rolesOfNeed)) {
-//            return new AuthorizationDecision(false);
-            //如果可以访问的角色列表为空，则所有角色不允许访问
-            throw new AccessDeniedException("该资源未设置访问权限，暂不允许访问！");
-        }
-        // 获取用户权限列表
-        List<String> permissionRoleList = authentication.getAuthorities()
-                .stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList());
-        //查询用户角色是否和访问资源所需的角色匹配
-        for (String item : rolesOfNeed) {
-            //匹配放行
-            if (permissionRoleList.contains(item)) {
-                return new AuthorizationDecision(true);
-            }
-        }
-        //不匹配则拒绝访问
-//        return new AuthorizationDecision(false);
-        throw new AccessDeniedException("您没有操作权限哦！");
-
-    }
-
-    @Override
-    public void verify(Supplier<Authentication> authentication, HttpServletRequest request) {
-        System.out.println("执行1");
-        AuthorizationDecision decision = check(authentication.get(), request);
-        if (decision != null && !decision.isGranted()) {
-            throw new AccessDeniedException("没有操作权限");
-        }
-    }
-
 }

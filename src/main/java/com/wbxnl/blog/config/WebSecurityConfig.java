@@ -9,6 +9,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
+import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
@@ -61,12 +63,7 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public AuthorizationFilter authorizationFilter() {
-        return new AuthorizationFilter(authorizationManager);
-    }
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity,AuthorizationManager<RequestAuthorizationContext> authz) throws Exception {
         httpSecurity.authenticationManager(authenticationManager());
         //配置登录和注销路径
         httpSecurity
@@ -90,7 +87,7 @@ public class WebSecurityConfig {
                             .requestMatchers(HttpMethod.OPTIONS).permitAll()
                             .requestMatchers("/**/login").anonymous()
                             .requestMatchers("/**/logout").authenticated()
-                            .anyRequest().permitAll();
+                            .anyRequest().access(authz);
                 })
                 .exceptionHandling(httpSecurityExceptionHandlingConfigurer -> {
                     httpSecurityExceptionHandlingConfigurer
@@ -111,7 +108,7 @@ public class WebSecurityConfig {
         // 自动注入了
         httpSecurity.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
         // 自动注入
-        httpSecurity.addFilter(authorizationFilter());
+//        httpSecurity.addFilter(authorizationFilter());
         return httpSecurity.build();
     }
 }
