@@ -49,7 +49,7 @@ public class SystemMenuVo implements Serializable {
 
     @Schema(title = "菜单标题")
     @NotBlank(message = "菜单标签不能为空",groups = {Add.class, Update.class})
-    private String label;
+    private String title;
 
     @Schema(title = "图标")
     @NotBlank(message = "菜单图标不能为空",groups = {Add.class, Update.class})
@@ -63,7 +63,7 @@ public class SystemMenuVo implements Serializable {
     private String path;
 
     @Schema(title = "组件路径")
-    @NotBlank(message = "组件地址不能为空",groups = {Add.class, Update.class})
+//    @NotBlank(message = "组件地址不能为空",groups = {Add.class, Update.class})
     private String component;
 
     @Schema(title = "隐藏菜单（0展示1隐藏）")

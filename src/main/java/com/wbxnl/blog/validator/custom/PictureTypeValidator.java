@@ -9,16 +9,16 @@ import jakarta.validation.ConstraintValidatorContext;
  * @Author xiaowansheng
  * @Date 2023/8/19 20:39
  */
-public class PictureTypeValidator implements ConstraintValidator<TopicType, String> {
+public class PictureTypeValidator implements ConstraintValidator<PictureType, String> {
 
     @Override
-    public void initialize(TopicType constraintAnnotation) {
+    public void initialize(PictureType constraintAnnotation) {
         // Initialization, if needed
     }
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        if (value == null) {
+        if (value == null||"".equals(value)) {
             return true;
         }
         // Implement your custom validation logic here

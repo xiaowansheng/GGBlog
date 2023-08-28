@@ -29,4 +29,10 @@ public interface SystemResourceService extends BaseService< SystemResource, Syst
      * @return
      */
     List<ResourceRoleDto> getResourceRoles();
+
+    /**
+     * 获取资源树形简单结构
+     * @return
+     */
+    List<SystemResourceDto> getResourceSimpleTree();
 }

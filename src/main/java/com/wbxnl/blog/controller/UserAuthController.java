@@ -8,6 +8,7 @@ import com.wbxnl.blog.controller.base.AbstractController;
 import com.wbxnl.blog.enums.LoginTypeEmus;
 import com.wbxnl.blog.enums.OperationStateCode;
 import com.wbxnl.blog.exception.BlogException;
+import com.wbxnl.blog.model.dto.LoginDataDto;
 import com.wbxnl.blog.model.dto.extra.NameLabelDto;
 import com.wbxnl.blog.model.dto.UserAuthDto;
 import com.wbxnl.blog.model.dto.UserDetailsDto;
@@ -72,14 +73,14 @@ public class UserAuthController extends AbstractController<UserAuthService, User
 
     @PostMapping("/login")
     @Operation(summary = "用户登录")
-    @Log(type = OperationType.LOGIN, desc = "用户登录系统")
-    public Result login(@RequestBody @Validated LoginVo loginVo) {
+//    @Log(type = OperationType.LOGIN, desc = "用户登录系统")
+    public Result<LoginDataDto> login(@RequestBody @Validated LoginVo loginVo) {
         return userAuthService.login(loginVo);
     }
 
     @GetMapping("/logout")
     @Operation(summary = "用户注销")
-    @Log(type = OperationType.LOGOUT, desc = "用户退出登录状态")
+//    @Log(type = OperationType.LOGOUT, desc = "用户退出登录状态")
     public Result logout() {
         return userAuthService.logout();
     }

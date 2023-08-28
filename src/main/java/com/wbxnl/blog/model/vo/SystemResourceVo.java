@@ -51,7 +51,7 @@ public class SystemResourceVo implements Serializable {
     private String name;
 
     @Schema(title = "请求方法")
-    @NotBlank(message = "请求方法不能为空",groups = {Add.class, Update.class})
+//    @NotBlank(message = "请求方法不能为空",groups = {Add.class, Update.class})
     @RequestMethod(groups = {Add.class, Update.class})
     private String requestMethod;
 

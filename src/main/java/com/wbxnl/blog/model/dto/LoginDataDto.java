@@ -25,7 +25,7 @@ public class LoginDataDto {
     /**
      * token
      */
-    private String token;
+    private String accessToken;
 
     /**
      * token过期时间

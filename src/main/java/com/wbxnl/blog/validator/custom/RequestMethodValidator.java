@@ -8,17 +8,17 @@ import jakarta.validation.ConstraintValidatorContext;
  * @Author xiaowansheng
  * @Date 2023/8/19 20:39
  */
-public class RequestMethodValidator implements ConstraintValidator<TopicType, String> {
+public class RequestMethodValidator implements ConstraintValidator<RequestMethod, String> {
 
     @Override
-    public void initialize(TopicType constraintAnnotation) {
+    public void initialize(RequestMethod constraintAnnotation) {
         // Initialization, if needed
     }
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        if (value == null) {
-            return false; // Allow null values, if needed
+        if (value == null||"".equals(value)) {
+            return true; // Allow null values, if needed
         }
         if("GET".equalsIgnoreCase(value)){
             return true;

@@ -17,7 +17,7 @@ public class TopicTypeValidator implements ConstraintValidator<TopicType, String
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        if (value == null) {
+        if (value == null||"".equals(value)) {
             return false; // Allow null values, if needed
         }
         // Implement your custom validation logic here

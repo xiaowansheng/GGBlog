@@ -37,8 +37,8 @@ public class SystemMenu implements Serializable {
     private String name;
 
     // // @ApiModelProperty("菜单标题")
-    @TableField("label")
-    private String label;
+    @TableField("title")
+    private String title;
 
     // // @ApiModelProperty("图标")
     @TableField("icon")

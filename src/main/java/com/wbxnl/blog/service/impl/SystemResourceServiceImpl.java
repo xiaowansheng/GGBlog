@@ -52,9 +52,20 @@ public class SystemResourceServiceImpl extends AbstractServiceImpl<SystemResourc
     }
 
     @Override
+    public List<SystemResourceDto> getResourceSimpleTree() {
+        List<SystemResource> resourceList = lambdaQuery()
+                .select(SystemResource::getId,SystemResource::getName,SystemResource::getParentId)
+                .list();
+        List<SystemResourceDto> resourceDtoList = ConvertUtils.sourceToTarget(resourceList, SystemResourceDto.class);
+        List<SystemResourceDto> menuTree= getResourceTree(0,resourceDtoList);
+        return menuTree;
+    }
+
+    @Override
     public List<ResourceRoleDto> getResourceRoles() {
         return systemResourceDao.getResourceRoles();
     }
+
 
     /**
      * 递归遍历使链表形成树形结构

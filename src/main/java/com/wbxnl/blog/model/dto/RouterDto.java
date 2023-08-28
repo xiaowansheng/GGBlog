@@ -23,78 +23,82 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-@Schema(name = "RouterDto",title = "RouterDto",description = "响应的路由菜单信息")
+@Schema(name = "RouterDto", title = "RouterDto", description = "响应的路由菜单信息")
 public class RouterDto implements Serializable {
 
-        private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-        /**
-         * 菜单名称
-         */
-        private Integer id;
-        /**
-         * 菜单名称
-         */
-        private String name;
+    /**
+     * 菜单名称
+     */
+    private Integer id;
+    /**
+     * 菜单名称
+     */
+    private String name;
 
-        /**
-         * 路由地址
-         */
-        private String path;
+    /**
+     * 路由地址
+     */
+    private String path;
 
-        /**
-         * 组件路径
-         */
-        private String component;
-
-
-        /**
-         * 路由重定向
-         */
-        private String redirect;
-
-        /**
-         * 路由配置
-         */
-        private Meta meta;
-        /**
-         * 隐藏菜单（0展示1隐藏）
-         */
-        private Integer hidden;
-
-        /**
-         * 排序
-         */
-        private Integer sort;
-
-        /**
-         * 父类ID
-         */
-        private Integer parentId;
-
-        /**
-         * 权限标识
-         */
-        private String perms;
+    /**
+     * 组件路径
+     */
+    private String component;
 
 
-        @JsonInclude(JsonInclude.Include.NON_EMPTY)
-        private List<RouterDto> children;
+    /**
+     * 路由重定向
+     */
+    private String redirect;
+
+    /**
+     * 路由配置
+     */
+    private Meta meta;
+    /**
+     * 隐藏菜单（0展示1隐藏）
+     */
+    private Integer hidden;
+
+    /**
+     * 排序
+     */
+    private Integer sort;
+
+    /**
+     * 父类ID
+     */
+    private Integer parentId;
+
+    /**
+     * 权限标识
+     */
+    private String perms;
 
 
-        //重写equals和hashcode方法，用来加入Set集合去重复
-        @Override
-        public boolean equals(Object o) {
-                if (this == o) return true;
-                if (o == null || getClass() != o.getClass()) return false;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private List<RouterDto> children;
 
-                RouterDto routerDto = (RouterDto) o;
 
-                return id.equals(routerDto.id);
+    // 重写equals和hashcode方法，用来加入Set集合去重复
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
         }
 
-        @Override
-        public int hashCode() {
-                return id.hashCode();
-        }
+        RouterDto routerDto = (RouterDto) o;
+
+        return id.equals(routerDto.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }

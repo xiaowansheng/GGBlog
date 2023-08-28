@@ -18,7 +18,7 @@ public class AccessStatusValidator implements ConstraintValidator<TopicType, Str
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        if (value == null) {
+        if (value == null||"".equals(value)) {
             return true; // Allow null values, if needed
         }
         // Implement your custom validation logic here

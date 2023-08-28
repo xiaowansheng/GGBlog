@@ -44,7 +44,7 @@ public class SystemMenuDto implements Serializable {
 
     private String name;
 
-    private String label;
+    private String title;
 
     private String icon;
 

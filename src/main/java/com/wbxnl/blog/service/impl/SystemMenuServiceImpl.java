@@ -34,7 +34,18 @@ public class SystemMenuServiceImpl extends AbstractServiceImpl<SystemMenuDao, Sy
 
     @Override
     public List<SystemMenuDto> getMenuTree() {
-        List<SystemMenu> menuList = list();
+        List<SystemMenu> menuList = lambdaQuery()
+                .list();
+        List<SystemMenuDto> menuDtoList = ConvertUtils.sourceToTarget(menuList, SystemMenuDto.class);
+        List<SystemMenuDto> menuTree = getMenuTree(0, menuDtoList);
+        return menuTree;
+    }
+
+    @Override
+    public List<SystemMenuDto> getMenuSimpleTree() {
+        List<SystemMenu> menuList = lambdaQuery()
+                .select(SystemMenu::getId,SystemMenu::getName,SystemMenu::getTitle,SystemMenu::getParentId,SystemMenu::getSort)
+                .list();
         List<SystemMenuDto> menuDtoList = ConvertUtils.sourceToTarget(menuList, SystemMenuDto.class);
         List<SystemMenuDto> menuTree = getMenuTree(0, menuDtoList);
         return menuTree;
@@ -51,7 +62,8 @@ public class SystemMenuServiceImpl extends AbstractServiceImpl<SystemMenuDao, Sy
         // TODO 或许还能优化，先标记
         List<SystemMenuDto> root = new ArrayList<>();
         for (SystemMenuDto menuDto : menuDtoList) {
-            if (menuDto.getParentId() == rootIndex) {
+            Integer parentId = menuDto.getParentId();
+            if (rootIndex==parentId) {
                 root.add(menuDto);
 //                menuDtoList.remove(menuDto);
                 List<SystemMenuDto> menuTree = getMenuTree(menuDto.getId(), menuDtoList);

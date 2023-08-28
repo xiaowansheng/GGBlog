@@ -33,8 +33,6 @@ public class WebSecurityConfig {
 
     @Autowired
     private AuthenticationConfiguration authenticationConfiguration;
-    @Autowired
-    private AuthorizationManager authorizationManager;
     /**
      * @return
      */
@@ -87,6 +85,7 @@ public class WebSecurityConfig {
                             .requestMatchers(HttpMethod.OPTIONS).permitAll()
                             .requestMatchers("/**/login").anonymous()
                             .requestMatchers("/**/logout").authenticated()
+                            // 使用自定义授权
                             .anyRequest().access(authz);
                 })
                 .exceptionHandling(httpSecurityExceptionHandlingConfigurer -> {
@@ -101,14 +100,9 @@ public class WebSecurityConfig {
 //                //不通过Session获取SecurityContext
                     httpSecuritySessionManagementConfigurer.disable();
                 });
-//        ExceptionTranslationFilter exceptionTranslationFilter = new ExceptionTranslationFilter(authenticationEntryPoint);
-//        exceptionTranslationFilter.setAccessDeniedHandler(accessDeniedHandler);
-//        httpSecurity.addFilterBefore(exceptionTranslationFilter,UsernamePasswordAuthenticationFilter.class);
         //把jwtAuthenticationTokenFilter添加到SpringSecurity的过滤器链中
         // 自动注入了
         httpSecurity.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
-        // 自动注入
-//        httpSecurity.addFilter(authorizationFilter());
         return httpSecurity.build();
     }
 }

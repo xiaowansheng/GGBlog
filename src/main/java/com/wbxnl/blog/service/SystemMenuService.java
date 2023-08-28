@@ -22,4 +22,10 @@ public interface SystemMenuService extends BaseService<SystemMenu, SystemMenuDto
      * @return
      */
     List<SystemMenuDto> getMenuTree();
+
+    /**
+     * 获取菜单列表树形结构简单数据
+     * @return
+     */
+    List<SystemMenuDto> getMenuSimpleTree();
 }

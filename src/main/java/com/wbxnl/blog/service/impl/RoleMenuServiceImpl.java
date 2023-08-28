@@ -93,6 +93,7 @@ public class RoleMenuServiceImpl extends AbstractServiceImpl<RoleMenuDao, RoleMe
     @Transactional
     @Override
     public void updateBatch(List<RoleMenuVo> roleMenuVos) {
+        // TODO BUG 清空角色菜单权限时，没有可以指定的角色ID
         // 可以优化，不用每次都全部删除
         if(CollectionUtils.isEmpty(roleMenuVos)){
             return;

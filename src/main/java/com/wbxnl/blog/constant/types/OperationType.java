@@ -34,14 +34,14 @@ public interface OperationType {
      */
     String EXPORT="导出";
 
-    /**
-     * 登录操作
-     */
-    String LOGIN="登录";
-    /**
-     * 注销操作
-     */
-    String LOGOUT="注销";
+//    /**
+//     * 登录操作
+//     */
+//    String LOGIN="登录";
+//    /**
+//     * 注销操作
+//     */
+//    String LOGOUT="注销";
     /**
      * 测试操作
      */

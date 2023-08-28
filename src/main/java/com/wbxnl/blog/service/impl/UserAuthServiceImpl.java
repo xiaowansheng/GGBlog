@@ -294,7 +294,7 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
         redisUtils.setCacheObject(key, useDto, expire, TimeUnit.SECONDS);
         //返回新token
         LoginDataDto loginDataDto = new LoginDataDto();
-        loginDataDto.setToken(token);
+        loginDataDto.setAccessToken(token);
         loginDataDto.setExpire(JwtUtil2.getExpireTime(token));
         return new Result<>().ok(loginDataDto);
     }

@@ -31,7 +31,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/role/interface")
+@RequestMapping("/role/resource")
 @Tag(name = "RoleResourceController", description = "角色和资源关系模块")
 public class RoleResourceController extends AbstractController<RoleResourceService, RoleResource, RoleResourceDto, RoleResourceVo> {
 

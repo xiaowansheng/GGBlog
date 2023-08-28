@@ -2,6 +2,7 @@ package com.wbxnl.blog.service.impl.base;
 
 import com.baomidou.mybatisplus.core.conditions.AbstractLambdaWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -80,14 +81,19 @@ public abstract class AbstractServiceImpl<D extends BaseDao<E>,E,T,V> extends Se
         return entity;
     }
 
-    @Transactional
     @Override
     public void saveVoBatch(List<V> vos) {
         if(CollectionUtils.isEmpty(vos)){
             return;
         }
+
         List<E> entities = ConvertUtils.sourceToTarget(vos, currentEntityClass());
-        saveBatch(entities,entities.size());
+        // TODO 批量插入出现 org.mybatis.spring.MyBatisSystemException 异常
+
+//        saveBatch(entities,entities.size());
+        entities.forEach(e->{
+            save(e);
+        });
     }
 
     @Override
@@ -95,7 +101,6 @@ public abstract class AbstractServiceImpl<D extends BaseDao<E>,E,T,V> extends Se
         removeById(id);
     }
 
-    @Transactional
     @Override
     public void deleteBatchByIds(List<Integer> ids) {
         removeBatchByIds(ids,ids.size());

@@ -22,6 +22,7 @@ import java.io.Serializable;
 @Schema(name = "Meta",title = "Meta",description = "响应的菜单路由配置信息")
 public class Meta  implements Serializable {
 
+    private static final long serialVersionUID = 1L;
 
     /**
      * 图标
