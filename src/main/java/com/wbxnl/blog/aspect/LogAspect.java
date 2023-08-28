@@ -139,13 +139,13 @@ public class LogAspect {
                 userDto = SecurityUtils.getUserDto();
             } catch (Exception ex) {
             }
-            Integer id = 0;
+            Integer userAuthId = 0;
             String name = "【未知用户】";
             if (userDto != null) {
-                id = userDto.getUserAuthId();
+                userAuthId = userDto.getUserAuthId();
                 name = userDto.getUsername();
             }
-            logInfo.setUserAuthId(id);
+            logInfo.setUserAuthId(userAuthId);
             logInfo.setUserName(name);
             logInfo.setVersion(version); // 操作版本
             // 请求方式
@@ -215,9 +215,9 @@ public class LogAspect {
             }
             Integer userAuthId = 0;
             String name = "【游客】";
-            if (Objects.nonNull(userDto)) {
-                name = userDto.getUsername();
+            if (userDto != null) {
                 userAuthId = userDto.getUserAuthId();
+                name = userDto.getUsername();
             }
             LogError logError = LogError.builder()
 //                            .id(UUID.randomUUID().toString())
