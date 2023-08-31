@@ -7,7 +7,7 @@ import com.wbxnl.blog.model.dto.LogErrorDto;
 import com.wbxnl.blog.model.entity.LogError;
 import com.wbxnl.blog.dao.LogErrorDao;
 import com.wbxnl.blog.model.vo.params.ErrorLogParams;
-import com.wbxnl.blog.model.vo.params.QueryParams;
+import com.wbxnl.blog.model.vo.params.base.QueryParams;
 import com.wbxnl.blog.service.LogErrorService;
 import com.wbxnl.blog.service.impl.base.AbstractServiceImpl;
 import org.springframework.stereotype.Service;

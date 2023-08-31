@@ -7,7 +7,7 @@ import com.wbxnl.blog.dao.CategoryDao;
 import com.wbxnl.blog.model.vo.CategoryVo;
 import com.wbxnl.blog.model.vo.params.CategoryParams;
 import com.wbxnl.blog.model.vo.params.PageParams;
-import com.wbxnl.blog.model.vo.params.QueryParams;
+import com.wbxnl.blog.model.vo.params.base.QueryParams;
 import com.wbxnl.blog.service.CategoryService;
 import com.wbxnl.blog.service.impl.base.AbstractServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

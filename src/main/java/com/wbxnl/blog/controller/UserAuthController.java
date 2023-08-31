@@ -6,22 +6,16 @@ import com.wbxnl.blog.common.Result;
 import com.wbxnl.blog.constant.types.OperationType;
 import com.wbxnl.blog.controller.base.AbstractController;
 import com.wbxnl.blog.enums.LoginTypeEmus;
-import com.wbxnl.blog.enums.OperationStateCode;
-import com.wbxnl.blog.exception.BlogException;
 import com.wbxnl.blog.model.dto.LoginDataDto;
 import com.wbxnl.blog.model.dto.extra.NameLabelDto;
 import com.wbxnl.blog.model.dto.UserAuthDto;
-import com.wbxnl.blog.model.dto.UserDetailsDto;
 import com.wbxnl.blog.model.entity.UserAuth;
 import com.wbxnl.blog.model.vo.*;
+import com.wbxnl.blog.model.vo.extra.StatusVo;
 import com.wbxnl.blog.model.vo.params.PageParams;
 import com.wbxnl.blog.model.vo.params.UserAuthParams;
 import com.wbxnl.blog.utils.*;
-//import io.swagger.annotations.Api;
-//import io.swagger.annotations.ApiImplicitParam;
-//import io.swagger.annotations.ApiImplicitParams;
-//import io.swagger.annotations.ApiOperation;
-import com.wbxnl.blog.validator.custom.CustomEmail;
+import com.wbxnl.blog.validator.group.Update;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -31,9 +25,6 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -63,6 +54,15 @@ public class UserAuthController extends AbstractController<UserAuthService, User
     UserAuthService userAuthService;
     @Autowired
     PasswordEncoder passwordEncoder;
+
+
+    @PutMapping("/status")
+    @Operation(summary = "改变用户的状态信息")
+    @Log(type = OperationType.UPDATE,desc = "修改用户的禁用状态信息")
+    public Result updateStatus(@Validated({Update.class}) @RequestBody StatusVo statusVo){
+        userAuthService.lambdaUpdate().eq(UserAuth::getId,statusVo.getId()).set(UserAuth::getDisable,statusVo.getStatus()).update();
+        return new Result();
+    }
 
     @GetMapping("/page")
     @Operation(summary = "分页查询用户详细信息")

@@ -10,7 +10,7 @@ import com.wbxnl.blog.model.dto.TalkDto;
 import com.wbxnl.blog.model.entity.Talk;
 import com.wbxnl.blog.dao.TalkDao;
 import com.wbxnl.blog.model.vo.TalkVo;
-import com.wbxnl.blog.model.vo.params.QueryParams;
+import com.wbxnl.blog.model.vo.params.base.QueryParams;
 import com.wbxnl.blog.model.vo.params.TalkParams;
 import com.wbxnl.blog.service.CommentService;
 import com.wbxnl.blog.service.PageViewService;

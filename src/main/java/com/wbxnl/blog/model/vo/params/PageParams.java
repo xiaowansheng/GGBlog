@@ -1,13 +1,10 @@
 package com.wbxnl.blog.model.vo.params;
 
+import com.wbxnl.blog.model.vo.params.base.QueryParams;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.SchemaProperty;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PageParams  implements QueryParams{
+public class PageParams  implements QueryParams {
 
     @Parameter(description = "当前页码，从1开始")
     @NotNull(message = "页数不能为空")

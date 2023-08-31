@@ -30,7 +30,7 @@ public class SocialAccount {
     static {
         String[] split = KEY.split(":");
         DEFAULT_CONFIG.setName(split[split.length-1])
-                .setLabel("封面")
+                .setLabel("社交账号")
                 .setDescription("作者社交信息json数组字符串");
         // 默认的社交账号
         SocialAccount email = new SocialAccount().setName("Email").setLabel("邮箱").setShow(1);
@@ -55,6 +55,10 @@ public class SocialAccount {
      * 标签
      */
     private String label;
+    /**
+     * 地址
+     */
+    private String value="http://";
     /**
      * 是否显示
      */

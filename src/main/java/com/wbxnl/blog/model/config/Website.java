@@ -27,7 +27,7 @@ public class Website {
         String[] split = KEY.split(":");
         DEFAULT_CONFIG.setName(split[split.length-1])
                 .setLabel("封面")
-                .setDescription("作者社交信息json数组字符串");
+                .setDescription("网站信息json数组字符串");
         Website website =new Website()
                 .setTitle("博客")
                 .setIcon("http://")

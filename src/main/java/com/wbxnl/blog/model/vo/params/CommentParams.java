@@ -1,5 +1,6 @@
 package com.wbxnl.blog.model.vo.params;
 
+import com.wbxnl.blog.model.vo.params.base.QueryParams;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +15,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentParams implements QueryParams{
+public class CommentParams implements QueryParams {
     @Parameter(description = "评论ID")
     private Integer id;
 
@@ -30,6 +31,9 @@ public class CommentParams implements QueryParams{
     @Parameter(description = "评论内容")
     private String content;
 
+    @Parameter(description = "ip来源")
+    private String ipSource;
+
     @Parameter(description = "使用的设备")
     private String device;
 
@@ -41,6 +45,9 @@ public class CommentParams implements QueryParams{
 
     @Parameter(description = "根评论ID")
     private Integer rootId;
+
+    @Parameter(description = "被评论的id")
+    private Integer parentId;
 
     @Parameter(description = "评论类型(1登录评论2游客评论3匿名评论)")
     private String type;

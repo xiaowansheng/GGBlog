@@ -1,6 +1,6 @@
 package com.wbxnl.blog.model.vo.params;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.wbxnl.blog.model.vo.params.base.QueryParams;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +15,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ErrorLogParams implements QueryParams{
+public class ErrorLogParams implements QueryParams {
     @Parameter(description = "错误日志编号")
     private Integer id;
 

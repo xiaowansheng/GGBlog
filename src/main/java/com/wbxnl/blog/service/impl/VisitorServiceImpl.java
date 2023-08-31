@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.wbxnl.blog.model.dto.VisitorDto;
 import com.wbxnl.blog.model.entity.Visitor;
 import com.wbxnl.blog.dao.VisitorDao;
-import com.wbxnl.blog.model.vo.params.QueryParams;
+import com.wbxnl.blog.model.vo.params.base.QueryParams;
 import com.wbxnl.blog.model.vo.params.VisitorParams;
 import com.wbxnl.blog.service.VisitorService;
 import com.wbxnl.blog.service.impl.base.AbstractServiceImpl;

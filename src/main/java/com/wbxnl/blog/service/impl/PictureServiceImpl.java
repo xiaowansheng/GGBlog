@@ -3,16 +3,13 @@ package com.wbxnl.blog.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.wbxnl.blog.common.PageData;
 import com.wbxnl.blog.enums.ContentStateEums;
 import com.wbxnl.blog.model.dto.PictureDto;
 import com.wbxnl.blog.model.entity.Picture;
 import com.wbxnl.blog.dao.PictureDao;
-import com.wbxnl.blog.model.entity.Talk;
 import com.wbxnl.blog.model.vo.PictureVo;
-import com.wbxnl.blog.model.vo.params.PageParams;
 import com.wbxnl.blog.model.vo.params.PictureParams;
-import com.wbxnl.blog.model.vo.params.QueryParams;
+import com.wbxnl.blog.model.vo.params.base.QueryParams;
 import com.wbxnl.blog.service.PictureService;
 import com.wbxnl.blog.service.impl.base.AbstractServiceImpl;
 import com.wbxnl.blog.utils.ConvertUtils;
@@ -21,8 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * <p>

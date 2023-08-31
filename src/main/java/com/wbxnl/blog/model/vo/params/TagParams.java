@@ -1,5 +1,6 @@
 package com.wbxnl.blog.model.vo.params;
 
+import com.wbxnl.blog.model.vo.params.base.QueryParams;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TagParams  implements QueryParams{
+public class TagParams  implements QueryParams {
     @Parameter(description = "编号")
     private Integer id;
 

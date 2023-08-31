@@ -3,22 +3,17 @@ package com.wbxnl.blog.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.wbxnl.blog.common.PageData;
 import com.wbxnl.blog.model.dto.FriendDto;
 import com.wbxnl.blog.model.entity.Friend;
 import com.wbxnl.blog.dao.FriendDao;
 import com.wbxnl.blog.model.vo.FriendVo;
 import com.wbxnl.blog.model.vo.params.FriendParams;
-import com.wbxnl.blog.model.vo.params.PageParams;
-import com.wbxnl.blog.model.vo.params.QueryParams;
+import com.wbxnl.blog.model.vo.params.base.QueryParams;
 import com.wbxnl.blog.service.FriendService;
 import com.wbxnl.blog.service.impl.base.AbstractServiceImpl;
 import com.wbxnl.blog.utils.ConvertUtils;
 import com.wbxnl.blog.utils.SecurityUtils;
-import com.wbxnl.blog.utils.SensitiveWordUtils;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * <p>

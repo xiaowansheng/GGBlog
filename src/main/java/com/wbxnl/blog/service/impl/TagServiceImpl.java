@@ -6,7 +6,7 @@ import com.wbxnl.blog.model.entity.Tag;
 import com.wbxnl.blog.dao.TagDao;
 import com.wbxnl.blog.model.vo.TagVo;
 import com.wbxnl.blog.model.vo.params.PageParams;
-import com.wbxnl.blog.model.vo.params.QueryParams;
+import com.wbxnl.blog.model.vo.params.base.QueryParams;
 import com.wbxnl.blog.model.vo.params.TagParams;
 import com.wbxnl.blog.service.TagService;
 import com.wbxnl.blog.service.impl.base.AbstractServiceImpl;

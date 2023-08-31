@@ -23,7 +23,7 @@ public interface UserAuthDao extends BaseDao<UserAuth> {
      * 获取用户详细信息
      * @return
      */
-    List<UserAuthDto> getUserList(@Param("current")Long current, @Param("size")Long size, UserAuthParams userAuthParams);
+    List<UserAuthDto> getUserList(@Param("current")Long current, @Param("size")Long size, @Param("userAuthParams") UserAuthParams userAuthParams);
 
     /**
      * 根据条件查询数量

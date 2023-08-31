@@ -35,7 +35,8 @@ public class Component {
         Component thirdPartLogin = new Component("ThirdPartLogin", "第三方登录组件", 1);
         Component register = new Component("Register", "注册组件", 1);
         Component search = new Component("Search", "搜索组件", 1);
-        Component[] ct={login,comment,thirdPartLogin,register,search};
+        Component reward = new Component("Reward", "打赏组件", 1);
+        Component[] ct={login,comment,thirdPartLogin,register,search,reward};
         DEFAULT_CONFIG.setValue(JSON.toJSONString(ct));
     }
 

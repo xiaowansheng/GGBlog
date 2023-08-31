@@ -10,7 +10,7 @@ import com.wbxnl.blog.model.entity.LoginLog;
 import com.wbxnl.blog.dao.LoginLogDao;
 import com.wbxnl.blog.model.vo.params.LoginLogParams;
 import com.wbxnl.blog.model.vo.params.PageParams;
-import com.wbxnl.blog.model.vo.params.QueryParams;
+import com.wbxnl.blog.model.vo.params.base.QueryParams;
 import com.wbxnl.blog.service.LoginLogService;
 import com.wbxnl.blog.service.impl.base.AbstractServiceImpl;
 import com.wbxnl.blog.utils.PageUtils;

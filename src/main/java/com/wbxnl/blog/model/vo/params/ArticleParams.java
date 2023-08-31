@@ -1,5 +1,6 @@
 package com.wbxnl.blog.model.vo.params;
 
+import com.wbxnl.blog.model.vo.params.base.QueryParams;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +15,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ArticleParams implements QueryParams{
+public class ArticleParams implements QueryParams {
     private static final long serialVersionUID = 1L;
 
     @Parameter(description = "文章编号")

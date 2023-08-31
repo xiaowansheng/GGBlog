@@ -1,14 +1,10 @@
 package com.wbxnl.blog.model.vo.params;
 
-import com.wbxnl.blog.model.vo.UserInfoVo;
+import com.wbxnl.blog.model.vo.params.base.QueryParams;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 /**
  * @Author xiaowansheng
@@ -31,9 +27,27 @@ public class UserAuthParams implements QueryParams {
     @Parameter(description = "用户是否禁用")
     private Integer disable;
 
+    @Parameter(description = "注册地")
+    private String ipSource;
+
+    @Parameter(description = "设备")
+    private String device;
+
+    @Parameter(description = "浏览器")
+    private String browser;
+
     @Parameter(description = "角色类型")
     private Integer roleId;
 
-    @Parameter(description = "用户信息")
+    @Parameter(description = "昵称")
     private String nickname;
+
+    @Parameter(description = "邮箱")
+    private String email;
+
+    @Parameter(description = "QQ")
+    private String qq;
+
+    @Parameter(description = "个人网站")
+    private String website;
 }

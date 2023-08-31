@@ -1,12 +1,11 @@
 package com.wbxnl.blog.model.vo.params;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.wbxnl.blog.model.vo.params.base.QueryParams;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.springframework.data.geo.Point;
 
 import java.util.Date;
 
@@ -18,7 +17,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class LoginLogParams implements QueryParams{
+public class LoginLogParams implements QueryParams {
     @Parameter(description = "登录日志编号")
     private Integer id;
 

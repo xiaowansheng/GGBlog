@@ -1,4 +1,4 @@
-package com.wbxnl.blog.model.vo.params;
+package com.wbxnl.blog.model.vo.params.base;
 
 /**
  * 请求参数接口

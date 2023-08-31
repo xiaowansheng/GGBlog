@@ -30,7 +30,7 @@ public class LoginDataDto {
     /**
      * token过期时间
      */
-    private Long expire;
+    private Long expires;
 
     /**
      * 刷新token
@@ -39,5 +39,5 @@ public class LoginDataDto {
     /**
      * 用户角色集合
      */
-    private List<String> roleNames;
+    private List<String> roles;
 }

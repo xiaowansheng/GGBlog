@@ -3,11 +3,10 @@ package com.wbxnl.blog.service.base;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.wbxnl.blog.common.PageData;
 import com.wbxnl.blog.model.vo.params.PageParams;
-import com.wbxnl.blog.model.vo.params.QueryParams;
+import com.wbxnl.blog.model.vo.params.base.QueryParams;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author wansheng

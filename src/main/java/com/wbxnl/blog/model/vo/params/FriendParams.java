@@ -1,5 +1,6 @@
 package com.wbxnl.blog.model.vo.params;
 
+import com.wbxnl.blog.model.vo.params.base.QueryParams;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FriendParams implements QueryParams{
+public class FriendParams implements QueryParams {
 
     // // @ApiModelProperty("友情链接ID")
     private Integer id;

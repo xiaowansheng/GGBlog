@@ -5,6 +5,7 @@ import com.wbxnl.blog.common.Result;
 import com.wbxnl.blog.constant.types.OperationType;
 import com.wbxnl.blog.controller.base.AbstractController;
 import com.wbxnl.blog.model.dto.RoleDto;
+import com.wbxnl.blog.model.dto.extra.IDNameLabelDto;
 import com.wbxnl.blog.model.dto.extra.NameLabelDto;
 import com.wbxnl.blog.model.entity.Role;
 import com.wbxnl.blog.model.vo.RoleVo;
@@ -52,9 +53,9 @@ public class RoleController extends AbstractController<RoleService, Role, RoleDt
 
     @GetMapping("/simple/list")
     @Operation(summary = "获取全部的角色简略信息")
-    public Result<List<NameLabelDto>> getAllRolesSimple(){
+    public Result<List<IDNameLabelDto>> getAllRolesSimple(){
         List<Role> roleList = roleService.lambdaQuery().select(Role::getId,Role::getName,Role::getLabel).list();
-        List<NameLabelDto> nameLabelDtoList = roleList.stream().map(role -> new NameLabelDto(role.getName(), role.getLabel())).collect(Collectors.toList());
+        List<IDNameLabelDto> nameLabelDtoList = roleList.stream().map(role -> new IDNameLabelDto(role.getId(),role.getName(), role.getLabel())).collect(Collectors.toList());
         return new Result().ok(nameLabelDtoList);
     }
 

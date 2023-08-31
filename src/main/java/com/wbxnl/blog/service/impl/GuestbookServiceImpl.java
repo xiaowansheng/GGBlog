@@ -1,7 +1,6 @@
 package com.wbxnl.blog.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
@@ -13,17 +12,14 @@ import com.wbxnl.blog.dao.GuestbookDao;
 import com.wbxnl.blog.model.vo.GuestbookVo;
 import com.wbxnl.blog.model.vo.params.GuestbookParams;
 import com.wbxnl.blog.model.vo.params.PageParams;
-import com.wbxnl.blog.model.vo.params.QueryParams;
+import com.wbxnl.blog.model.vo.params.base.QueryParams;
 import com.wbxnl.blog.service.EmailService;
 import com.wbxnl.blog.service.GuestbookService;
 import com.wbxnl.blog.service.impl.base.AbstractServiceImpl;
 import com.wbxnl.blog.utils.*;
-import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Map;
 
 /**
  * <p>

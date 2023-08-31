@@ -1,16 +1,8 @@
 package com.wbxnl.blog.model.vo;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
-import com.wbxnl.blog.model.dto.UserInfoDto;
 //import io.swagger.annotations.ApiModel;
 //import io.swagger.annotations.ApiModelProperty;
 import com.wbxnl.blog.validator.group.Add;
@@ -65,7 +57,7 @@ public class UserAuthVo implements Serializable {
      */
     @Schema(title = "用户信息")
     @Valid
-    private UserInfoVo userInfo;
+    private UserInfoVo userInfoVo;
     /**
      * 添加或编辑用户时，给用户赋予角色
      * 角色id

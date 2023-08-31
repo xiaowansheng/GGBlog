@@ -14,7 +14,7 @@ import com.wbxnl.blog.model.entity.PageView;
 import com.wbxnl.blog.dao.PageViewDao;
 import com.wbxnl.blog.model.entity.Visitor;
 import com.wbxnl.blog.model.vo.params.PageViewParams;
-import com.wbxnl.blog.model.vo.params.QueryParams;
+import com.wbxnl.blog.model.vo.params.base.QueryParams;
 import com.wbxnl.blog.service.PageViewService;
 import com.wbxnl.blog.service.VisitorService;
 import com.wbxnl.blog.service.impl.base.AbstractServiceImpl;

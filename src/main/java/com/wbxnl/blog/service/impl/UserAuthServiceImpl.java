@@ -18,7 +18,7 @@ import com.wbxnl.blog.dao.UserAuthDao;
 import com.wbxnl.blog.model.dto.LoginDataDto;
 import com.wbxnl.blog.model.vo.*;
 import com.wbxnl.blog.model.vo.params.PageParams;
-import com.wbxnl.blog.model.vo.params.QueryParams;
+import com.wbxnl.blog.model.vo.params.base.QueryParams;
 import com.wbxnl.blog.model.vo.params.UserAuthParams;
 import com.wbxnl.blog.service.*;
 import com.wbxnl.blog.service.impl.base.AbstractServiceImpl;
@@ -295,7 +295,7 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
         //返回新token
         LoginDataDto loginDataDto = new LoginDataDto();
         loginDataDto.setAccessToken(token);
-        loginDataDto.setExpire(JwtUtil2.getExpireTime(token));
+        loginDataDto.setExpires(JwtUtil2.getExpireTime(token));
         return new Result<>().ok(loginDataDto);
     }
 
@@ -318,7 +318,7 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
     @Override
     @Transactional
     public UserAuth saveVo(UserAuthVo userAuthVo) {
-        UserInfoVo userInfoVo = userAuthVo.getUserInfo();
+        UserInfoVo userInfoVo = userAuthVo.getUserInfoVo();
         UserInfo userInfo = userInfoService.saveVo(userInfoVo);
         userAuthVo.setPassword(passwordEncoder.encode(userAuthVo.getPassword()));
         UserAuth userAuth = ConvertUtils.sourceToTarget(userAuthVo, UserAuth.class);
@@ -335,7 +335,7 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
             List<UserRole> roleList = userAuthVo.getRoleIds().stream()
                     .map(roleId -> new UserRole().setUserAuthId(userAuth.getId()).setRoleId(roleId))
                     .collect(Collectors.toList());
-            userRoleService.saveBatch(roleList,roleList.size());
+            userRoleService.saveVoBatch(roleList);
         }
         return userAuth;
     }
@@ -343,7 +343,7 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
     @Override
     @Transactional
     public void update(UserAuthVo userAuthVo) {
-        UserInfoVo userInfoVo = userAuthVo.getUserInfo();
+        UserInfoVo userInfoVo = userAuthVo.getUserInfoVo();
         if (ObjectUtils.isNotNull(userInfoVo) && ObjectUtils.isNotNull(userInfoVo.getId())) {
             userInfoService.update(userInfoVo);
         }
