@@ -9,16 +9,16 @@ import jakarta.validation.ConstraintValidatorContext;
  * @Author xiaowansheng
  * @Date 2023/8/19 20:39
  */
-public class AccessStatusValidator implements ConstraintValidator<TopicType, String> {
+public class AccessStatusValidator implements ConstraintValidator<AccessStatus, String> {
 
     @Override
-    public void initialize(TopicType constraintAnnotation) {
+    public void initialize(AccessStatus constraintAnnotation) {
         // Initialization, if needed
     }
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        if (value == null||"".equals(value)) {
+        if (value == null) {
             return true; // Allow null values, if needed
         }
         // Implement your custom validation logic here

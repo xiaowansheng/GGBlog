@@ -5,13 +5,14 @@ import lombok.Getter;
 
 /**
  * @author wansheng
- * @createDate 2022/9/11 21:53
+ * @Date 2022/9/11 21:53
  */
 @Getter
 @AllArgsConstructor
 public enum ContentStateEums {
     PUBLIC("public", "公开"),
     PRIVATE("private", "私密"),
+    Login("login", "登录可见"),
     COMMENT("comment", "评论可见");
     /**
      * 文章状态码

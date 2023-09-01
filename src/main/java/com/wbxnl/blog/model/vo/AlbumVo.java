@@ -48,6 +48,8 @@ public class AlbumVo implements Serializable {
     @Null(message = "相册ID必须为空",groups = Add.class)
     private Integer id;
 
+    private Integer userAuthId;
+
     @Schema(title = "相册名称")
     @NotBlank(message = "相册名称不能为空",groups = {Add.class, Update.class})
     private String name;
@@ -59,8 +61,9 @@ public class AlbumVo implements Serializable {
     @URL(message = "封面链接必须是合法的链接",groups = {Add.class, Update.class})
     private String cover;
 
-    @Schema(title = "相册状态（1公开2私密）")
+    @Schema(title = "相册状态（1公开2私密...）")
     @AccessStatus(groups = {Add.class, Update.class})
+    @NotBlank(message = "相册状态不能为空",groups = {Add.class, Update.class})
     private String status;
 
 }

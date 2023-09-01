@@ -49,7 +49,6 @@ public class ArticleController extends AbstractController<ArticleService, Articl
     @Autowired
     private ArticleService articleService;
 
-
     @GetMapping("/detail/{id}")
     @Operation(summary = "游客查询文章详细数据")
     public Result<ArticleDto> getDetailByUser(@PathVariable Integer id){

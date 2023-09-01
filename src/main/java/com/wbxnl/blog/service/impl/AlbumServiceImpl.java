@@ -17,6 +17,7 @@ import com.wbxnl.blog.service.CommentService;
 import com.wbxnl.blog.service.PageViewService;
 import com.wbxnl.blog.service.impl.base.AbstractServiceImpl;
 import com.wbxnl.blog.utils.ConvertUtils;
+import com.wbxnl.blog.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,7 +48,7 @@ public class AlbumServiceImpl extends AbstractServiceImpl<AlbumDao, Album, Album
             // 响应结果中添加访问量
             albumDto.setPageView(pageView);
             // 添加评论数量
-            Long count = commentService.getCountByUser(TopicTypeEums.Album.getName(),id);
+            Long count = commentService.getCountByUser(TopicTypeEums.Album.getName(), id);
             albumDto.setCommentCount(count);
         }
         return albumDto;
@@ -85,4 +86,9 @@ public class AlbumServiceImpl extends AbstractServiceImpl<AlbumDao, Album, Album
         return queryWrapper;
     }
 
+    @Override
+    public Album saveVo(AlbumVo vo) {
+        vo.setUserAuthId(SecurityUtils.getUserAuthId());
+        return super.saveVo(vo);
+    }
 }
