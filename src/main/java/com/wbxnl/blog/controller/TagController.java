@@ -1,17 +1,23 @@
 package com.wbxnl.blog.controller;
 
+import com.wbxnl.blog.annotation.Log;
 import com.wbxnl.blog.common.PageData;
 import com.wbxnl.blog.common.Result;
+import com.wbxnl.blog.constant.types.OperationType;
 import com.wbxnl.blog.controller.base.AbstractController;
 import com.wbxnl.blog.model.dto.extra.IDNameDto;
 import com.wbxnl.blog.model.dto.TagDto;
+import com.wbxnl.blog.model.entity.Category;
 import com.wbxnl.blog.model.entity.Tag;
 import com.wbxnl.blog.model.vo.TagVo;
+import com.wbxnl.blog.model.vo.extra.StatusVo;
 import com.wbxnl.blog.model.vo.params.PageParams;
 import com.wbxnl.blog.model.vo.params.TagParams;
+import com.wbxnl.blog.validator.group.Update;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.wbxnl.blog.service.TagService;
 
@@ -35,6 +41,15 @@ import java.util.stream.Collectors;
 public class TagController extends AbstractController<TagService, Tag, TagDto, TagVo> {
     @Autowired
     private TagService tagService;
+
+
+    @PutMapping("/status")
+    @Operation(summary = "改变标签状态信息")
+    @Log(type = OperationType.UPDATE,desc = "改变标签状态信息")
+    public Result updateStatus(@Validated({Update.class}) @RequestBody StatusVo statusVo){
+        tagService.lambdaUpdate().eq(Tag::getId,statusVo.getId()).set(Tag::getHidden,statusVo.getStatus()).update();
+        return new Result();
+    }
 
     @GetMapping("/user/list")
     @Operation(summary = "用户获取所有的博客标签详细信息")

@@ -10,7 +10,9 @@ import com.wbxnl.blog.model.dto.ArticleDto;
 import com.wbxnl.blog.model.dto.extra.NameLabelDto;
 import com.wbxnl.blog.model.dto.extra.StatisticsOfNumberDto;
 import com.wbxnl.blog.model.entity.Article;
+import com.wbxnl.blog.model.entity.Role;
 import com.wbxnl.blog.model.vo.ArticleVo;
+import com.wbxnl.blog.model.vo.extra.StatusVo;
 import com.wbxnl.blog.model.vo.params.ArticleParams;
 import com.wbxnl.blog.model.vo.params.PageParams;
 import com.wbxnl.blog.service.*;
@@ -51,6 +53,14 @@ public class ArticleController extends AbstractController<ArticleService, Articl
 
     @Autowired
     private ArticleService articleService;
+
+    @PutMapping("/top")
+    @Operation(summary = "改变文章置顶信息")
+    @Log(type = OperationType.UPDATE,desc = "修改文章置顶信息")
+    public Result updateStatus(@Validated({Update.class}) @RequestBody StatusVo statusVo){
+        articleService.lambdaUpdate().eq(Article::getId,statusVo.getId()).set(Article::getTop,statusVo.getStatus()).update();
+        return new Result();
+    }
 
     @GetMapping("/type")
     @Operation(summary = "获取所有的文章类型")

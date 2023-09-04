@@ -1,18 +1,24 @@
 package com.wbxnl.blog.controller;
 
+import com.wbxnl.blog.annotation.Log;
 import com.wbxnl.blog.common.PageData;
 import com.wbxnl.blog.common.Result;
+import com.wbxnl.blog.constant.types.OperationType;
 import com.wbxnl.blog.controller.base.AbstractController;
 import com.wbxnl.blog.model.dto.CategoryDto;
 import com.wbxnl.blog.model.dto.extra.IDNameDto;
+import com.wbxnl.blog.model.entity.Article;
 import com.wbxnl.blog.model.entity.Category;
 import com.wbxnl.blog.model.vo.CategoryVo;
+import com.wbxnl.blog.model.vo.extra.StatusVo;
 import com.wbxnl.blog.model.vo.params.CategoryParams;
 import com.wbxnl.blog.model.vo.params.PageParams;
+import com.wbxnl.blog.validator.group.Update;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.wbxnl.blog.service.CategoryService;
 
@@ -37,6 +43,14 @@ public class CategoryController extends AbstractController<CategoryService, Cate
 
     @Autowired
     private CategoryService categoryService;
+
+    @PutMapping("/status")
+    @Operation(summary = "改变分类状态信息")
+    @Log(type = OperationType.UPDATE,desc = "改变分类状态信息")
+    public Result updateStatus(@Validated({Update.class}) @RequestBody StatusVo statusVo){
+        categoryService.lambdaUpdate().eq(Category::getId,statusVo.getId()).set(Category::getHidden,statusVo.getStatus()).update();
+        return new Result();
+    }
 
     @GetMapping("/user/list")
     @Operation(summary = "用户获取所有的博客分类")
