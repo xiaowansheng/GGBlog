@@ -18,12 +18,12 @@ public enum ArticleTypeEums {
     /**
      * 文章类型码
      */
-    private final String code;
+    private final String name;
 
     /**
      * 文章类型名称
      */
-    private final String name;
+    private final String label;
 
     /**
      * 根据名称获取文章类型枚举
@@ -32,7 +32,7 @@ public enum ArticleTypeEums {
      */
     public static ArticleTypeEums getArticleTypeEums(String name){
         for (ArticleTypeEums value : values()) {
-            if(value.getName().equals(name)){
+            if(value.getLabel().equals(name)){
                 return value;
             }
         }

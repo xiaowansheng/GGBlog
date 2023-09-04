@@ -5,7 +5,9 @@ import com.wbxnl.blog.common.PageData;
 import com.wbxnl.blog.common.Result;
 import com.wbxnl.blog.constant.types.OperationType;
 import com.wbxnl.blog.controller.base.AbstractController;
+import com.wbxnl.blog.enums.ArticleTypeEums;
 import com.wbxnl.blog.model.dto.ArticleDto;
+import com.wbxnl.blog.model.dto.extra.NameLabelDto;
 import com.wbxnl.blog.model.dto.extra.StatisticsOfNumberDto;
 import com.wbxnl.blog.model.entity.Article;
 import com.wbxnl.blog.model.vo.ArticleVo;
@@ -13,7 +15,6 @@ import com.wbxnl.blog.model.vo.params.ArticleParams;
 import com.wbxnl.blog.model.vo.params.PageParams;
 import com.wbxnl.blog.service.*;
 import com.wbxnl.blog.utils.ConvertUtils;
-import com.wbxnl.blog.utils.SecurityUtils;
 //import io.swagger.annotations.Api;
 //import io.swagger.annotations.ApiImplicitParam;
 //import io.swagger.annotations.ApiImplicitParams;
@@ -30,7 +31,9 @@ import org.springframework.web.bind.annotation.*;
 import lombok.extern.slf4j.Slf4j;
 //import io.swagger.documentation.annotations.ApiIgnore;
 
-import java.util.HashMap;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -48,6 +51,16 @@ public class ArticleController extends AbstractController<ArticleService, Articl
 
     @Autowired
     private ArticleService articleService;
+
+    @GetMapping("/type")
+    @Operation(summary = "获取所有的文章类型")
+    public Result<List<NameLabelDto>> getAllArticleType(){
+        List<NameLabelDto> list = Arrays.stream(ArticleTypeEums.values())
+                .map(articleType -> new NameLabelDto(articleType.getName(), articleType.getLabel()))
+                .collect(Collectors.toList());
+        return new Result().ok(list);
+    }
+
 
     @GetMapping("/detail/{id}")
     @Operation(summary = "游客查询文章详细数据")

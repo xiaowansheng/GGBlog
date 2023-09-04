@@ -1,6 +1,5 @@
 package com.wbxnl.blog.validator.custom;
 
-import com.wbxnl.blog.enums.ArticleTypeEums;
 import com.wbxnl.blog.enums.PictureTypeEums;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
