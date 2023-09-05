@@ -134,7 +134,7 @@ public class ArticleController extends AbstractController<ArticleService, Articl
     @PostMapping("/draft")
     @Log(type = OperationType.ADD,desc ="保存草稿")
     @Operation(summary = "快速保存文章草稿",description = "保存草稿信息并返回文章ID")
-    public Result<ArticleDto> saveDraft(@Validated(Add.class) @RequestBody ArticleVo articleVo){
+    public Result<ArticleDto> saveDraft(@RequestBody ArticleVo articleVo){
         ArticleDto articleDto=articleService.saveDraft(articleVo);
         // 只返回ID
         return new Result().ok(ArticleDto.builder().id(articleDto.getId()).build());
