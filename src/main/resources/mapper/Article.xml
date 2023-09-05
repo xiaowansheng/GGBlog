@@ -313,10 +313,10 @@
         <if test="article.title!=null and article.title!=''">
             and a.title like concat('%',#{article.title},'%')
         </if>
-        <if test="article.type!=null">
+        <if test="article.type!=null and article.type!=''">
             and a.type=#{article.type}
         </if>
-        <if test="article.status!=null">
+        <if test="article.status!=null and article.status!=''">
             and a.status=#{article.status}
         </if>
         <if test="article.categoryId!=null">
@@ -366,10 +366,10 @@
         <if test="article.title!=null and article.title!=''">
             and a.title like concat('%',#{article.title},'%')
         </if>
-        <if test="article.type!=null">
+        <if test="article.type!=null and article.type!=''">
             and a.type=#{article.type}
         </if>
-        <if test="article.status!=null">
+        <if test="article.status!=null and article.status!=''">
             and a.status=#{article.status}
         </if>
         <if test="article.categoryId!=null">

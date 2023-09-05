@@ -22,6 +22,7 @@
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="hidden" property="hidden"/>
+        <result column="description" property="description"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
         <result column="count" property="count"/>
@@ -32,6 +33,7 @@
         t.id,
         t.name,
         t.hidden,
+        t.description,
         t.create_time,
         t.update_time,
         count(a.id) as count
@@ -65,6 +67,7 @@
         select t.id,
                t.name,
                t.hidden,
+               t.description,
                t.create_time,
                t.update_time,
                count(a.id) as count
