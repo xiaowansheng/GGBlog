@@ -3,6 +3,7 @@ package com.wbxnl.blog.service.impl;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.wbxnl.blog.common.PageData;
+import com.wbxnl.blog.enums.ArticleTypeEums;
 import com.wbxnl.blog.enums.TopicTypeEums;
 import com.wbxnl.blog.enums.ViewTypeEums;
 import com.wbxnl.blog.model.dto.ArticleDto;
@@ -137,6 +138,8 @@ public class ArticleServiceImpl extends AbstractServiceImpl<ArticleDao, Article,
     public ArticleDto saveDraft(ArticleVo articleVo) {
         Article article = ConvertUtils.sourceToTarget(articleVo, Article.class);
         article.setUserAuthId(SecurityUtils.getUserInfoId());
+        // 文章类型设置为草稿
+        article.setType(ArticleTypeEums.DRAFT.getName());
         saveOrUpdate(article);
         return ConvertUtils.sourceToTarget(article, ArticleDto.class);
     }
