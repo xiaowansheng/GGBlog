@@ -101,7 +101,9 @@ public abstract class AbstractServiceImpl<D extends BaseDao<E>,E,T,V> extends Se
 
     @Override
     public void deleteBatchByIds(List<Integer> ids) {
-        removeBatchByIds(ids,ids.size());
+        // TODO BUG 批量删除bug
+//        removeBatchByIds(ids,ids.size());
+        ids.forEach(id->deleteById(id));
     }
 
     @Override
@@ -113,7 +115,9 @@ public abstract class AbstractServiceImpl<D extends BaseDao<E>,E,T,V> extends Se
     @Override
     public void updateBatch(List<V> vos) {
         List<E> entities = ConvertUtils.sourceToTarget(vos, currentEntityClass());
-        updateBatchById(entities);
+        // TODO BUG 批量修改BUG
+//        updateBatchById(entities);
+        entities.forEach(e -> updateById(e));
     }
 
     @Override
