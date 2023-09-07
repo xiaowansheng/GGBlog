@@ -56,14 +56,6 @@ public class CommentController extends AbstractController<CommentService, Commen
         return new Result().ok(review);
     }
 
-    @GetMapping("/user/type")
-    @Operation(summary = "获取用户评论类型列表")
-    public Result<List<NameLabelDto>> getUserCommentType() {
-        List<NameLabelDto> list = Arrays.stream(UserTypeEums.values())
-                .map(topicTypeEums -> new NameLabelDto(topicTypeEums.getName(), topicTypeEums.getLabel()))
-                .collect(Collectors.toList());
-        return new Result().ok(list);
-    }
 
     @GetMapping("/topic/type")
     @Operation(summary = "获取话题类型列表")

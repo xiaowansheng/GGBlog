@@ -2,6 +2,7 @@ package com.wbxnl.blog.controller;
 
 import com.wbxnl.blog.common.Result;
 import com.wbxnl.blog.enums.ContentStateEums;
+import com.wbxnl.blog.enums.UserTypeEums;
 import com.wbxnl.blog.model.dto.extra.NameLabelDto;
 import com.wbxnl.blog.model.dto.extra.NameValueDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/common")
-@Tag(name = "",description = "通用模块")
+@Tag(name = "CommonController",description = "通用接口模块")
 public class CommonController {
 
     @GetMapping("/content/status")
@@ -28,6 +29,16 @@ public class CommonController {
     public Result<List<NameLabelDto>> getContentStatus(){
         List<NameLabelDto> list = Arrays.stream(ContentStateEums.values())
                 .map(c -> new NameLabelDto(c.getName(), c.getLabel()))
+                .collect(Collectors.toList());
+        return new Result().ok(list);
+    }
+
+
+    @GetMapping("/user/type")
+    @Operation(summary = "获取用户类型列表")
+    public Result<List<NameLabelDto>> getUserCommentType() {
+        List<NameLabelDto> list = Arrays.stream(UserTypeEums.values())
+                .map(topicTypeEums -> new NameLabelDto(topicTypeEums.getName(), topicTypeEums.getLabel()))
                 .collect(Collectors.toList());
         return new Result().ok(list);
     }

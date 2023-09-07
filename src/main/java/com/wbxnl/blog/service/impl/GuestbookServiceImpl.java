@@ -84,6 +84,9 @@ public class GuestbookServiceImpl extends AbstractServiceImpl<GuestbookDao, Gues
         if(ObjectUtils.isNotNull(guestbookParams.getHidden())){
             queryWrapper.eq(Guestbook::getHidden,guestbookParams.getHidden());
         }
+        if(ObjectUtils.isNotNull(guestbookParams.getReview())){
+            queryWrapper.eq(Guestbook::getReview,guestbookParams.getReview());
+        }
         if(ObjectUtils.isNotNull(guestbookParams.getDevice())){
             queryWrapper.like(Guestbook::getDevice,guestbookParams.getDevice());
         }

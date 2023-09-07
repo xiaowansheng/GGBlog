@@ -70,7 +70,7 @@ public class GuestbookController extends AbstractController<GuestbookService, Gu
     @GetMapping("/page")
     @Operation(summary = "分页查询留言数据")
     public Result<PageData<GuestbookDto>> getPage(@ParameterObject PageParams pageParams, @ParameterObject GuestbookParams guestbookParams){
-        PageData<GuestbookDto> page = guestbookService.getPageByUser(pageParams,guestbookParams);
+        PageData<GuestbookDto> page = guestbookService.getPage(pageParams,guestbookParams);
         return new Result().ok(page);
     }
 }

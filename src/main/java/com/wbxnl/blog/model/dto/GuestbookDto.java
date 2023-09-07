@@ -82,8 +82,4 @@ public class GuestbookDto implements Serializable {
      */
     private Integer deleted;
 
-    /**
-     * （额外）用户名
-     */
-    private String userName;
 }

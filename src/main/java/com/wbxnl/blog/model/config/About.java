@@ -16,7 +16,7 @@ public class About {
         String[] split = KEY.split(":");
         DEFAULT_CONFIG.setName(split[split.length-1])
                 .setLabel("关于作者")
-                .setValue("无")
+                .setValue("作者没有写任何的介绍信息哦~")
                 .setDescription("关于作者的信息");
     }
 }
