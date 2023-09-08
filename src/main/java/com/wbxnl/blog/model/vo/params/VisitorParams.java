@@ -5,11 +5,13 @@ import io.swagger.v3.oas.annotations.Parameter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
 /**
  * 访客查询参数
+ *
  * @Author xiaowansheng
  * @Date 2023/8/14 9:29
  */
@@ -40,9 +42,11 @@ public class VisitorParams implements QueryParams {
     private String browser;
 
     @Parameter(description = "时间间隔：开始时间")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date beginDate;
 
     @Parameter(description = "时间间隔：结束时间")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endDate;
 
 }
