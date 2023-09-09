@@ -21,16 +21,12 @@ public class JwtUtil {
     /**
      * 过期2小时
      */
-//    public static final long EXPIRE_TIME = 2*60 * 60 * 1000;
-//            TODO 测试
-    public static final long EXPIRE_TIME = 10 * 1000;
+    public static final long EXPIRE_TIME = 2*60 * 60 * 1000;
 
     /**
-     * 刷新token14天过期，14天必须重新登录一次
+     * 刷新token 14天过期，14天不操作必须重新登录一次
      */
-//    public static final long REFRESH_EXPIRE_TIME = 14*24*60 * 60 * 1000;
-//            TODO 测试
-    public static final long REFRESH_EXPIRE_TIME = 60 * 1000;
+    public static final long REFRESH_EXPIRE_TIME = 14*24*60 * 60 * 1000;
 
     /**
      * jwt密钥
