@@ -68,8 +68,8 @@ import java.util.stream.Collectors;
         // 对所有请求的地址检测都通过
         log.info("request:{},{}", request.getMethod(), request.getRequestURI());
         // TODO 关闭权限校验
-        return new AuthorizationDecision(true);
-//        return myCheck(authentication, request);
+//        return new AuthorizationDecision(true);
+        return myCheck(authentication, request);
     }
 
 
@@ -148,11 +148,11 @@ import java.util.stream.Collectors;
                 List<String> roleList = resourceRoleDto.getRoleList();
                 return match(authentication, roleList);
 //                return SecurityConfig.createList(roleList.toArray(new String[]{}));
-            } else {
-
-                throw new AccessDeniedException("该资源未设置访问权限，暂不允许访问！");
-//                throw new IllegalArgumentException("该资源未设置访问权限，暂不允许访问！");
             }
+        }
+        if(!CollectionUtils.isEmpty(resourceRoleList)){
+            throw new AccessDeniedException("该资源未设置访问权限，暂不允许访问！");
+//                throw new IllegalArgumentException("该资源未设置访问权限，暂不允许访问！");
         }
         //该资源暂未设置访问权限
 //        throw new IllegalArgumentException("该资源未设置访问权限，暂不允许访问！");

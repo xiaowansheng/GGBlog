@@ -42,7 +42,7 @@ CREATE TABLE `log_error` (
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否已删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=116 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='系统异常错误日志';
+) ENGINE=InnoDB AUTO_INCREMENT=225 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='系统异常错误日志';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -74,7 +74,7 @@ CREATE TABLE `log_operation` (
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否被删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='操作日志';
+) ENGINE=InnoDB AUTO_INCREMENT=546 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='操作日志';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,7 +95,7 @@ CREATE TABLE `system_config` (
   `deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否已删除',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='网站配置信息';
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='网站配置信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -108,21 +108,21 @@ DROP TABLE IF EXISTS `system_menu`;
 CREATE TABLE `system_menu` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL COMMENT '菜单名称',
-  `label` varchar(50) NOT NULL COMMENT '菜单标题',
+  `title` varchar(50) NOT NULL COMMENT '菜单标题',
   `icon` varchar(255) NOT NULL COMMENT '图标',
   `redirect` varchar(100) DEFAULT NULL COMMENT '路由重定向',
   `path` varchar(100) NOT NULL COMMENT '路由地址',
-  `component` varchar(200) NOT NULL COMMENT '组件路径',
+  `component` varchar(200) DEFAULT NULL COMMENT '组件路径',
   `hidden` tinyint(1) NOT NULL DEFAULT '0' COMMENT '隐藏菜单（0展示1隐藏）',
   `sort` tinyint NOT NULL DEFAULT '0' COMMENT '排序',
   `parent_id` int NOT NULL DEFAULT '0' COMMENT '父类ID',
-  `perms` varchar(50) NOT NULL COMMENT '权限标识',
+  `perms` varchar(50) DEFAULT NULL COMMENT '权限标识',
   `description` varchar(100) DEFAULT NULL COMMENT '描述信息',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否已删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='菜单目录';
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='菜单目录';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -135,7 +135,7 @@ DROP TABLE IF EXISTS `system_resource`;
 CREATE TABLE `system_resource` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '资源菜单ID',
   `name` varchar(50) NOT NULL COMMENT '资源名称',
-  `request_method` varchar(10) NOT NULL COMMENT '请求方法',
+  `request_method` varchar(10) DEFAULT NULL COMMENT '请求方法',
   `path` varchar(255) DEFAULT NULL COMMENT '资源访问路径',
   `open` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否开放资源（1开放0不开放）',
   `parent_id` int NOT NULL DEFAULT '0' COMMENT '父类ID',
@@ -145,7 +145,7 @@ CREATE TABLE `system_resource` (
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否已删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='资源菜单';
+) ENGINE=InnoDB AUTO_INCREMENT=125 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='资源菜单';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -166,7 +166,7 @@ CREATE TABLE `t_album` (
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否已删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='相册';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='相册';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -194,7 +194,7 @@ CREATE TABLE `t_article` (
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否已删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='博客文章';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='博客文章';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -209,7 +209,7 @@ CREATE TABLE `t_article_tag` (
   `article_id` int NOT NULL COMMENT '文章ID',
   `tag_id` int NOT NULL COMMENT '标签ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='文章对应标签';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='文章对应标签';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -222,13 +222,13 @@ DROP TABLE IF EXISTS `t_category`;
 CREATE TABLE `t_category` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '分类ID',
   `name` varchar(30) NOT NULL COMMENT '类别名',
-  `description` varchar(100) NOT NULL COMMENT '分类描述',
+  `description` varchar(100) DEFAULT NULL COMMENT '分类描述',
   `hidden` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否隐藏该分类',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否被删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='文章类别';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='文章类别';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -241,10 +241,10 @@ DROP TABLE IF EXISTS `t_comment`;
 CREATE TABLE `t_comment` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '评论ID',
   `user_auth_id` int DEFAULT NULL COMMENT '评论人账号',
-  `topic_type` tinyint(1) NOT NULL COMMENT '评论类型（1文章2说说3写作4友联）',
-  `topic_id` int NOT NULL COMMENT '评论的主题ID（文章ID说说ID...）',
+  `topic_type` varchar(20) NOT NULL COMMENT '评论类型（1文章2说说3写作4友联）',
+  `topic_id` int DEFAULT NULL COMMENT '评论的主题ID（文章ID说说ID...）',
   `content` text NOT NULL COMMENT '评论内容',
-  `images` varchar(2048) DEFAULT NULL COMMENT '图片',
+  `images` varchar(2048) DEFAULT '[]' COMMENT '图片',
   `ip_address` varchar(50) NOT NULL COMMENT 'ip地址',
   `ip_source` varchar(100) NOT NULL COMMENT 'ip所在地',
   `device` varchar(50) NOT NULL DEFAULT '未知设备' COMMENT '使用设备',
@@ -263,7 +263,7 @@ CREATE TABLE `t_comment` (
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否已删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='评论信息';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='评论信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -287,7 +287,7 @@ CREATE TABLE `t_friend` (
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否已删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='友情链接';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='友情链接';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -301,14 +301,14 @@ CREATE TABLE `t_guestbook` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '留言ID',
   `user_auth_id` int DEFAULT NULL COMMENT '留言账号ID',
   `content` varchar(1024) NOT NULL COMMENT '留言内容',
-  `images` varchar(2048) DEFAULT NULL COMMENT '图片',
+  `images` varchar(2048) DEFAULT '[]' COMMENT '图片',
   `ip_address` varchar(50) NOT NULL COMMENT 'ip地址',
   `ip_source` varchar(100) NOT NULL COMMENT 'ip所在地',
   `device` varchar(50) NOT NULL DEFAULT '未知设备' COMMENT '使用设备',
   `browser` varchar(50) NOT NULL DEFAULT '未知浏览器' COMMENT '使用浏览器',
   `point` point DEFAULT NULL COMMENT '坐标',
   `location` varchar(100) DEFAULT NULL COMMENT '位置',
-  `type` tinyint(1) NOT NULL COMMENT '留言类型(1登录留言2游客留言3匿名留言)',
+  `type` varchar(20) NOT NULL COMMENT '留言类型(1登录留言2游客留言3匿名留言)',
   `nickname` varchar(30) DEFAULT NULL COMMENT '游客别名',
   `email` varchar(100) DEFAULT NULL COMMENT '游客邮箱',
   `qq` varchar(15) DEFAULT NULL COMMENT '游客QQ号',
@@ -318,7 +318,7 @@ CREATE TABLE `t_guestbook` (
   `update_time` datetime NOT NULL,
   `deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否已删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='留言簿';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='留言簿';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -341,7 +341,7 @@ CREATE TABLE `t_login_log` (
   `update_time` datetime NOT NULL COMMENT '更新时间',
   `deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='登录日志，记录用户的登录信息';
+) ENGINE=InnoDB AUTO_INCREMENT=139 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='登录日志，记录用户的登录信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -404,7 +404,7 @@ CREATE TABLE `t_role` (
   `deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否已删除',
   PRIMARY KEY (`id`),
   UNIQUE KEY `role_label` (`label`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户角色';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户角色';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -419,7 +419,7 @@ CREATE TABLE `t_role_menu` (
   `role_id` int NOT NULL COMMENT '角色ID',
   `menu_id` int NOT NULL COMMENT '系统菜单ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='角色菜单';
+) ENGINE=InnoDB AUTO_INCREMENT=216 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='角色菜单';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -434,7 +434,7 @@ CREATE TABLE `t_role_resource` (
   `role_id` int NOT NULL COMMENT '角色ID',
   `resource_id` int NOT NULL COMMENT '资源ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='角色资源';
+) ENGINE=InnoDB AUTO_INCREMENT=157 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='角色资源';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -453,7 +453,7 @@ CREATE TABLE `t_tag` (
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否已删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='文章标签';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='文章标签';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -467,7 +467,7 @@ CREATE TABLE `t_talk` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '说说ID',
   `user_auth_id` int NOT NULL COMMENT '发表人账号ID',
   `content` varchar(2048) NOT NULL COMMENT '说说内容',
-  `images` varchar(4096) NOT NULL COMMENT '图片',
+  `images` varchar(4096) NOT NULL DEFAULT '[]' COMMENT '图片',
   `status` varchar(20) NOT NULL COMMENT '状态（1显示2私密）',
   `top` tinyint(1) NOT NULL DEFAULT '0' COMMENT '置顶（1置顶0不置顶）',
   `ip_address` varchar(100) NOT NULL COMMENT 'ip地址',
@@ -480,7 +480,7 @@ CREATE TABLE `t_talk` (
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否已删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='说说';
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='说说';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -506,7 +506,7 @@ CREATE TABLE `t_user_auth` (
   `deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否已删除',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3 COMMENT='用户账号';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3 COMMENT='用户账号';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -518,7 +518,7 @@ DROP TABLE IF EXISTS `t_user_info`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `t_user_info` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-  `email` varchar(50) NOT NULL COMMENT '用户邮箱',
+  `email` varchar(50) DEFAULT NULL COMMENT '用户邮箱',
   `qq` varchar(11) DEFAULT NULL,
   `nickname` varchar(50) NOT NULL DEFAULT '【无名氏】' COMMENT '用户名',
   `avatar` varchar(250) DEFAULT NULL COMMENT '个人头像',
@@ -529,7 +529,7 @@ CREATE TABLE `t_user_info` (
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `deleted` tinyint(1) DEFAULT '0' COMMENT '是否已删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3 COMMENT='用户信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3 COMMENT='用户信息表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -544,7 +544,7 @@ CREATE TABLE `t_user_role` (
   `user_auth_id` int NOT NULL COMMENT '用户账号ID',
   `role_id` int NOT NULL COMMENT '角色ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户账号对应角色';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户账号对应角色';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -582,4 +582,4 @@ CREATE TABLE `t_visitor` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-08-23 18:22:29
+-- Dump completed on 2023-09-10  2:28:36

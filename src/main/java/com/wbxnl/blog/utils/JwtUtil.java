@@ -144,7 +144,7 @@ public class JwtUtil {
             verifier.verify(token);
             return true;
         } catch (JWTVerificationException e) {
-            log.warn("token 无效，请重新获取");
+            log.warn("token 无效。");
             return false;
         }
     }

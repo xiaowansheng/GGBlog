@@ -133,15 +133,16 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
         //有效期和refresh_token的过期时间相同
         redisUtils.setCacheObject(key, userDto, JwtUtil.REFRESH_EXPIRE_TIME, TimeUnit.MILLISECONDS);
         log.info("保存用户数据到redis。");
-        // 获取用户昵称
+        // 获取用户昵称和头像
         UserInfo userInfo = userInfoService
                 .lambdaQuery()
-                .select(UserInfo::getNickname)
+                .select(UserInfo::getNickname,UserInfo::getAvatar)
                 .eq(UserInfo::getId, userDto.getUserInfoId())
                 .one();
         LoginDataDto loginDataDto = new LoginDataDto(
                 userDetailsDto.getUsername(),
                 userInfo.getNickname(),
+                userInfo.getAvatar(),
                 token,
                 JwtUtil.getExpireTime(token),
                 refreshToken,
@@ -168,16 +169,16 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
         String username = userDetailsDto.getUserDto().getUsername();
         String key = UserPrefix.getUserInfoKey(username);
         UserDto userDto = redisUtils.getCacheObject(key);
-        log.info("用户{}注销", username);
+        log.info("用户【{}】注销", username);
         if (userDto == null) {
             return new Result();
         }
-        log.info("用户{}登录数{}。", username, userDto.getCount());
+        log.info("用户【{}】登录数{}", username, userDto.getCount());
         if (userDto.getCount() > 1) {
             //登录设备减一
             userDto.setCount(userDto.getCount() - 1);
             long expire = redisUtils.getExpire(key, TimeUnit.SECONDS);
-            log.info("过期时间还剩：" + expire);
+            log.info("过期时间还剩：{}s" , expire);
             redisUtils.setCacheObject(key, userDto, expire, TimeUnit.SECONDS);
         } else {
             //删除redis中的用户信息
@@ -280,7 +281,7 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
         // 新的刷新token
         String newRefreshToken = JwtUtil.getToken(username, new HashMap<>());
         String key = UserPrefix.getUserInfoKey(username);
-        UserDto useDto = redisUtils.getCacheObject(key);
+        UserDto userDto = redisUtils.getCacheObject(key);
         UserAuth userAuth = lambdaQuery().select(UserAuth::getId, UserAuth::getDisable)
                 .eq(UserAuth::getUsername, username).one();
         if (userAuth.getDisable() == 1) {
@@ -295,25 +296,25 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
                     .stream()
                     .filter(roleDto -> roleDto.getDisable() == 0)
                     .collect(Collectors.toList());
-            useDto.setRoles(roleDtos);
+            userDto.setRoles(roleDtos);
             roles = userRoles.getRolesList().stream().map(roleDto -> roleDto.getName()).collect(Collectors.toList());
         } else {
-            useDto.setRoles(new ArrayList<>(0));
+            userDto.setRoles(new ArrayList<>(0));
             roles = new ArrayList<>();
         }
 //      // 重新设置缓存数据和国企时间
-        redisUtils.setCacheObject(key, useDto, JwtUtil.REFRESH_EXPIRE_TIME, TimeUnit.SECONDS);
-        // 查询用户昵称
+        redisUtils.setCacheObject(key, userDto, JwtUtil.REFRESH_EXPIRE_TIME, TimeUnit.SECONDS);
+        // 获取用户昵称和头像
         UserInfo userInfo = userInfoService
                 .lambdaQuery()
-                .select(UserInfo::getNickname)
-                .eq(UserInfo::getId, useDto.getUserInfoId())
+                .select(UserInfo::getNickname,UserInfo::getAvatar)
+                .eq(UserInfo::getId, userDto.getUserInfoId())
                 .one();
-
         //返回新token
         LoginDataDto loginDataDto = new LoginDataDto(
                 username,
                 userInfo.getNickname(),
+                userInfo.getAvatar(),
                 token,
                 JwtUtil.getExpireTime(token),
                 newRefreshToken, roles);

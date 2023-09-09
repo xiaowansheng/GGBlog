@@ -27,6 +27,10 @@ public class LoginDataDto {
      */
     private String nickname;
     /**
+     * 头像
+     */
+    private String avatar;
+    /**
      * token
      */
     private String accessToken;

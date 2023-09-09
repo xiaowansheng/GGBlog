@@ -9,7 +9,7 @@
         <result column="open" property="open"/>
         <collection property="roleList" ofType="java.lang.String">
             <constructor>
-                <arg column="label"/>
+                <arg column="roleName"/>
             </constructor>
         </collection>
     </resultMap>
@@ -18,7 +18,7 @@
 <!--父类ID不为空不为0，即当前资源是模块内资源-->
 <!--角色当前属于可用-->
     <select id="getResourceRoles" resultMap="RoleResourceMap">
-        SELECT re.id, path, request_method, open, label
+        SELECT re.id, path, request_method, open, r.name as roleName
         FROM system_resource re
             LEFT JOIN t_role_resource res ON re.id = res.resource_id
             LEFT JOIN t_role r
@@ -26,7 +26,7 @@
             AND r.deleted = 0
             AND r.disable = 0
         WHERE re.deleted = 0
-          AND parent_id IS NOT NULL
+          AND re.parent_id IS NOT NULL
           AND re.parent_id != 0
     </select>
 </mapper>
