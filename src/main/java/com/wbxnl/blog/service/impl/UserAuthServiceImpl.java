@@ -117,8 +117,8 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
         log.info("更新了用户{}登录时间：", userDto.getUsername());
 
 //        String token = JwtUtil.createJWT(userAuthVo.getUsername());
-        String token = JwtUtil2.getToken(userDto.getUsername(), new HashMap<>());
-        String refreshToken = JwtUtil2.getRefreshToken(userDto.getUsername(), new HashMap<>());
+        String token = JwtUtil.getToken(userDto.getUsername(), new HashMap<>());
+        String refreshToken = JwtUtil.getRefreshToken(userDto.getUsername(), new HashMap<>());
         log.info("获取了token：" + token);
         //把用户信息存入redis
 //        redisUtils.setCacheObject("login:"+userAuthVo.getUsername(),userDetailsDto);
@@ -131,7 +131,7 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
             userDto.setCount(1);
         }
         //有效期和refresh_token的过期时间相同
-        redisUtils.setCacheObject(key, userDto, JwtUtil2.REFRESH_EXPIRE_TIME, TimeUnit.MILLISECONDS);
+        redisUtils.setCacheObject(key, userDto, JwtUtil.REFRESH_EXPIRE_TIME, TimeUnit.MILLISECONDS);
         log.info("保存用户数据到redis。");
         // 获取用户昵称
         UserInfo userInfo = userInfoService.lambdaQuery().select(UserInfo::getNickname).eq(UserInfo::getId, userDto.getUserInfoId()).one();
@@ -139,7 +139,7 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
                 userDetailsDto.getUsername(),
                 userInfo.getNickname(),
                 token,
-                JwtUtil2.getExpireTime(token),
+                JwtUtil.getExpireTime(token),
                 refreshToken,
                 userDto.getRoles()
                         .stream()
@@ -270,9 +270,9 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
     public Result refreshToken(HttpServletRequest request) {
         //获取刷新token
         String refreshToken = request.getHeader(HeaderParamConstant.HEADER_TOKEN);
-        String username = JwtUtil2.getUserId(refreshToken);
+        String username = JwtUtil.getUserId(refreshToken);
         Map<String, Object> information = new HashMap<>();
-        String token = JwtUtil2.getToken(username, information);
+        String token = JwtUtil.getToken(username, information);
         String key = UserPrefix.USER_INFO + username;
         UserDto useDto = redisUtils.getCacheObject(key);
         UserAuth userAuth = lambdaQuery().select(UserAuth::getId, UserAuth::getDisable)
@@ -297,7 +297,7 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
         //返回新token
         LoginDataDto loginDataDto = new LoginDataDto();
         loginDataDto.setAccessToken(token);
-        loginDataDto.setExpires(JwtUtil2.getExpireTime(token));
+        loginDataDto.setExpires(JwtUtil.getExpireTime(token));
         return new Result<>().ok(loginDataDto);
     }
 

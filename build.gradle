@@ -52,11 +52,9 @@ dependencies {
     implementation 'mysql:mysql-connector-java:8.0.28'
 
     // token生成
+//    java-jwt是Java语言中推荐的JWT实现库
     // https://mvnrepository.com/artifact/com.auth0/java-jwt
     implementation 'com.auth0:java-jwt:4.4.0'
-    //上面的jwt包的依赖
-    // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api
-    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 
     // 浏览器解析工具
 // https://mvnrepository.com/artifact/eu.bitwalker/UserAgentUtils
@@ -78,7 +76,6 @@ dependencies {
     // map 转实体需要 import net.sf.cglib.beans.BeanMap;
     // https://mvnrepository.com/artifact/cglib/cglib
 //    implementation 'cglib:cglib:3.3.0'
-
 
 
     // xTODO springboot3.0+会报错，该工具暂时没有适配3.0貌似是这样 =====》已修复，选用springdoc作为文档工具

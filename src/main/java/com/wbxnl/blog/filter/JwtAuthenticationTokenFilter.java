@@ -6,7 +6,7 @@ import com.wbxnl.blog.enums.OperationStateCode;
 import com.wbxnl.blog.exception.BlogException;
 import com.wbxnl.blog.model.dto.UserDetailsDto;
 import com.wbxnl.blog.model.dto.UserDto;
-import com.wbxnl.blog.utils.JwtUtil2;
+import com.wbxnl.blog.utils.JwtUtil;
 import com.wbxnl.blog.utils.RedisUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -16,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -25,7 +24,6 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
-import java.util.Collection;
 import java.util.Objects;
 
 /**
@@ -50,14 +48,14 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         if (StringUtils.hasText(token)) {
             //解析token
             //检测token有效性
-            if (!JwtUtil2.checkToken(token)) {
+            if (!JwtUtil.checkToken(token)) {
 //                throw new BlogException(OperationStateCode.TOKEN_EXPIRE);
                 log.warn("Token:{}",token);
                 throw new AccessDeniedException("Token已过期！");
             } else {
                 String username = null;
                 try {
-                    username = JwtUtil2.getUserId(token);
+                    username = JwtUtil.getUserId(token);
                 } catch (Exception e) {
                     e.printStackTrace();
                     throw new BlogException(OperationStateCode.TOKEN_ILLEGAL);
