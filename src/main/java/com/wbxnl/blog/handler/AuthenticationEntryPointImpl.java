@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -32,23 +33,23 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
         //设置响应头
         response.setContentType(HeaderParamConstant.RESPONSE_TYPE);
 
-        log.info("AuthenticationEntryPointImpl：{}",authException.getMessage());
+        log.warn("AuthenticationException：{}", authException.getMessage());
         //返回数据
-//        log.info("异常信息:");
         authException.printStackTrace();
 
         Result result = null;
-//        if(authException instanceof BadCredentialsException){
-//            //BadCredentialsException 登录验证未通过
-//            result=new Result<>().error(OperationStateCode.LOGIN_FAILURE);
-//        }else
-        if (authException instanceof InsufficientAuthenticationException) {
+        if (authException instanceof BadCredentialsException) {
+            //BadCredentialsException 登录验证未通过
+            result = new Result<>().error(OperationStateCode.LOGIN_FAILURE);
+        } else if (authException instanceof InsufficientAuthenticationException) {
             //InsufficientAuthenticationException 访问的资源需要登录
             result = new Result<>().error(OperationStateCode.NO_LOGIN);
-        }
-        else {
+        } else if (authException instanceof CredentialsExpiredException) {
+            result=new Result<>().error(OperationStateCode.REFRESH_TOKEN_EXPIRE);
+        } else {
             // 其它异常
-            result = new Result<>().error(OperationStateCode.NO_RIGHT);
+//            result = new Result<>().error(OperationStateCode.NO_RIGHT);
+            result = new Result().error().setMessage(authException.getMessage());
         }
         response.getWriter().write(JSON.toJSONString(result));
     }

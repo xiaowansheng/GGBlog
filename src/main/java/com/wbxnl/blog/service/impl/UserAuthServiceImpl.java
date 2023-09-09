@@ -122,7 +122,7 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
         log.info("获取了token：" + token);
         //把用户信息存入redis
 //        redisUtils.setCacheObject("login:"+userAuthVo.getUsername(),userDetailsDto);
-        String key = UserPrefix.USER_INFO + userDto.getUsername();
+        String key = UserPrefix.getUserInfoKey(userDto.getUsername());
         UserDto oldUserDto = redisUtils.getCacheObject(key);
         if (oldUserDto != null) {
             //登录设备数+1
@@ -134,7 +134,11 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
         redisUtils.setCacheObject(key, userDto, JwtUtil.REFRESH_EXPIRE_TIME, TimeUnit.MILLISECONDS);
         log.info("保存用户数据到redis。");
         // 获取用户昵称
-        UserInfo userInfo = userInfoService.lambdaQuery().select(UserInfo::getNickname).eq(UserInfo::getId, userDto.getUserInfoId()).one();
+        UserInfo userInfo = userInfoService
+                .lambdaQuery()
+                .select(UserInfo::getNickname)
+                .eq(UserInfo::getId, userDto.getUserInfoId())
+                .one();
         LoginDataDto loginDataDto = new LoginDataDto(
                 userDetailsDto.getUsername(),
                 userInfo.getNickname(),
@@ -162,7 +166,7 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
         UserDetailsDto userDetailsDto = (UserDetailsDto) authentication.getPrincipal();
         //获取userid
         String username = userDetailsDto.getUserDto().getUsername();
-        String key = UserPrefix.USER_INFO + username;
+        String key = UserPrefix.getUserInfoKey(username);
         UserDto userDto = redisUtils.getCacheObject(key);
         log.info("用户{}注销", username);
         if (userDto == null) {
@@ -188,7 +192,7 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
         String email = signupVo.getEmail();
         String verificationCode = signupVo.getVerificationCode();
         String password = signupVo.getPassword();
-        String key = UserPrefix.VERIFICATION_CODE + email;
+        String key = UserPrefix.getCodeKey(email);
         String code = redisUtils.getCacheObject(key);
 //      忽略大小写
         if (StringUtils.isNotBlank(code) && code.compareToIgnoreCase(verificationCode) == 0) {
@@ -238,7 +242,7 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
         String code = StrUtils.getVerificationCode(6);
         log.info("邮箱：[{}]，获取的验证码：[{}]", email, code);
         //定时十五分钟
-        redisUtils.setCacheObject(UserPrefix.VERIFICATION_CODE + email, code, 15L, TimeUnit.MINUTES);
+        redisUtils.setCacheObject(UserPrefix.getCodeKey(email), code, 15L, TimeUnit.MINUTES);
         boolean flag = emailService.sendVerification(email, code);
         if (!flag) {
             throw new BlogException(OperationStateCode.SEND_CODE_FAILURE);
@@ -248,7 +252,7 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
 
     @Override
     public Result resetPassword(ResetVo resetVo) {
-        String key = UserPrefix.VERIFICATION_CODE + resetVo.getEmail();
+        String key = UserPrefix.getCodeKey(resetVo.getEmail());
         String code = redisUtils.getCacheObject(key);
 //      忽略大小写
         if (StringUtils.isNotBlank(code) && code.compareToIgnoreCase(resetVo.getVerificationCode()) == 0) {
@@ -270,10 +274,12 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
     public Result refreshToken(HttpServletRequest request) {
         //获取刷新token
         String refreshToken = request.getHeader(HeaderParamConstant.HEADER_TOKEN);
-        String username = JwtUtil.getUserId(refreshToken);
-        Map<String, Object> information = new HashMap<>();
-        String token = JwtUtil.getToken(username, information);
-        String key = UserPrefix.USER_INFO + username;
+        String username = JwtUtil.getUsername(refreshToken);
+        // 新的token
+        String token = JwtUtil.getToken(username, new HashMap<>());
+        // 新的刷新token
+        String newRefreshToken = JwtUtil.getToken(username, new HashMap<>());
+        String key = UserPrefix.getUserInfoKey(username);
         UserDto useDto = redisUtils.getCacheObject(key);
         UserAuth userAuth = lambdaQuery().select(UserAuth::getId, UserAuth::getDisable)
                 .eq(UserAuth::getUsername, username).one();
@@ -283,21 +289,34 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
         }
 
         UserRoleDto userRoles = userRoleService.getUserRoles(userAuth.getId());
+        List<String> roles = null;
         if (Objects.nonNull(userRoles)) {
             List<RoleDto> roleDtos = userRoles.getRolesList()
                     .stream()
                     .filter(roleDto -> roleDto.getDisable() == 0)
                     .collect(Collectors.toList());
             useDto.setRoles(roleDtos);
+            roles = userRoles.getRolesList().stream().map(roleDto -> roleDto.getName()).collect(Collectors.toList());
         } else {
             useDto.setRoles(new ArrayList<>(0));
+            roles = new ArrayList<>();
         }
-        long expire = redisUtils.getExpire(key, TimeUnit.SECONDS);
-        redisUtils.setCacheObject(key, useDto, expire, TimeUnit.SECONDS);
+//      // 重新设置缓存数据和国企时间
+        redisUtils.setCacheObject(key, useDto, JwtUtil.REFRESH_EXPIRE_TIME, TimeUnit.SECONDS);
+        // 查询用户昵称
+        UserInfo userInfo = userInfoService
+                .lambdaQuery()
+                .select(UserInfo::getNickname)
+                .eq(UserInfo::getId, useDto.getUserInfoId())
+                .one();
+
         //返回新token
-        LoginDataDto loginDataDto = new LoginDataDto();
-        loginDataDto.setAccessToken(token);
-        loginDataDto.setExpires(JwtUtil.getExpireTime(token));
+        LoginDataDto loginDataDto = new LoginDataDto(
+                username,
+                userInfo.getNickname(),
+                token,
+                JwtUtil.getExpireTime(token),
+                newRefreshToken, roles);
         return new Result<>().ok(loginDataDto);
     }
 

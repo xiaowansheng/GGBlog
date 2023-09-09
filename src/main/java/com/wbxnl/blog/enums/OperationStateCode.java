@@ -64,9 +64,11 @@ public enum OperationStateCode {
     /**
      * token已过期
      */
-    TOKEN_EXPIRE(40010, "token已过期"),
-
-    REFRESH_TOKEN_EXPIRE(40011, "refresh_token过期"),
+    TOKEN_EXPIRE(40010, "Token已过期！"),
+    /**
+     * 刷新的token过期，需要重新登录
+     */
+    REFRESH_TOKEN_EXPIRE(40011, "登录凭证已过期，请重新登录！"),
     /**
      * 用户未授权
      */

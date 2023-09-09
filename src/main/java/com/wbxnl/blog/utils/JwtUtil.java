@@ -15,36 +15,36 @@ public class JwtUtil {
     /**
      * 存放信息的key
      */
-    public static final  String INFO_KEY ="info";
+    public static final String INFO_KEY = "info";
 
-    /**
-     * 查询过期时间的key
-     */
-//    public static final String EXPIRE_KEY ="expire";
 
     /**
      * 过期2小时
-     * */
-    public static final long EXPIRE_TIME = 2*60 * 60 * 1000;
-//    public static final long EXPIRE_TIME =  10 * 1000;
+     */
+//    public static final long EXPIRE_TIME = 2*60 * 60 * 1000;
+//            TODO 测试
+    public static final long EXPIRE_TIME = 10 * 1000;
 
     /**
      * 刷新token14天过期，14天必须重新登录一次
-     * */
-    public static final long REFRESH_EXPIRE_TIME = 14*24*60 * 60 * 1000;
+     */
+//    public static final long REFRESH_EXPIRE_TIME = 14*24*60 * 60 * 1000;
+//            TODO 测试
+    public static final long REFRESH_EXPIRE_TIME = 60 * 1000;
 
     /**
      * jwt密钥
-     * */
+     */
     private static final String SECRET = "xiaowansheng";
 
     /**
      * 生成jwt字符串， JWT(json web token)
-     * @param userId
+     *
+     * @param username
      * @param info,Map的value只能存放值的类型为：Map，List，Boolean，Integer，Long，Double，String and Date
      * @return
-     * */
-    public static String getToken(String userId, Map<String, Object> info) {
+     */
+    public static String getToken(String username, Map<String, Object> info) {
         try {
             Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
             //保存token失效时间
@@ -52,7 +52,7 @@ public class JwtUtil {
             Algorithm algorithm = Algorithm.HMAC256(SECRET);
             return JWT.create()
                     //将userId保存到token里面
-                    .withAudience(userId)
+                    .withAudience(username)
                     //存放自定义数据
                     .withClaim(INFO_KEY, info)
                     //xxx分钟后token过期
@@ -67,11 +67,12 @@ public class JwtUtil {
 
     /**
      * 获取刷新token
-     * @param userId
+     *
+     * @param username
      * @param info
      * @return
      */
-    public static String getRefreshToken(String userId, Map<String, Object> info) {
+    public static String getRefreshToken(String username, Map<String, Object> info) {
         try {
             Date date = new Date(System.currentTimeMillis() + REFRESH_EXPIRE_TIME);
             //保存token失效时间
@@ -80,7 +81,7 @@ public class JwtUtil {
             Algorithm algorithm = Algorithm.HMAC256(SECRET);
             return JWT.create()
                     //将userId保存到token里面
-                    .withAudience(userId)
+                    .withAudience(username)
                     //存放自定义数据
                     .withClaim(INFO_KEY, info)
                     //xxx分钟后token过期
@@ -95,57 +96,59 @@ public class JwtUtil {
 
     /**
      * 根据token获取userId
+     *
      * @param token
      * @return
-     * */
-    public static String getUserId(String token) {
+     */
+    public static String getUsername(String token) {
         try {
             String userId = JWT.decode(token).getAudience().get(0);
-//            log.info("过期时间测试："+JWT.decode(token).getExpiresAt());
-//            log.info("过期时间测试2："+JWT.decode(token).getExpiresAt().getTime());
             return userId;
-        }catch (JWTDecodeException e) {
+        } catch (JWTDecodeException e) {
             return null;
         }
     }
 
     /**
      * 根据token获取自定义数据info
+     *
      * @param token
      * @return
-     * */
-    public static Map<String, Object> getInfo(String token) {
+     */
+    public static Map<String, Object> getInforMap(String token) {
         try {
-            return JWT.decode(token).getClaim("info").asMap();
-        }catch (JWTDecodeException e) {
+            return JWT.decode(token).getClaim(INFO_KEY).asMap();
+        } catch (JWTDecodeException e) {
             return null;
         }
     }
 
     /**
      * 获取token到期时间
+     *
      * @param token
      * @return
      */
-    public static long getExpireTime(String token){
+    public static long getExpireTime(String token) {
         return JWT.decode(token).getExpiresAt().getTime();
     }
 
     /**
      * 校验token
+     *
      * @param token
      * @return
-     * */
+     */
     public static boolean checkToken(String token) {
         try {
-            Algorithm algorithm  = Algorithm.HMAC256(SECRET);
+            Algorithm algorithm = Algorithm.HMAC256(SECRET);
             JWTVerifier verifier = JWT.require(algorithm)
                     //.withClaim("username, username)
                     .build();
             verifier.verify(token);
             return true;
-        }catch (JWTVerificationException e) {
-            log.info("token 无效，请重新获取");
+        } catch (JWTVerificationException e) {
+            log.warn("token 无效，请重新获取");
             return false;
         }
     }
