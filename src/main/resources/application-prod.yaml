@@ -21,6 +21,10 @@ server:
 spring:
   application:
     name: gg-blog
+  jackson:
+    # 统一时间格式化处理，请求参数和响应结果都可以格式化
+    date-format: yyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
   datasource:
     #    druid:
     type: com.alibaba.druid.pool.DruidDataSource

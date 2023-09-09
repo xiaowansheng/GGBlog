@@ -23,6 +23,10 @@ public class LoginDataDto {
      */
     private String username;
     /**
+     * 昵称
+     */
+    private String nickname;
+    /**
      * token
      */
     private String accessToken;

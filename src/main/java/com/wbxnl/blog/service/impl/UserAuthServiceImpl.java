@@ -89,7 +89,7 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
         PageData<UserAuthDto> pageData = new PageData<>(userAuthList, count);
         return pageData;
     }
-    
+
     @Override
     @Transactional
     public Result login(LoginVo loginVo) {
@@ -133,9 +133,11 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
         //有效期和refresh_token的过期时间相同
         redisUtils.setCacheObject(key, userDto, JwtUtil2.REFRESH_EXPIRE_TIME, TimeUnit.MILLISECONDS);
         log.info("保存用户数据到redis。");
-
+        // 获取用户昵称
+        UserInfo userInfo = userInfoService.lambdaQuery().select(UserInfo::getNickname).eq(UserInfo::getId, userDto.getUserInfoId()).one();
         LoginDataDto loginDataDto = new LoginDataDto(
                 userDetailsDto.getUsername(),
+                userInfo.getNickname(),
                 token,
                 JwtUtil2.getExpireTime(token),
                 refreshToken,
@@ -146,7 +148,7 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
         );
 
         //  邮件通知作者
-        emailService.loginNotice(userDto,ipAddress,ipSource,deviceType,browserName);
+        emailService.loginNotice(userDto, ipAddress, ipSource, deviceType, browserName);
 
 //        response.setHeader("Access-Control-Expose-Headers", token);
         return new Result().ok(SuccessMessageConstant.LOGIN, loginDataDto);
@@ -223,7 +225,7 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
             userRoleService.save(userRole);
 
             //通知作者
-            emailService.registerNotice(email,signupVo.getNickname(),ipAddress,ipSource);
+            emailService.registerNotice(email, signupVo.getNickname(), ipAddress, ipSource);
             return new Result().ok(SuccessMessageConstant.SIGNUP);
         } else {
             throw new BlogException(OperationStateCode.VERIFICATION_ERROR);
