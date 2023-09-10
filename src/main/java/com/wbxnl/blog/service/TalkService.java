@@ -2,11 +2,15 @@ package com.wbxnl.blog.service;
 
 import com.wbxnl.blog.common.PageData;
 import com.wbxnl.blog.model.dto.TalkDto;
+import com.wbxnl.blog.model.dto.extra.NameValueDto;
 import com.wbxnl.blog.model.entity.Talk;
 import com.wbxnl.blog.model.vo.TalkVo;
+import com.wbxnl.blog.model.vo.params.DateIntervalParams;
 import com.wbxnl.blog.model.vo.params.PageParams;
 import com.wbxnl.blog.model.vo.params.TalkParams;
 import com.wbxnl.blog.service.base.BaseService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -31,4 +35,11 @@ public interface TalkService extends BaseService< Talk, TalkDto, TalkVo> {
      * @return
      */
     public Long getCountByUser();
+
+    /**
+     * 根据时间统计查询说说数量
+     * @param dateIntervalParams
+     * @return
+     */
+    List<NameValueDto> getStatisticsOfCount(DateIntervalParams dateIntervalParams);
 }

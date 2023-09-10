@@ -43,10 +43,6 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     private RedisUtils redisUtils;
 
     @Autowired
-    @Qualifier("handlerExceptionResolver")
-    private HandlerExceptionResolver resolver;
-
-    @Autowired
     private AuthenticationEntryPoint authenticationEntryPoint;
 
     @Override
@@ -91,15 +87,5 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         }
         //放行
         filterChain.doFilter(request, response);
-//        try {
-//            filterChain.doFilter(request, response);
-//        }catch (AccessDeniedException e){
-//            resolver.resolveException(request, response, null, e);
-//        }
-//        catch (Exception e){
-//            resolver.resolveException(request, response, null, new AccessDeniedException("权限不足，操作已被拒绝。"));
-////            resolver.resolveException(request, response, null, new BlogException(40000,"权限不足，操作已被拒绝。"));
-//        }
-
     }
 }

@@ -2,12 +2,16 @@ package com.wbxnl.blog.service;
 
 import com.wbxnl.blog.common.PageData;
 import com.wbxnl.blog.model.dto.ArticleDto;
+import com.wbxnl.blog.model.dto.extra.NameValueDto;
 import com.wbxnl.blog.model.dto.extra.StatisticsOfNumberDto;
 import com.wbxnl.blog.model.entity.Article;
 import com.wbxnl.blog.model.vo.ArticleVo;
 import com.wbxnl.blog.model.vo.params.ArticleParams;
+import com.wbxnl.blog.model.vo.params.DateIntervalParams;
 import com.wbxnl.blog.model.vo.params.PageParams;
 import com.wbxnl.blog.service.base.BaseService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -66,4 +70,11 @@ public interface ArticleService extends BaseService< Article, ArticleDto, Articl
      * @return
      */
     ArticleDto saveDraft(ArticleVo articleVo);
+
+    /**
+     * 根据日期区间查询文章统计
+     * @param dateIntervalParams
+     * @return
+     */
+    List<NameValueDto> getStatisticsOfCount(DateIntervalParams dateIntervalParams);
 }

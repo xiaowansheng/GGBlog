@@ -2,6 +2,7 @@ package com.wbxnl.blog.service;
 
 import com.wbxnl.blog.common.PageData;
 import com.wbxnl.blog.model.dto.CategoryDto;
+import com.wbxnl.blog.model.dto.extra.NameValueDto;
 import com.wbxnl.blog.model.entity.Category;
 import com.wbxnl.blog.model.vo.CategoryVo;
 import com.wbxnl.blog.model.vo.params.CategoryParams;
@@ -31,4 +32,10 @@ public interface CategoryService extends BaseService<Category, CategoryDto, Cate
      * @return
      */
     Long getCountByUser();
+
+    /**
+     * 查询分类对应的文章数量统计
+     * @return
+     */
+    List<NameValueDto> getCategoryStatistics();
 }

@@ -7,6 +7,7 @@ import com.wbxnl.blog.constant.types.OperationType;
 import com.wbxnl.blog.controller.base.AbstractController;
 import com.wbxnl.blog.model.dto.CategoryDto;
 import com.wbxnl.blog.model.dto.extra.IDNameDto;
+import com.wbxnl.blog.model.dto.extra.NameValueDto;
 import com.wbxnl.blog.model.entity.Article;
 import com.wbxnl.blog.model.entity.Category;
 import com.wbxnl.blog.model.vo.CategoryVo;
@@ -50,6 +51,13 @@ public class CategoryController extends AbstractController<CategoryService, Cate
     public Result updateStatus(@Validated({Update.class}) @RequestBody StatusVo statusVo){
         categoryService.lambdaUpdate().eq(Category::getId,statusVo.getId()).set(Category::getHidden,statusVo.getStatus()).update();
         return new Result();
+    }
+
+    @GetMapping("/statistics")
+    @Operation(summary = "获取所有的博客分类的文章数统计")
+    public Result<List<NameValueDto>> getCategoryStatistic() {
+        List<NameValueDto> list = categoryService.getCategoryStatistics();
+        return new Result().ok(list);
     }
 
     @GetMapping("/user/list")

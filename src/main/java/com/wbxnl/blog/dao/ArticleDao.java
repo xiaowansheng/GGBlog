@@ -1,10 +1,12 @@
 package com.wbxnl.blog.dao;
 
 import com.wbxnl.blog.model.dto.ArticleDto;
+import com.wbxnl.blog.model.dto.extra.NameValueDto;
 import com.wbxnl.blog.model.entity.Article;
 import com.wbxnl.blog.dao.base.BaseDao;
 import com.wbxnl.blog.model.vo.ArticleVo;
 import com.wbxnl.blog.model.vo.params.ArticleParams;
+import com.wbxnl.blog.model.vo.params.DateIntervalParams;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -81,5 +83,10 @@ public interface ArticleDao extends BaseDao<Article> {
      */
     public ArticleDto getArticleDto(@Param("id")Long id);
 
-
+    /**
+     * 根据日期查询文章统计
+     * @param dateIntervalParams
+     * @return
+     */
+    List<NameValueDto> getStatisticsOfCount(@Param("queryParams") DateIntervalParams dateIntervalParams);
 }

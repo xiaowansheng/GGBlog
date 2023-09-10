@@ -46,8 +46,6 @@ public class OssServiceController {
         String endpoint = this.endpoint; // 请填写您的 endpoint。
         String bucket = this.bucket; // 请填写您的 bucketname 。
         String dir = this.directory; // 用户上传文件时指定的前缀。
-//        String accessId = "LTAI5tAmSxRuhVPFxwcrmfig"; // 请填写您的AccessKeyId。
-//        String accessKey = "b6j07gIcttKidNnasKSgJ7SDyJleDo"; // 请填写您的AccessKeySecret。
 //        String endpoint = "oss-cn-chengdu.aliyuncs.com"; // 请填写您的 endpoint。
 //        String bucket = "grainmall-wbxnl"; // 请填写您的 bucketname 。
         String host = "http://" + bucket + "." + endpoint; // host的格式为 bucketname.endpoint

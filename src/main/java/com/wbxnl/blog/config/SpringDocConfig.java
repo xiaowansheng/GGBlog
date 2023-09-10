@@ -16,8 +16,8 @@ public class SpringDocConfig    {
     @Bean
     public OpenAPI restfulOpenAPI() {
         return new OpenAPI()
-                .info(new Info().title("Spring Boot3 Restful Zoo API")
-                        .description("Zoo & Animal Detail APi")
+                .info(new Info().title("GGBlog API")
+                        .description("Spring Boot3 Restful GGBlog Detail APi")
                         .version("v2.0.0")
                         .license(new License().name("Apache 2.0").url("http://springdoc.org")))
                 .externalDocs(new ExternalDocumentation()

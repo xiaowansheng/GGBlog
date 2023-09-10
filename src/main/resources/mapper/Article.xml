@@ -2,26 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wbxnl.blog.dao.ArticleDao">
 
-    <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.wbxnl.blog.model.entity.Article">
-        <id column="id" property="id"/>
-        <result column="user_auth_id" property="userAuthId"/>
-        <result column="category_id" property="categoryId"/>
-        <result column="cover" property="cover"/>
-        <result column="title" property="title"/>
-        <result column="content" property="content"/>
-        <result column="type" property="type"/>
-        <result column="original_author" property="originalAuthor"/>
-        <result column="original_title" property="originalTitle"/>
-        <result column="original_url" property="originalUrl"/>
-        <result column="note" property="note"/>
-        <result column="top" property="top"/>
-        <result column="status" property="status"/>
-        <result column="create_time" property="createTime"/>
-        <result column="update_time" property="updateTime"/>
-        <result column="deleted" property="deleted"/>
-    </resultMap>
-
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id
@@ -437,4 +417,32 @@
            or t.deleted=0)
     </select>
 
+    <resultMap id="NameValueMap" type="com.wbxnl.blog.model.dto.extra.NameValueDto">
+        <id column="date" property="name"/>
+        <result column="count" property="value"/>
+    </resultMap>
+
+    <!--   根据时间间隔查询文章数量统计 -->
+    <select id="getStatisticsOfCount" resultMap="NameValueMap">
+            <![CDATA[
+        SELECT date_range.date, COUNT(t_article.create_time) AS count
+        FROM (
+            SELECT DATE (DATE_ADD(#{queryParams.beginDate}, INTERVAL n.num DAY)) AS date
+            FROM (
+            SELECT (a.num + b.num * 10 + 1) - 1 AS num
+            FROM (SELECT 0 AS num UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3
+            UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7
+            UNION ALL SELECT 8 UNION ALL SELECT 9) a
+            CROSS JOIN (SELECT 0 AS num UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3
+            UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7
+            UNION ALL SELECT 8 UNION ALL SELECT 9) b
+            ) n
+            WHERE DATE (DATE_ADD(#{queryParams.beginDate}, INTERVAL n.num DAY)) <= #{queryParams.endDate}
+            ) date_range
+            LEFT JOIN t_article
+        ON DATE (t_article.create_time) = date_range.date
+        GROUP BY date_range.date
+        order by date_range.date
+        ]]>
+        </select>
 </mapper>

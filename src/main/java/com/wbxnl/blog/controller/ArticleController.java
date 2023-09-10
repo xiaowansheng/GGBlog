@@ -8,12 +8,14 @@ import com.wbxnl.blog.controller.base.AbstractController;
 import com.wbxnl.blog.enums.ArticleTypeEums;
 import com.wbxnl.blog.model.dto.ArticleDto;
 import com.wbxnl.blog.model.dto.extra.NameLabelDto;
+import com.wbxnl.blog.model.dto.extra.NameValueDto;
 import com.wbxnl.blog.model.dto.extra.StatisticsOfNumberDto;
 import com.wbxnl.blog.model.entity.Article;
 import com.wbxnl.blog.model.entity.Role;
 import com.wbxnl.blog.model.vo.ArticleVo;
 import com.wbxnl.blog.model.vo.extra.StatusVo;
 import com.wbxnl.blog.model.vo.params.ArticleParams;
+import com.wbxnl.blog.model.vo.params.DateIntervalParams;
 import com.wbxnl.blog.model.vo.params.PageParams;
 import com.wbxnl.blog.service.*;
 import com.wbxnl.blog.utils.ConvertUtils;
@@ -53,6 +55,13 @@ public class ArticleController extends AbstractController<ArticleService, Articl
 
     @Autowired
     private ArticleService articleService;
+
+    @GetMapping("/statistics/count")
+    @Operation(summary = "根据日期区间查询文章统计")
+    public Result<List<NameValueDto>> getStatisticsOfCount(@Validated DateIntervalParams dateIntervalParams){
+        List<NameValueDto> list=articleService.getStatisticsOfCount(dateIntervalParams);
+        return new Result<List<NameValueDto>>().ok(list);
+    }
 
     @PutMapping("/top")
     @Operation(summary = "改变文章置顶信息")

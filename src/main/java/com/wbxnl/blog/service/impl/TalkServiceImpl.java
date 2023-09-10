@@ -7,9 +7,11 @@ import com.wbxnl.blog.enums.ContentStateEums;
 import com.wbxnl.blog.enums.TopicTypeEums;
 import com.wbxnl.blog.enums.ViewTypeEums;
 import com.wbxnl.blog.model.dto.TalkDto;
+import com.wbxnl.blog.model.dto.extra.NameValueDto;
 import com.wbxnl.blog.model.entity.Talk;
 import com.wbxnl.blog.dao.TalkDao;
 import com.wbxnl.blog.model.vo.TalkVo;
+import com.wbxnl.blog.model.vo.params.DateIntervalParams;
 import com.wbxnl.blog.model.vo.params.base.QueryParams;
 import com.wbxnl.blog.model.vo.params.TalkParams;
 import com.wbxnl.blog.service.CommentService;
@@ -22,6 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  * 说说 服务实现类
@@ -33,6 +37,8 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class TalkServiceImpl extends AbstractServiceImpl<TalkDao, Talk, TalkDto, TalkVo> implements TalkService {
+    @Autowired
+    private TalkDao talkDao;
 
     @Autowired
     private PageViewService pageViewService;
@@ -61,6 +67,11 @@ public class TalkServiceImpl extends AbstractServiceImpl<TalkDao, Talk, TalkDto,
     @Override
     public Long getCountByUser() {
         return lambdaQuery().eq(Talk::getStatus,ContentStateEums.PUBLIC.getName()).count();
+    }
+
+    @Override
+    public List<NameValueDto> getStatisticsOfCount(DateIntervalParams dateIntervalParams) {
+        return talkDao.getStatisticsOfCount(dateIntervalParams);
     }
 
 

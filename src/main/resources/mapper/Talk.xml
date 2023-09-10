@@ -23,4 +23,33 @@
 <!--    <sql id="Base_Column_List">-->
 <!--        id, user_auth_id, content, images,ip_address,ip_source,device,browser, status, top, create_time, update_time, deleted-->
 <!--    </sql>-->
+
+    <resultMap id="NameValueMap" type="com.wbxnl.blog.model.dto.extra.NameValueDto">
+        <id column="date" property="name"/>
+        <result column="count" property="value"/>
+    </resultMap>
+
+    <!--   根据时间间隔查询说说数量统计 -->
+    <select id="getStatisticsOfCount" resultMap="NameValueMap">
+            <![CDATA[
+        SELECT date_range.date, COUNT(t.create_time) AS count
+        FROM (
+            SELECT DATE (DATE_ADD(#{queryParams.beginDate}, INTERVAL n.num DAY)) AS date
+            FROM (
+            SELECT (a.num + b.num * 10 + 1) - 1 AS num
+            FROM (SELECT 0 AS num UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3
+            UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7
+            UNION ALL SELECT 8 UNION ALL SELECT 9) a
+            CROSS JOIN (SELECT 0 AS num UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3
+            UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7
+            UNION ALL SELECT 8 UNION ALL SELECT 9) b
+            ) n
+            WHERE DATE (DATE_ADD(#{queryParams.beginDate}, INTERVAL n.num DAY)) <= #{queryParams.endDate}
+            ) date_range
+            LEFT JOIN t_talk t
+        ON DATE (t.create_time) = date_range.date
+        GROUP BY date_range.date
+        order by date_range.date
+        ]]>
+        </select>
 </mapper>

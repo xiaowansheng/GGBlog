@@ -279,7 +279,7 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
         // 新的token
         String token = JwtUtil.getToken(username, new HashMap<>());
         // 新的刷新token
-        String newRefreshToken = JwtUtil.getToken(username, new HashMap<>());
+        String newRefreshToken = JwtUtil.getRefreshToken(username, new HashMap<>());
         String key = UserPrefix.getUserInfoKey(username);
         UserDto userDto = redisUtils.getCacheObject(key);
         UserAuth userAuth = lambdaQuery().select(UserAuth::getId, UserAuth::getDisable)

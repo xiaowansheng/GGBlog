@@ -7,6 +7,7 @@ import com.wbxnl.blog.enums.ArticleTypeEums;
 import com.wbxnl.blog.enums.TopicTypeEums;
 import com.wbxnl.blog.enums.ViewTypeEums;
 import com.wbxnl.blog.model.dto.ArticleDto;
+import com.wbxnl.blog.model.dto.extra.NameValueDto;
 import com.wbxnl.blog.model.dto.extra.StatisticsOfNumberDto;
 import com.wbxnl.blog.model.entity.Article;
 import com.wbxnl.blog.dao.ArticleDao;
@@ -17,6 +18,7 @@ import com.wbxnl.blog.model.vo.ArticleVo;
 import com.wbxnl.blog.model.vo.CategoryVo;
 import com.wbxnl.blog.model.vo.TagVo;
 import com.wbxnl.blog.model.vo.params.ArticleParams;
+import com.wbxnl.blog.model.vo.params.DateIntervalParams;
 import com.wbxnl.blog.model.vo.params.PageParams;
 import com.wbxnl.blog.model.vo.params.base.QueryParams;
 import com.wbxnl.blog.service.*;
@@ -142,6 +144,11 @@ public class ArticleServiceImpl extends AbstractServiceImpl<ArticleDao, Article,
         article.setType(ArticleTypeEums.DRAFT.getName());
         saveOrUpdate(article);
         return ConvertUtils.sourceToTarget(article, ArticleDto.class);
+    }
+
+    @Override
+    public List<NameValueDto> getStatisticsOfCount(DateIntervalParams dateIntervalParams) {
+        return articleDao.getStatisticsOfCount(dateIntervalParams);
     }
 
     @Override

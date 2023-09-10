@@ -4,8 +4,10 @@ import com.wbxnl.blog.common.PageData;
 import com.wbxnl.blog.common.Result;
 import com.wbxnl.blog.controller.base.AbstractController;
 import com.wbxnl.blog.model.dto.TalkDto;
+import com.wbxnl.blog.model.dto.extra.NameValueDto;
 import com.wbxnl.blog.model.entity.Talk;
 import com.wbxnl.blog.model.vo.TalkVo;
+import com.wbxnl.blog.model.vo.params.DateIntervalParams;
 import com.wbxnl.blog.model.vo.params.PageParams;
 import com.wbxnl.blog.model.vo.params.TalkParams;
 import com.wbxnl.blog.service.SystemConfigService;
@@ -17,10 +19,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.wbxnl.blog.service.TalkService;
 
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
 //import io.swagger.documentation.annotations.ApiIgnore;
 
 
@@ -41,6 +46,12 @@ public class TalkController extends AbstractController<TalkService, Talk, TalkDt
     @Autowired
     private TalkService talkService;
 
+    @GetMapping("/statistics/count")
+    @Operation(summary = "根据日期区间查询说说统计")
+    public Result<List<NameValueDto>> getStatisticsOfCount(@Validated DateIntervalParams dateIntervalParams){
+        List<NameValueDto> list=talkService.getStatisticsOfCount(dateIntervalParams);
+        return new Result<List<NameValueDto>>().ok(list);
+    }
 
     //    @GetMapping("/visitor/count")
 //    //import io.swagger("游客查询说说访问量")

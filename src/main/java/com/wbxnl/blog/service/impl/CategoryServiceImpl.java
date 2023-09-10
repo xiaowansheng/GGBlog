@@ -2,6 +2,7 @@ package com.wbxnl.blog.service.impl;
 
 import com.wbxnl.blog.common.PageData;
 import com.wbxnl.blog.model.dto.CategoryDto;
+import com.wbxnl.blog.model.dto.extra.NameValueDto;
 import com.wbxnl.blog.model.entity.Category;
 import com.wbxnl.blog.dao.CategoryDao;
 import com.wbxnl.blog.model.vo.CategoryVo;
@@ -37,6 +38,11 @@ public class CategoryServiceImpl extends AbstractServiceImpl<CategoryDao, Catego
     @Override
     public Long getCountByUser() {
         return lambdaQuery().eq(Category::getHidden,0).count();
+    }
+
+    @Override
+    public List<NameValueDto> getCategoryStatistics() {
+        return categoryDao.getCategoryStatistics();
     }
 
     @Override

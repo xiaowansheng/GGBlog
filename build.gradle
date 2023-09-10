@@ -64,7 +64,7 @@ dependencies {
     // https://mvnrepository.com/artifact/com.alibaba.cloud/aliyun-oss-spring-boot-starter
     // implementation 'com.alibaba.cloud:aliyun-oss-spring-boot-starter:1.0.0'
     // https://mvnrepository.com/artifact/com.aliyun.oss/aliyun-sdk-oss
-    implementation 'com.aliyun.oss:aliyun-sdk-oss:3.17.0'
+    implementation 'com.aliyun.oss:aliyun-sdk-oss:3.17.1'
     // 敏感词检测工具
     // https://mvnrepository.com/artifact/com.github.houbb/sensitive-word
     implementation 'com.github.houbb:sensitive-word:0.8.0'

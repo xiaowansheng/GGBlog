@@ -1,22 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wbxnl.blog.dao.CategoryDao">
-
-    <!-- 通用查询映射结果 -->
-    <!--    <resultMap id="BaseResultMap" type="com.wbxnl.blog.model.entity.Category">-->
-    <!--        <id column="id" property="id" />-->
-    <!--        <result column="name" property="name" />-->
-    <!--        <result column="hidden" property="hidden" />-->
-    <!--        <result column="create_time" property="createTime" />-->
-    <!--        <result column="update_time" property="updateTime" />-->
-    <!--        <result column="deleted" property="deleted" />-->
-    <!--    </resultMap>-->
-
-    <!-- 通用查询结果列 -->
-    <!--    <sql id="Base_Column_List">-->
-    <!--        id, name, hidden, create_time, update_time, deleted-->
-    <!--    </sql>-->
-
     <!--    categoryDto-->
     <resultMap id="BaseDtoMap" type="com.wbxnl.blog.model.dto.CategoryDto">
         <id column="id" property="id"/>
@@ -76,5 +60,21 @@
             c.hidden=0
         group by c.id
         order by create_time desc, c.id
+    </select>
+    <resultMap id="NameValueMap" type="com.wbxnl.blog.model.dto.extra.NameValueDto">
+        <id column="name" property="name"/>
+        <result column="count" property="value"/>
+    </resultMap>
+    <!--    查询分类对应文章数量统计-->
+    <select id="getCategoryStatistics" resultMap="NameValueMap">
+        select c.name,
+               count(a.id) as count
+        from
+            t_category c
+            left join t_article a
+        on a.category_id= c.id and a.deleted=0
+        where
+            c.deleted=0
+        group by c.id
     </select>
 </mapper>
