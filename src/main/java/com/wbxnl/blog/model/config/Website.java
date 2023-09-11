@@ -33,6 +33,7 @@ public class Website {
                 .setIcon("http://")
                 .setHomeTitle("满天星辰")
                 .setWebsite("http://")
+                .setGithub("https://github.com/xiaowanshneg")
                 .setIntroduction("没有介绍")
                 .setCreateTime(new Date())
                 .setRecordNumber("XXXXXXXXXXXXX")
@@ -57,6 +58,10 @@ public class Website {
      * 网站地址
      */
     private String website;
+    /**
+     * GITHUB开源链接
+     */
+    private String github;
     /**
      * 网站介绍
      */

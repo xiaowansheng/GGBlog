@@ -181,6 +181,7 @@ public class SystemConfigServiceImpl extends AbstractServiceImpl<SystemConfigDao
                     break;
                 }
             } catch (IllegalAccessException e) {
+                log.error("找不到修改的配置信息key");
                 throw new RuntimeException(e);
             }
         }
