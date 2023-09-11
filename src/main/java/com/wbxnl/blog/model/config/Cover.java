@@ -60,5 +60,5 @@ public class Cover {
     /**
      * 封面地址
      */
-    private String url="http://";
+    private String url="";
 }

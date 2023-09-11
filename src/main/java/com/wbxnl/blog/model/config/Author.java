@@ -32,7 +32,7 @@ public class Author {
         DEFAULT_CONFIG.setName(split[split.length - 1])
                 .setLabel("作者信息")
                 .setDescription("作者信息json字符串");
-        Author author = new Author("作者", "http://", "没有介绍");
+        Author author = new Author("作者", "", "没有介绍");
         DEFAULT_CONFIG.setValue(JSON.toJSONString(author));
     }
 

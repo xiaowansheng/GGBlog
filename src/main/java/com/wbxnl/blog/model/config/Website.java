@@ -30,7 +30,7 @@ public class Website {
                 .setDescription("网站信息json数组字符串");
         Website website =new Website()
                 .setTitle("博客")
-                .setIcon("http://")
+                .setIcon("")
                 .setHomeTitle("满天星辰")
                 .setWebsite("http://")
                 .setGithub("https://github.com/xiaowanshneg")
