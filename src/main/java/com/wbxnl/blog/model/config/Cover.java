@@ -34,6 +34,7 @@ public class Cover {
                 .setLabel("封面")
                 .setDescription("封面信息json对象数组字符串");
         // 默认的封面配置
+        Cover welcome = new Cover().setName("Welcome").setLabel("欢迎页");
         Cover home = new Cover().setName("Home").setLabel("主页");
         Cover archive = new Cover().setName("Archive").setLabel("归档");
         Cover category = new Cover().setName("Category").setLabel("分类");
@@ -44,7 +45,7 @@ public class Cover {
         Cover guestbook = new Cover().setName("Guestbook").setLabel("留言板");
         Cover about = new Cover().setName("About").setLabel("关于");
         Cover other = new Cover().setName("Other").setLabel("其它");
-        Cover[] covers={home,archive,category,tag,talk,album,friend,guestbook,about,other};
+        Cover[] covers={welcome,home,archive,category,tag,talk,album,friend,guestbook,about,other};
         DEFAULT_CONFIG.setValue(JSON.toJSONString(covers));
     }
 
