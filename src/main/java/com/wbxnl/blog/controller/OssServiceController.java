@@ -107,7 +107,7 @@ public class OssServiceController {
         OSSClient client = new OSSClient(endpoint, accessId, accessKey);
         Map<String, String> respMap = new LinkedHashMap<String, String>();
         try {
-            long expireTime = 30;
+            long expireTime = 10;
             long expireEndTime = System.currentTimeMillis() + expireTime * 1000;
             Date expiration = new Date(expireEndTime);
             PolicyConditions policyConds = new PolicyConditions();

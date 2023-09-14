@@ -75,7 +75,11 @@ public class PictureServiceImpl extends AbstractServiceImpl<PictureDao, Picture,
         List<Picture> pictures = ConvertUtils.sourceToTarget(vos, Picture.class);
         for (Picture picture : pictures) {
             picture.setUserAuthId(SecurityUtils.getUserAuthId());
+            picture.setStatus(ContentStateEums.PUBLIC.getName());
+            save(picture);
         }
-        saveBatch(pictures, pictures.size());
+        // TODO 批量上传bug
+//        saveBatch(pictures, pictures.size());
+
     }
 }

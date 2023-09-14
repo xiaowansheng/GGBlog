@@ -4,7 +4,11 @@ import com.wbxnl.blog.annotation.Api;
 import com.wbxnl.blog.common.PageData;
 import com.wbxnl.blog.common.Result;
 import com.wbxnl.blog.controller.base.AbstractController;
+import com.wbxnl.blog.enums.ArticleTypeEums;
+import com.wbxnl.blog.enums.PictureTypeEums;
 import com.wbxnl.blog.model.dto.PictureDto;
+import com.wbxnl.blog.model.dto.extra.NameLabelDto;
+import com.wbxnl.blog.model.dto.extra.NameValueDto;
 import com.wbxnl.blog.model.entity.Picture;
 import com.wbxnl.blog.model.vo.PictureVo;
 //import io.swagger.annotations.Api;
@@ -23,7 +27,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -40,6 +47,15 @@ import java.util.Map;
 public class PictureController extends AbstractController<PictureService, Picture, PictureDto, PictureVo> {
     @Autowired
     private PictureService pictureService;
+
+    @GetMapping("/type")
+    @Operation(summary = "查询所有的照片分类信息")
+    public Result<List<NameLabelDto>> getPictureType(@ParameterObject PageParams pageParams){
+        List<NameLabelDto> list = Arrays.stream(PictureTypeEums.values())
+                .map(pictureType -> new NameLabelDto(pictureType.getName(), pictureType.getLabel()))
+                .collect(Collectors.toList());
+        return new Result().ok(list);
+    }
 
     @GetMapping("/user/page")
     @Operation(summary = "用户分页查询照片")
