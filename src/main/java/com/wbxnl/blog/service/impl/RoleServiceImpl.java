@@ -48,7 +48,7 @@ public class RoleServiceImpl extends AbstractServiceImpl<RoleDao, Role, RoleDto,
         }
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteById(Integer id) {
         //删除角色相关的其它信息

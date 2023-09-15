@@ -90,7 +90,7 @@ public class RoleMenuServiceImpl extends AbstractServiceImpl<RoleMenuDao, RoleMe
         return root;
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateBatch(List<RoleMenuVo> roleMenuVos) {
         // TODO BUG 清空角色菜单权限时，没有可以指定的角色ID

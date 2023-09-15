@@ -91,7 +91,7 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Result login(LoginVo loginVo) {
         //AuthenticationManager authenticate进行用户认证
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginVo.getUsername(), loginVo.getPassword());
@@ -188,7 +188,7 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Result signup(SignupVo signupVo) {
         String email = signupVo.getEmail();
         String verificationCode = signupVo.getVerificationCode();
@@ -338,7 +338,7 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public UserAuth saveVo(UserAuthVo userAuthVo) {
         UserInfoVo userInfoVo = userAuthVo.getUserInfoVo();
         UserInfo userInfo = userInfoService.saveVo(userInfoVo);
@@ -363,7 +363,7 @@ public class UserAuthServiceImpl extends AbstractServiceImpl<UserAuthDao, UserAu
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void update(UserAuthVo userAuthVo) {
         UserInfoVo userInfoVo = userAuthVo.getUserInfoVo();
         if (ObjectUtils.isNotNull(userInfoVo) && ObjectUtils.isNotNull(userInfoVo.getId())) {

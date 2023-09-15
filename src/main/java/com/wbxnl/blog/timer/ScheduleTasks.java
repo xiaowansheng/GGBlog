@@ -38,7 +38,7 @@ public class ScheduleTasks {
      */
 //    @Scheduled(fixedRate = 12 * 60 * 60 * 1000) // 每12小时执行一次
     @Scheduled(cron = "0 0 4 * * *")
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void executeSaveBatchVisitor() {
         Map<String, Visitor> visitorMap = null;
         Map<String, PageView> pageViewMap = null;

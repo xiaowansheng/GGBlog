@@ -79,7 +79,7 @@ public class SystemMenuServiceImpl extends AbstractServiceImpl<SystemMenuDao, Sy
         return root;
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteById(Integer id) {
         // 删除与该菜单相关的数据

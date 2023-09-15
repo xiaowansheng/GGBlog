@@ -41,7 +41,7 @@ public class RoleResourceServiceImpl extends AbstractServiceImpl<RoleResourceDao
 //        return roleResourceDao.getRoleResources(roleId);
 //    }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateBatch(List<RoleResourceVo> roleResourceVos) {
         if(CollectionUtils.isEmpty(roleResourceVos)){

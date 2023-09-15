@@ -105,7 +105,7 @@ public class SystemResourceServiceImpl extends AbstractServiceImpl<SystemResourc
         authorizationManager.clearDataSource();
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteById(Integer id) {
         //删除角色接口

@@ -67,8 +67,10 @@ import java.util.stream.Collectors;
         HttpServletRequest request = authorizationContext.getRequest();
         // 对所有请求的地址检测都通过
         log.info("request:{},{}", request.getMethod(), request.getRequestURI());
-        // TODO 关闭权限校验
+        // TODO 当前开启权限校验
+//        跳过授权
 //        return new AuthorizationDecision(true);
+//        执行授权
         return myCheck(authentication, request);
     }
 

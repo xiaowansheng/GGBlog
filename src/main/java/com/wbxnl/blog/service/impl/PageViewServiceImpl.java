@@ -51,7 +51,7 @@ public class PageViewServiceImpl extends AbstractServiceImpl<PageViewDao, PageVi
     private HttpServletRequest request;
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Long increasePageView(String viewType, Integer viewId) {
         /**
          * 保持数据库数据和redis数据双向同步

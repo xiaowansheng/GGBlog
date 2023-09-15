@@ -69,7 +69,7 @@ public class PictureServiceImpl extends AbstractServiceImpl<PictureDao, Picture,
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void saveVoBatch(List<PictureVo> vos) {
         // 填充每张照片的作者信息
         List<Picture> pictures = ConvertUtils.sourceToTarget(vos, Picture.class);

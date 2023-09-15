@@ -164,7 +164,7 @@ public class ArticleServiceImpl extends AbstractServiceImpl<ArticleDao, Article,
      * @return
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Article saveVo(ArticleVo articleVo) {
         Article article = ConvertUtils.sourceToTarget(articleVo, Article.class);
         article.setUserAuthId(SecurityUtils.getUserAuthId());
