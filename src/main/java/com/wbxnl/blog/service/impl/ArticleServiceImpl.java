@@ -13,6 +13,7 @@ import com.wbxnl.blog.model.entity.Article;
 import com.wbxnl.blog.dao.ArticleDao;
 import com.wbxnl.blog.model.entity.ArticleTag;
 import com.wbxnl.blog.model.entity.Category;
+import com.wbxnl.blog.model.entity.Tag;
 import com.wbxnl.blog.model.vo.ArticleTagVo;
 import com.wbxnl.blog.model.vo.ArticleVo;
 import com.wbxnl.blog.model.vo.CategoryVo;
@@ -180,7 +181,7 @@ public class ArticleServiceImpl extends AbstractServiceImpl<ArticleDao, Article,
         article.setCategoryId(category.getId());
         //添加或修改文章
         // 文章编号是null，则是添加文章，不是则修改文章
-        if (ObjectUtils.isNull(article.getId())) {
+        if (ObjectUtils.isNull(article.getId())||article.getId()==0) {
             save(article);
             articleVo.setId(article.getId());
         } else {
@@ -190,10 +191,15 @@ public class ArticleServiceImpl extends AbstractServiceImpl<ArticleDao, Article,
         articleTagService.lambdaUpdate().eq(ArticleTag::getArticleId, article.getId()).remove();
         //设置文章新的标签
         // 过滤得到新的标签，需要将这些新标签添加到数据库中
-        List<TagVo> newTags = tagVos.stream().filter(tag -> tag.getId() == null || tag.getId() == 0).collect(Collectors.toList());
-        if (CollectionUtils.isNotEmpty(newTags)) {
-            tagService.saveVoBatch(newTags);
-        }
+        tagVos.forEach(tagVo -> {
+            if(tagVo.getId() == null || tagVo.getId() == 0){
+                // 不存在的标签，新加入到数据库
+                Tag tag = ConvertUtils.sourceToTarget(tagVo, Tag.class);
+                tagService.save(tag);
+                // 回写id
+                tagVo.setId(tag.getId());
+            }
+        });
         // 添加文章标签
         List<ArticleTagVo> articleTagList = tagVos.stream().map(tagVo -> ArticleTagVo.builder()
                 .tagId(tagVo.getId())
