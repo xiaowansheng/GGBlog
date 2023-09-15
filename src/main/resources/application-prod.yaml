@@ -21,8 +21,14 @@ server:
 spring:
   application:
     name: gg-blog
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+    # 统一时间结果响应格式化
+    format:
+      date-time: yyyy-MM-dd HH:mm:ss
   jackson:
-    # 统一时间格式化处理，请求参数和响应结果都可以格式化
+    # 统一请求时间参数格式化处理，请求参数和响应结果都可以格式化
     date-format: yyy-MM-dd HH:mm:ss
     time-zone: GMT+8
   datasource:
@@ -33,9 +39,6 @@ spring:
     url: jdbc:mysql://localhost:3306/ggblog?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
     username: XXXX
     password: XXXX
-  mvc:
-    pathmatch:
-      matching-strategy: ANT_PATH_MATCHER
   #  redis??
   data:
     redis:
