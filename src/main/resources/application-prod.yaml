@@ -2,7 +2,7 @@ config:
   author: xiaowansheng
   version: 2.0
 
-debug: true
+debug: false
 
 # 文档地址
 # swagger-ui custom path
@@ -20,7 +20,7 @@ server:
 #    context-path: /api
 spring:
   application:
-    name: gg-blog
+    name: GG-Blog
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
@@ -39,7 +39,7 @@ spring:
     url: jdbc:mysql://localhost:3306/ggblog?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
     username: XXXX
     password: XXXX
-  #  redis??
+  #  redis：
   data:
     redis:
       host: 127.0.0.1
@@ -62,6 +62,7 @@ spring:
           starttls:
             enable: true
             required: true
+
   # rabbitMQ
 #  rabbitmq:
 #    host: XXX:XXX:XXX:XXX
@@ -83,6 +84,7 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
+# 阿里云OSS
 alibaba:
   cloud:
     access-key: XXXXXXXX
@@ -90,5 +92,6 @@ alibaba:
     oss:
       endpoint: XXXXXXXXX
       bucket: XXXXX
+      # 自定义上传的文件夹，不要带前缀/
       dir: XXXXX
 
