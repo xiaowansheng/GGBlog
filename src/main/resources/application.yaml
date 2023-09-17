@@ -1,7 +1,5 @@
 spring:
   profiles:
-    #    active: @activatedEnv@
-    # TODO 本地测试时复制一份配置文件名称改为 application-dev.yaml，再修复配置信息运行
     # 此时加载dev开发环境
     active: dev
     # 此时加载pro生产环境
