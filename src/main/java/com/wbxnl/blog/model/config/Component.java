@@ -30,13 +30,14 @@ public class Component {
                 .setLabel("功能组件")
                 .setDescription("组件信息json数组字符串");
         // 默认的组件配置
+        Component bulletin = new Component("Bulletin", "公告组件", 1);
         Component login = new Component("Login", "登录组件", 1);
         Component comment = new Component("Comment", "评论组件", 1);
         Component thirdPartLogin = new Component("ThirdPartLogin", "第三方登录组件", 1);
         Component register = new Component("Register", "注册组件", 1);
         Component search = new Component("Search", "搜索组件", 1);
         Component reward = new Component("Reward", "打赏组件", 1);
-        Component[] ct={login,comment,thirdPartLogin,register,search,reward};
+        Component[] ct={bulletin,login,comment,thirdPartLogin,register,search,reward};
         DEFAULT_CONFIG.setValue(JSON.toJSONString(ct));
     }
 

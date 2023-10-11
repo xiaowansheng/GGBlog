@@ -35,8 +35,10 @@ public class PrivacyAndSecurity {
         PrivacyAndSecurity browser = new PrivacyAndSecurity().setName("Browser").setLabel("显示浏览器信息").setShow(1);
         PrivacyAndSecurity location = new PrivacyAndSecurity().setName("Location").setLabel("显示定位信息").setShow(1);
         PrivacyAndSecurity visitor = new PrivacyAndSecurity().setName("Visitor").setLabel("允许游客操作").setShow(1);
-        PrivacyAndSecurity loginVerificationCode = new PrivacyAndSecurity().setName("LoginVerificationCode").setLabel("登录需要验证码").setShow(1);
-        PrivacyAndSecurity[] pas={address,device,browser,location,visitor,loginVerificationCode};
+        PrivacyAndSecurity loginVerificationCode = new PrivacyAndSecurity().setName("LoginVerificationCode").setLabel("登录验证码").setShow(1);
+        PrivacyAndSecurity commentVerificationCode = new PrivacyAndSecurity().setName("CommentVerificationCode").setLabel("评论验证码").setShow(1);
+        PrivacyAndSecurity leaveWordVerificationCode = new PrivacyAndSecurity().setName("LeaveWordVerificationCode").setLabel("留言验证码").setShow(1);
+        PrivacyAndSecurity[] pas={address,device,browser,location,visitor,loginVerificationCode,commentVerificationCode,leaveWordVerificationCode};
         DEFAULT_CONFIG.setValue(JSON.toJSONString(pas));
     }
 

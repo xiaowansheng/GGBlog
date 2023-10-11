@@ -26,7 +26,7 @@ public class Website {
     static {
         String[] split = KEY.split(":");
         DEFAULT_CONFIG.setName(split[split.length-1])
-                .setLabel("封面")
+                .setLabel("网站信息")
                 .setDescription("网站信息json数组字符串");
         Website website =new Website()
                 .setTitle("博客")
@@ -35,9 +35,9 @@ public class Website {
                 .setWebsite("http://")
                 .setGithub("https://github.com/xiaowanshneg")
                 .setIntroduction("没有介绍")
-                .setCreateTime(new Date())
+                .setCreateTime("2023-10-11 00:00:00")
                 .setRecordNumber("XXXXXXXXXXXXX")
-                .setNotice("没有通知信息~");
+                .setBulletin("没有通知信息~");
         DEFAULT_CONFIG.setValue(JSON.toJSONString(website));
     }
     /**
@@ -69,7 +69,7 @@ public class Website {
     /**
      * 建站时间
      */
-    private Date createTime;
+    private String createTime;
     /**
      * 备案号
      */
@@ -78,5 +78,5 @@ public class Website {
     /**
      * 通知信息
      */
-    private String notice;
+    private String bulletin;
 }

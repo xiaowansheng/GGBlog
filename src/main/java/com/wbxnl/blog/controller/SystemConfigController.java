@@ -42,9 +42,9 @@ public class SystemConfigController extends AbstractController<SystemConfigServi
 
     @GetMapping("/config/list")
     @Operation(summary = "用户获取所有配置信息")
-    public Result<List<NameValueDto>> getConfigList(){
-        List<NameValueDto> list=systemConfigService.getConfigList();
-        return new Result().ok(list);
+    public Result<Map<String,Object>> getConfigList(){
+        Map<String,Object> data=systemConfigService.getConfigList();
+        return new Result().ok(data);
     }
 
 //    @GetMapping("/covers")

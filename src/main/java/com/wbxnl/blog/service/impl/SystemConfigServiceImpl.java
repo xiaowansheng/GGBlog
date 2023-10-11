@@ -60,32 +60,48 @@ public class SystemConfigServiceImpl extends AbstractServiceImpl<SystemConfigDao
 
 
     @Override
-    public List<NameValueDto> getConfigList() {
+    public Map<String,Object> getConfigList() {
+        HashMap<String, Object> map = new HashMap<>();
         // 获取相关的配置信息
-        SystemConfig cover = getSystemConfig(Cover.KEY, Cover.DEFAULT_CONFIG);
-        SystemConfig menu = getSystemConfig(Menu.KEY, Menu.DEFAULT_CONFIG);
-        SystemConfig author = getSystemConfig(Author.KEY, Author.DEFAULT_CONFIG);
-        SystemConfig socialAccount = getSystemConfig(SocialAccount.KEY, SocialAccount.DEFAULT_CONFIG);
-        SystemConfig website = getSystemConfig(Website.KEY, Website.DEFAULT_CONFIG);
-        SystemConfig thirdPart = getSystemConfig(ThirdPartyLogin.KEY, ThirdPartyLogin.DEFAULT_CONFIG);
-        SystemConfig component = getSystemConfig(Component.KEY, Component.DEFAULT_CONFIG);
-        SystemConfig privacy = getSystemConfig(PrivacyAndSecurity.KEY, PrivacyAndSecurity.DEFAULT_CONFIG);
-        SystemConfig avatar = getSystemConfig(Avatar.KEY, Avatar.DEFAULT_CONFIG);
-        SystemConfig reward = getSystemConfig(Reward.KEY, Reward.DEFAULT_CONFIG);
-        SystemConfig[] configs = {cover, menu, author, socialAccount, website, thirdPart, component, privacy, avatar, reward};
-        List<NameValueDto> configList = Arrays.stream(configs)
-                .map(config ->
-                        new NameValueDto(config.getName(), getJsonObject(config.getValue()))
-                )
-                .collect(Collectors.toList());
+        Object cover = getJsonObjectOfConfig(Cover.KEY, Cover.DEFAULT_CONFIG);
+        map.put("cover",cover);
+        Object menu = getJsonObjectOfConfig(Menu.KEY, Menu.DEFAULT_CONFIG);
+        map.put("menu",menu);
+        Object author = getJsonObjectOfConfig(Author.KEY, Author.DEFAULT_CONFIG);
+        map.put("author",author);
+        Object socialAccount = getJsonObjectOfConfig(SocialAccount.KEY, SocialAccount.DEFAULT_CONFIG);
+        map.put("socialAccount",socialAccount);
+        Object website = getJsonObjectOfConfig(Website.KEY, Website.DEFAULT_CONFIG);
+        map.put("website",website);
+
+        Object thirdPart = getJsonObjectOfConfig(ThirdPartyLogin.KEY, ThirdPartyLogin.DEFAULT_CONFIG);
+        map.put("login",thirdPart);
+        Object component = getJsonObjectOfConfig(Component.KEY, Component.DEFAULT_CONFIG);
+        map.put("component",component);
+        Object privacy = getJsonObjectOfConfig(PrivacyAndSecurity.KEY, PrivacyAndSecurity.DEFAULT_CONFIG);
+        map.put("privacy",privacy);
+        Object avatar = getJsonObjectOfConfig(Avatar.KEY, Avatar.DEFAULT_CONFIG);
+        map.put("avatar",avatar);
+        Object reward = getJsonObjectOfConfig(Reward.KEY, Reward.DEFAULT_CONFIG);
+        map.put("reward",reward);
+
+
+//        SystemConfig[] configs = {cover, menu, author, socialAccount, website, thirdPart, component, privacy, avatar, reward};
+//        List<NameValueDto> configList = Arrays.stream(configs)
+//                .map(config ->
+//                        new NameValueDto(config.getName(), getJsonObject(config.getValue()))
+//                )
+//                .collect(Collectors.toList());
 
         // 网站访问量增加
         Long pageView = pageViewService.increasePageView(ViewTypeEums.WEBSITE.getName(), null);
+        map.put("pageView",pageView);
         // 添加统计
         addStatisticsOfIp();
         // 响应体中，添加网站访问量
-        configList.add(new NameValueDto(PAGE_VIEW, pageView));
-        return configList;
+//        configList.add(new NameValueDto(PAGE_VIEW, pageView));
+//        return configList;
+        return map;
     }
 
     /**
@@ -102,6 +118,7 @@ public class SystemConfigServiceImpl extends AbstractServiceImpl<SystemConfigDao
 
     @Override
     public Object getJsonObjectOfConfig(String key, SystemConfig defaultConfig) {
+
         SystemConfig systemConfig = getSystemConfig(key, defaultConfig);
         return getJsonObject(systemConfig.getValue());
     }

@@ -8,6 +8,7 @@ import com.wbxnl.blog.model.vo.SystemConfigVo;
 import com.wbxnl.blog.service.base.BaseService;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -25,7 +26,7 @@ public interface SystemConfigService extends BaseService<SystemConfig, SystemCon
      * 同时网站访问量增加
      * @return
      */
-    List<NameValueDto> getConfigList();
+    Map<String,Object> getConfigList();
     /**
      * 获取指定配置信息D的json对象,可能是json对象也可能是json数组
      * @param key redis查询key
