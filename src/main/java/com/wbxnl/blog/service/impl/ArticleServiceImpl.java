@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.wbxnl.blog.common.PageData;
 import com.wbxnl.blog.enums.ArticleTypeEums;
+import com.wbxnl.blog.enums.ContentStateEums;
 import com.wbxnl.blog.enums.TopicTypeEums;
 import com.wbxnl.blog.enums.ViewTypeEums;
 import com.wbxnl.blog.model.dto.ArticleDto;
@@ -64,6 +65,10 @@ public class ArticleServiceImpl extends AbstractServiceImpl<ArticleDao, Article,
         ArticleParams articleParams = (ArticleParams) queryParams;
         Long page = pageParams.getPage();
         Long limit = pageParams.getLimit();
+        // 访问公开文章
+        articleParams.setStatus(ContentStateEums.PUBLIC.getName());
+        // 排除草稿
+        articleParams.setType(ArticleTypeEums.DRAFT.getName());
         List<ArticleDto> articleDto = articleDao.getPageByUser((page - 1) * limit, limit, articleParams);
         Long count = getCountByUser(articleParams);
         return new PageData<>(articleDto, count);
@@ -71,8 +76,13 @@ public class ArticleServiceImpl extends AbstractServiceImpl<ArticleDao, Article,
 
     @Override
     public ArticleDto getArticleDtoByUser(Integer id) {
+        ArticleParams articleParams = new ArticleParams();
+        // 访问公开文章
+        articleParams.setStatus(ContentStateEums.PUBLIC.getName());
+        // 排除草稿
+        articleParams.setType(ArticleTypeEums.DRAFT.getName());
         // 查询文章数据
-        ArticleDto articleDto = articleDao.getArticleDtoByUser(id);
+        ArticleDto articleDto = articleDao.getArticleDtoByUser(id,articleParams);
         // 文章访问量增加
         if (ObjectUtils.isNotNull(articleDto)) {
             Long pageView = pageViewService.increasePageView(ViewTypeEums.ARTICLE.getName(), id);
@@ -94,8 +104,14 @@ public class ArticleServiceImpl extends AbstractServiceImpl<ArticleDao, Article,
     public PageData<ArticleDto> getArchiveByUser(PageParams pageParams) {
         Long page = pageParams.getPage();
         Long limit = pageParams.getLimit();
-        List<ArticleDto> archive = articleDao.getArchiveByUser((page - 1) * limit, limit);
-        Long count = getCountByUser(new ArticleParams());
+
+        ArticleParams articleParams = new ArticleParams();
+        // 访问公开文章
+        articleParams.setStatus(ContentStateEums.PUBLIC.getName());
+        // 排除草稿
+        articleParams.setType(ArticleTypeEums.DRAFT.getName());
+        List<ArticleDto> archive = articleDao.getArchiveByUser((page - 1) * limit, limit,articleParams);
+        Long count = getCountByUser(articleParams);
         return new PageData<>(archive, count);
     }
 

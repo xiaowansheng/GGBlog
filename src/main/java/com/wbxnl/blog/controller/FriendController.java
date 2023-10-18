@@ -55,7 +55,7 @@ public class FriendController extends AbstractController<FriendService, Friend, 
     @GetMapping("/user/page")
     @Operation(summary = "用户分页查询友链数据")
     public Result<PageData<FriendDto>> getPageByUser(@ParameterObject PageParams pageParams){
-        PageData<FriendDto> pageData = friendService.getPageByUser(pageParams,new CommentParams());
+        PageData<FriendDto> pageData = friendService.getPageByUser(pageParams,new FriendParams());
         // 添加访客记录
         if(pageParams.getPage()==1){
             pageViewService.increasePageView(ViewTypeEums.FRIEND.getName(), null);

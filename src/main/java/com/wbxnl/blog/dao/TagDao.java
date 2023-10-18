@@ -3,6 +3,7 @@ package com.wbxnl.blog.dao;
 import com.wbxnl.blog.model.dto.TagDto;
 import com.wbxnl.blog.model.entity.Tag;
 import com.wbxnl.blog.dao.base.BaseDao;
+import com.wbxnl.blog.model.vo.params.ArticleParams;
 import com.wbxnl.blog.model.vo.params.TagParams;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -33,6 +34,6 @@ public interface TagDao extends BaseDao<Tag> {
      * 用户获取全部分类详细数据
      * @return
      */
-    List<TagDto> getAllDetailByUser();
+    List<TagDto> getAllDetailByUser(@Param("params")ArticleParams params);
 
 }

@@ -1,11 +1,14 @@
 package com.wbxnl.blog.service.impl;
 
 import com.wbxnl.blog.common.PageData;
+import com.wbxnl.blog.enums.ArticleTypeEums;
+import com.wbxnl.blog.enums.ContentStateEums;
 import com.wbxnl.blog.model.dto.CategoryDto;
 import com.wbxnl.blog.model.dto.extra.NameValueDto;
 import com.wbxnl.blog.model.entity.Category;
 import com.wbxnl.blog.dao.CategoryDao;
 import com.wbxnl.blog.model.vo.CategoryVo;
+import com.wbxnl.blog.model.vo.params.ArticleParams;
 import com.wbxnl.blog.model.vo.params.CategoryParams;
 import com.wbxnl.blog.model.vo.params.PageParams;
 import com.wbxnl.blog.model.vo.params.base.QueryParams;
@@ -32,7 +35,10 @@ public class CategoryServiceImpl extends AbstractServiceImpl<CategoryDao, Catego
 
     @Override
     public List<CategoryDto> getAllDetailByUser() {
-        return categoryDao.getAllDetailByUser();
+        ArticleParams articleParams = new ArticleParams();
+        articleParams.setType(ArticleTypeEums.DRAFT.getName());
+        articleParams.setStatus(ContentStateEums.PUBLIC.getName());
+        return categoryDao.getAllDetailByUser(articleParams);
     }
 
     @Override

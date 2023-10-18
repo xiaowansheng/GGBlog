@@ -1,10 +1,13 @@
 package com.wbxnl.blog.service.impl;
 
 import com.wbxnl.blog.common.PageData;
+import com.wbxnl.blog.enums.ArticleTypeEums;
+import com.wbxnl.blog.enums.ContentStateEums;
 import com.wbxnl.blog.model.dto.TagDto;
 import com.wbxnl.blog.model.entity.Tag;
 import com.wbxnl.blog.dao.TagDao;
 import com.wbxnl.blog.model.vo.TagVo;
+import com.wbxnl.blog.model.vo.params.ArticleParams;
 import com.wbxnl.blog.model.vo.params.PageParams;
 import com.wbxnl.blog.model.vo.params.base.QueryParams;
 import com.wbxnl.blog.model.vo.params.TagParams;
@@ -30,7 +33,10 @@ public class TagServiceImpl extends AbstractServiceImpl<TagDao, Tag, TagDto, Tag
 
     @Override
     public List<TagDto> getAllDetailByUser() {
-        return tagDao.getAllDetailByUser();
+        ArticleParams articleParams = new ArticleParams();
+        articleParams.setType(ArticleTypeEums.DRAFT.getName());
+        articleParams.setStatus(ContentStateEums.PUBLIC.getName());
+        return tagDao.getAllDetailByUser(articleParams);
     }
 
 

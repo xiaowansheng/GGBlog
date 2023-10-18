@@ -27,9 +27,10 @@ public interface ArticleDao extends BaseDao<Article> {
      * 游客查询文章归档信息
      * @param current
      * @param limit
+     * @param params
      * @return
      */
-    public  List<ArticleDto> getArchiveByUser(@Param("current")Long current, @Param("limit")Long limit);
+    public  List<ArticleDto> getArchiveByUser(@Param("current")Long current, @Param("limit")Long limit,@Param("article")ArticleParams params);
 
     /**
      * 游客分页查询文章列表
@@ -51,9 +52,10 @@ public interface ArticleDao extends BaseDao<Article> {
     /**
      * 游客查询文章详细信息
      * @param id
+     * @param articleParams
      * @return
      */
-    public ArticleDto getArticleDtoByUser(@Param("id")Integer id);
+    public ArticleDto getArticleDtoByUser(@Param("id")Integer id,@Param("article")ArticleParams articleParams);
 
     /**
      * 管理员查询文章归档信息

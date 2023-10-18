@@ -40,10 +40,11 @@ public class SocialAccount {
         SocialAccount facebook = new SocialAccount().setName("Facebook").setLabel("脸书").setShow(1);
         SocialAccount twitter = new SocialAccount().setName("Twitter").setLabel("推特").setShow(1);
         SocialAccount telegram = new SocialAccount().setName("Telegram").setLabel("电报").setShow(1);
+        SocialAccount instagram = new SocialAccount().setName("Instagram").setLabel("Ins").setShow(1);
         SocialAccount github = new SocialAccount().setName("Github").setLabel("Github").setShow(1);
         SocialAccount gitee = new SocialAccount().setName("Gitee").setLabel("码云").setShow(1);
         SocialAccount[] accounts={
-                email,qq,wechat,weibo,facebook,twitter,telegram,github,gitee
+                email,qq,wechat,weibo,facebook,twitter,telegram,instagram,github,gitee
         };
         DEFAULT_CONFIG.setValue(JSON.toJSONString(accounts));
     }

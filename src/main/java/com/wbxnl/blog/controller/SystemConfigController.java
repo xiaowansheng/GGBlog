@@ -160,12 +160,12 @@ public class SystemConfigController extends AbstractController<SystemConfigServi
     @GetMapping("/about")
     @Operation(summary = "用户获取作者和网站介绍")
     public Result<SystemConfigDto> getAboutByUser(){
-        Object config = systemConfigService.getJsonObjectOfConfig(About.KEY, About.DEFAULT_CONFIG);
+        SystemConfig config = systemConfigService.getSystemConfig(About.KEY, About.DEFAULT_CONFIG);
         // 添加访客记录
         if(ObjectUtils.isNotNull(config)){
             pageViewService.increasePageView(ViewTypeEums.ABOUT.getName(), null);
         }
-        return new Result().ok(ConvertUtils.sourceToTarget(config,SystemConfigDto.class));
+        return new Result().ok(config.getValue());
     }
 
     @GetMapping("/config/about")

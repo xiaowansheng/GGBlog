@@ -53,7 +53,7 @@
         from
             t_category c
             left join t_article a
-        on a.category_id= c.id and a.deleted=0 and a.status=1
+        on a.category_id= c.id and a.deleted=0 and a.status=#{params.status} and a.type!=#{params.type}
         where
             c.deleted=0
           and

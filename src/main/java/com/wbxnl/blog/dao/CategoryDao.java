@@ -4,6 +4,7 @@ import com.wbxnl.blog.model.dto.CategoryDto;
 import com.wbxnl.blog.model.dto.extra.NameValueDto;
 import com.wbxnl.blog.model.entity.Category;
 import com.wbxnl.blog.dao.base.BaseDao;
+import com.wbxnl.blog.model.vo.params.ArticleParams;
 import com.wbxnl.blog.model.vo.params.CategoryParams;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -33,7 +34,7 @@ public interface CategoryDao extends BaseDao<Category> {
      * 用户查询所有的分类详情信息
      * @return
      */
-    List<CategoryDto> getAllDetailByUser();
+    List<CategoryDto> getAllDetailByUser(@Param("params")ArticleParams articleParams);
 
     /**
      * 查询分类对应的文章数量统计
