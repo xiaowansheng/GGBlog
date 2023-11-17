@@ -34,10 +34,10 @@
                 AND c.id = #{tag.id}
             </if>
             <if test="tag.name != null and tag.name != ''">
-                AND name like concat('%',#{tag},'%')
+                AND name like concat('%',#{tag.name},'%')
             </if>
             <if test="tag.hidden != null">
-                AND c.hidden=#{tag}
+                AND c.hidden=#{tag.hidden}
             </if>
         </where>
         group by t.id
@@ -58,14 +58,18 @@
                count(a.id) as count
         from
             t_tag t
-            left join t_article_tag at
-            on at.tag_id=t.id
-            left join t_article a
-            on a.id= at.article_id and a.deleted=0 and a.deleted=0 and a.status=#{params.status} and a.type!=#{params.type}
+            left join t_article_tag at on at.tag_id=t.id
+            left join t_article a on a.id= at.article_id and a.deleted=0 and a.status=#{params.status} and a.type!=#{params.type}
         where
             t.deleted=0
           and
             t.hidden=0
+            and
+            at.article_id not in(
+                select article_id as id
+                from t_article_tag at left join t_tag t on t.id=at.tag_id and t.deleted=0
+                where t.hidden=1
+            )
         group by t.id
         order by t.create_time desc, t.id
     </select>
