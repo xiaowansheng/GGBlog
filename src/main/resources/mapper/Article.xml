@@ -36,10 +36,6 @@
             <result column="t_hidden" property="hidden"/>
         </collection>
     </resultMap>
-    <!--    TODO 可能以下的SQL代码还能优化，先放着-->
-
-
-    <!--    TODO tag标签隐藏还会有其它标签让文章查询到，可跳过-->
     <!--    用户相关查询-->
     <select id="getPageByUser" resultMap="BaseDtoMap">
         select
