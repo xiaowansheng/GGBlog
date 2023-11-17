@@ -41,6 +41,61 @@
 TODO   BUG 用户分页查询时，使用标签查询的文章信息，只有查询的标签显示
             数量查询时同理
 -->
+<!--    <select id="getPageByUser" resultMap="BaseDtoMap">-->
+<!--        select-->
+<!--        a.id,-->
+<!--        a.user_auth_id,-->
+<!--        a.category_id,-->
+<!--        a.title,-->
+<!--        left(a.content,300) as content,-->
+<!--        a.cover,-->
+<!--        a.type,-->
+<!--        a.original_author,-->
+<!--        a.original_title,-->
+<!--        a.original_url,-->
+<!--        a.note,-->
+<!--        a.top,-->
+<!--        a.status,-->
+<!--        a.create_time,-->
+<!--        a.update_time,-->
+<!--        a.deleted,-->
+
+<!--        c.id as c_id,-->
+<!--        c.name as c_name,-->
+<!--        c.hidden as c_hidden,-->
+
+<!--        t.id as t_id,-->
+<!--        t.name as t_name,-->
+<!--        t.hidden as t_hidden-->
+<!--        from-->
+<!--        t_article a-->
+<!--        left join t_category c on c.id=a.category_id and c.deleted=0 and c.hidden=0-->
+<!--        left join t_article_tag at on at.article_id=a.id-->
+<!--        left join t_tag t on t.id=at.tag_id and t.deleted=0 and t.hidden=0-->
+<!--        where-->
+<!--        a.deleted=0-->
+<!--        <if test="article.status!=null and article.status!=''">-->
+<!--            and a.status=#{article.status}-->
+<!--        </if>-->
+<!--        <if test="article.type!=null and article.type!=''">-->
+<!--            and a.type != #{article.type}-->
+<!--        </if>-->
+<!--        <if test="article.categoryId!=null and article.categoryId!=''">-->
+<!--            and c.id=#{article.categoryId}-->
+<!--        </if>-->
+
+<!--        <if test="article.tagId !=null">-->
+<!--            and t.id=#{article.tagId}-->
+<!--        </if>-->
+<!--        and a.id not in (-->
+<!--        select distinct article_id as id-->
+<!--        from t_article_tag at-->
+<!--        right join t_tag t on at.tag_id = t.id and t.deleted=0-->
+<!--        where t.hidden=1-->
+<!--        )-->
+<!--        order by top desc, a.update_time desc-->
+<!--        limit #{current},#{limit}-->
+<!--    </select>-->
     <select id="getPageByUser" resultMap="BaseDtoMap">
         select
         a.id,
@@ -68,9 +123,10 @@ TODO   BUG 用户分页查询时，使用标签查询的文章信息，只有查
         t.name as t_name,
         t.hidden as t_hidden
         from
-        t_article a
-        left join t_category c on c.id=a.category_id and c.deleted=0 and c.hidden=0
-        left join t_article_tag at on at.article_id=a.id
+        (
+        select distinct  a.id as id,a.top as top,a.update_time from t_article a
+        left join t_category c on c.id=a.category_id and c.deleted =0 and c.hidden=0
+        left join t_article_tag at on a.id=at.article_id
         left join t_tag t on t.id=at.tag_id and t.deleted=0 and t.hidden=0
         where
         a.deleted=0
@@ -83,18 +139,24 @@ TODO   BUG 用户分页查询时，使用标签查询的文章信息，只有查
         <if test="article.categoryId!=null and article.categoryId!=''">
             and c.id=#{article.categoryId}
         </if>
-
         <if test="article.tagId !=null">
-            and t.id=#{article.tagId}
+            and t.id = #{article.tagId}
         </if>
         and a.id not in (
         select distinct article_id as id
         from t_article_tag at
-        right join t_tag t on at.tag_id = t.id and t.deleted=0
+        left join t_tag t on at.tag_id = t.id and t.deleted=0
         where t.hidden=1
         )
-        order by top desc, a.update_time desc
+        order by a.top desc, a.update_time desc
         limit #{current},#{limit}
+        ) as sa,
+        t_article a
+        left join t_category c on c.id=a.category_id and c.deleted=0 and c.hidden=0
+        left join t_article_tag at on at.article_id=a.id
+        left join t_tag t on t.id=at.tag_id and t.deleted=0 and t.hidden=0
+        where
+        a.id=sa.id
     </select>
     <!--    用户根据条件查询文章数量-->
     <select id="getCountByUser" resultType="Long">
@@ -244,6 +306,60 @@ TODO   BUG 用户分页查询时，使用标签查询的文章信息，只有查
             limit #{current}, #{limit}
     </select>
     <!--    管理员分页查询-->
+<!--    <select id="getPage" resultMap="BaseDtoMap">-->
+<!--        select a.id,-->
+<!--        a.user_auth_id,-->
+<!--        a.category_id,-->
+<!--        a.title,-->
+<!--        a.cover,-->
+<!--        a.type,-->
+<!--        a.original_author,-->
+<!--        a.original_title,-->
+<!--        a.original_url,-->
+<!--        a.note,-->
+<!--        a.top,-->
+<!--        a.status,-->
+<!--        a.create_time,-->
+<!--        a.update_time,-->
+<!--        a.deleted,-->
+<!--        c.id as c_id,-->
+<!--        c.name as c_name,-->
+<!--        c.hidden as c_hidden,-->
+<!--        t.id as t_id,-->
+<!--        t.name as t_name,-->
+<!--        t.hidden as t_hidden-->
+<!--        from-->
+<!--        t_article a-->
+<!--        left join t_category c-->
+<!--        on c.id=a.category_id and c.deleted =0-->
+<!--        left join t_article_tag at on at.article_id=a.id-->
+<!--        left join t_tag t on t.id= at.tag_id and t.deleted=0-->
+<!--        where-->
+<!--        a.deleted=0-->
+<!--        <if test="article.title!=null and article.title!=''">-->
+<!--            and a.title like concat('%',#{article.title},'%')-->
+<!--        </if>-->
+<!--        <if test="article.type!=null and article.type!=''">-->
+<!--            and a.type=#{article.type}-->
+<!--        </if>-->
+<!--        <if test="article.status!=null and article.status!=''">-->
+<!--            and a.status=#{article.status}-->
+<!--        </if>-->
+<!--        <if test="article.categoryId!=null">-->
+<!--            and c.id=#{article.categoryId}-->
+<!--        </if>-->
+<!--        <if test="article.top!=null">-->
+<!--            and a.top=#{article.top}-->
+<!--        </if>-->
+
+<!--        <if test="article.tagId!=null">-->
+<!--            and a.id in (select distinct at.article_id as id-->
+<!--            from t_article_tag at left join t_tag t on at.tag_id=t.id-->
+<!--            where at.tag_id =#{article.tagId})-->
+<!--        </if>-->
+<!--        order by a.update_time desc-->
+<!--        limit #{current}, #{limit}-->
+<!--    </select>-->
     <select id="getPage" resultMap="BaseDtoMap">
         select a.id,
         a.user_auth_id,
@@ -266,10 +382,10 @@ TODO   BUG 用户分页查询时，使用标签查询的文章信息，只有查
         t.id as t_id,
         t.name as t_name,
         t.hidden as t_hidden
-        from
+        from (
+        select distinct a.id as id,a.update_time from
         t_article a
-        left join t_category c
-        on c.id=a.category_id and c.deleted =0
+        left join t_category c on c.id=a.category_id and  c.deleted =0
         left join t_article_tag at on at.article_id=a.id
         left join t_tag t on t.id= at.tag_id and t.deleted=0
         where
@@ -286,10 +402,10 @@ TODO   BUG 用户分页查询时，使用标签查询的文章信息，只有查
         <if test="article.categoryId!=null">
             and c.id=#{article.categoryId}
         </if>
+
         <if test="article.top!=null">
             and a.top=#{article.top}
         </if>
-
         <if test="article.tagId!=null">
             and a.id in (select distinct at.article_id as id
             from t_article_tag at left join t_tag t on at.tag_id=t.id
@@ -297,6 +413,14 @@ TODO   BUG 用户分页查询时，使用标签查询的文章信息，只有查
         </if>
         order by a.update_time desc
         limit #{current}, #{limit}
+        ) as sa,
+        t_article a
+        left join t_category c  on c.id=a.category_id and c.deleted=0
+        left join t_article_tag at on at.article_id=a.id
+        left join t_tag t on t.id= at.tag_id and t.deleted=0
+        where
+        sa.id=a.id
+        order by a.update_time desc
     </select>
     <!--    根据条件查询数量-->
     <select id="getCount" resultType="Long">
