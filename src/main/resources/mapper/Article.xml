@@ -68,10 +68,10 @@
         t.name as t_name,
         t.hidden as t_hidden
         from
-        (
-        select a.id as id from t_article a
-
-        left join t_category c on c.id=a.category_id
+        t_article a
+        left join t_category c on c.id=a.category_id and c.deleted=0 and c.hidden=0
+        left join t_article_tag at on at.article_id=a.id
+        left join t_tag t on t.id=at.tag_id and t.deleted=0 and t.hidden=0
         where
         a.deleted=0
         <if test="article.status!=null and article.status!=''">
@@ -83,21 +83,16 @@
         <if test="article.categoryId!=null and article.categoryId!=''">
             and c.id=#{article.categoryId}
         </if>
-        and
-        (c.deleted is null or (c.deleted =0 and c.hidden=0))
+        <if test="article.tagId!=null and article.tagId!=''">
+            and a.id in (
+            select distinct article_id as id
+            from t_article_tag at
+            left join t_tag t on at.tag_id = t.id and t.deleted=0
+            where at.tag_id=#{article.tagId} and t.hidden=0
+            )
+        </if>
         order by top desc, a.update_time desc
         limit #{current},#{limit}
-        ) as sa,
-        t_article a
-        left join t_category c on c.id=a.category_id
-        left join t_article_tag at on at.article_id=a.id
-        left join t_tag t on t.id=at.tag_id
-        where
-        a.id=sa.id and
-        (t.deleted is null or (t.deleted=0 and t.hidden=0))
-        <if test="article.tagId!=null and article.tagId!=''">
-            and at.tag_id=#{article.tagId}
-        </if>
     </select>
     <!--    用户根据条件查询文章数量-->
     <select id="getCountByUser" resultType="Long">
@@ -106,15 +101,11 @@
         a.id
         from
         t_article a
-        left join t_category c on c.id=a.category_id
+        left join t_category c on c.id=a.category_id and c.deleted =0 and c.hidden=0
         left join t_article_tag at on at.article_id=a.id
-        left join t_tag t on t.id=at.tag_id
+        left join t_tag t on t.id=at.tag_id and t.deleted=0 and t.hidden=0
         where
         a.deleted=0
-        and
-        (c.deleted is null or (c.deleted =0 and c.hidden=0))
-        and
-        (t.deleted is null or (t.deleted=0 and t.hidden=0))
         <if test="article.status!=null and article.status!=''">
             and a.status=#{article.status}
         </if>
@@ -131,51 +122,43 @@
     <!--    用户根据ID查询文章详细信息-->
     <select id="getArticleDtoByUser" resultMap="BaseDtoMap">
         select a.id,
-               a.user_auth_id,
-               a.category_id,
-               a.title,
-               a.content,
-               a.cover,
-               a.type,
-               a.original_author,
-               a.original_title,
-               a.original_url,
-               a.note,
-               a.top,
-               a.status,
-               a.create_time,
-               a.update_time,
+        a.user_auth_id,
+        a.category_id,
+        a.title,
+        a.content,
+        a.cover,
+        a.type,
+        a.original_author,
+        a.original_title,
+        a.original_url,
+        a.note,
+        a.top,
+        a.status,
+        a.create_time,
+        a.update_time,
 
-               c.id     as c_id,
-               c.name   as c_name,
-               c.hidden as c_hidden,
+        c.id as c_id,
+        c.name as c_name,
+        c.hidden as c_hidden,
 
-               t.id     as t_id,
-               t.name   as t_name,
-               t.hidden as t_hidden
+        t.id as t_id,
+        t.name as t_name,
+        t.hidden as t_hidden
         from t_article a
-                 left join t_category c on c.id = a.category_id
-                 left join t_article_tag at
+        left join t_category c on c.id = a.category_id and c.deleted =0 and c.hidden=0
+        left join t_article_tag at
         on at.article_id=a.id
-            left join t_tag t on t.id= at.tag_id
+        left join t_tag t on t.id= at.tag_id and t.deleted=0 and t.hidden=0
         where
-            a.deleted=0
-          and
-            a.id=#{id}
+        a.deleted=0
+        and
+        a.id=#{id}
         <if test="article.status!=null and article.status!=''">
             and a.status=#{article.status}
         </if>
         <if test="article.type!=null and article.type!=''">
             and a.type != #{article.type}
         </if>
-          and
-            (c.deleted is null
-           or (c.deleted =0
-          and c.hidden=0))
-          and
-            (t.deleted is null
-           or (t.deleted=0
-          and t.hidden=0))
     </select>
     <!--    文章归档-->
     <select id="getArchiveByUser" resultMap="BaseDtoMap">
@@ -199,10 +182,10 @@
         c.name as c_name,
         c.hidden as c_hidden
         from t_article a
-        left join t_category c on c.id = a.category_id
+        left join t_category c on c.id = a.category_id and c.deleted =0 and c.hidden=0
         left join t_article_tag at
         on at.article_id=a.id
-        left join t_tag t on t.id= at.tag_id
+        left join t_tag t on t.id= at.tag_id and t.deleted=0 and t.hidden=0
         where
         a.deleted=0
         <if test="article.status!=null and article.status!=''">
@@ -211,14 +194,6 @@
         <if test="article.type!=null and article.type!=''">
             and a.type != #{article.type}
         </if>
-        and
-        (c.deleted is null
-        or (c.deleted =0
-        and c.hidden=0))
-        and
-        (t.deleted is null
-        or (t.deleted=0
-        and t.hidden=0))
         order by a.create_time desc
         limit #{current}, #{limit}
     </select>
@@ -239,34 +214,19 @@
                a.status,
                a.create_time,
                a.update_time,
-               a.deleted,
-               c.id     as c_id,
-               c.name   as c_name,
-               c.hidden as c_hidden,
-               t.id     as t_id,
-               t.name   as t_name,
-               t.hidden as t_hidden
-        from (select a.id as id
-              from t_article a
-                       left join t_category c
-                                 on c.id = a.category_id
-              where a.deleted = 0
-                and (c.deleted is null
-                  or c.deleted = 0)
-              order by a.update_time desc
-                  limit #{current}, #{limit}) as sa,
-             t_article a
-                 left join t_category c
-                           on c.id = a.category_id
+               c.id   as c_id,
+               c.name as c_name,
+               t.id   as t_id,
+               t.name as t_name,
+        from t_article a
+                 left join t_category c on c.id = a.category_id and c.deleted = 0
                  left join t_article_tag at
         on at.article_id=a.id
-            left join t_tag t on t.id= at.tag_id
+            left join t_tag t on t.id= at.tag_id and t.deleted=0
         where
-            sa.id=a.id
-          and
-            (t.deleted is null
-           or t.deleted=0)
+            a.deleted=0
         order by a.create_time desc
+            limit #{current}, #{limit}
     </select>
     <!--    管理员分页查询-->
     <select id="getPage" resultMap="BaseDtoMap">
@@ -291,11 +251,12 @@
         t.id as t_id,
         t.name as t_name,
         t.hidden as t_hidden
-        from (
-        select a.id as id from
+        from
         t_article a
         left join t_category c
-        on c.id=a.category_id
+        on c.id=a.category_id and c.deleted =0
+        left join t_article_tag at on at.article_id=a.id
+        left join t_tag t on t.id= at.tag_id and t.deleted=0
         where
         a.deleted=0
         <if test="article.title!=null and article.title!=''">
@@ -310,47 +271,30 @@
         <if test="article.categoryId!=null">
             and c.id=#{article.categoryId}
         </if>
-
         <if test="article.top!=null">
             and a.top=#{article.top}
         </if>
-        and
-        (c.deleted is null
-        or c.deleted =0)
-        order by a.update_time desc
-        limit #{current}, #{limit}
-        ) as sa,
-        t_article a
-        left join t_category c
-        on c.id=a.category_id
-        left join t_article_tag at on at.article_id=a.id
-        left join t_tag t on t.id= at.tag_id
-        where
-        sa.id=a.id
-        and
-        (t.deleted is null
-        or t.deleted=0)
+
         <if test="article.tagId!=null">
-            and at.tag_id=#{article.tagId}
+            and a.id in (select distinct at.article_id as id
+            from t_article_tag at left join t_tag t on at.tag_id=t.id
+            where at.tag_id =#{article.tagId})
         </if>
         order by a.update_time desc
+        limit #{current}, #{limit}
     </select>
     <!--    根据条件查询数量-->
     <select id="getCount" resultType="Long">
-        select count(id) from
-        (select
-        distinct
-        a.id
-        from (
-        select a.id as id from
+        select
+        count(distinct a.id) as count
+        from
         t_article a
         left join t_category c
-        on c.id=a.category_id
+        on c.id=a.category_id and c.deleted =0
+        left join t_article_tag at on at.article_id=a.id
+        left join t_tag t on t.id= at.tag_id and t.deleted=0
         where
         a.deleted=0
-        and
-        (c.deleted is null
-        or c.deleted =0)
         <if test="article.title!=null and article.title!=''">
             and a.title like concat('%',#{article.title},'%')
         </if>
@@ -363,24 +307,14 @@
         <if test="article.categoryId!=null">
             and c.id=#{article.categoryId}
         </if>
-
         <if test="article.top!=null">
             and a.top=#{article.top}
         </if>
-        ) as sa,
-        t_article a
-        left join t_category c
-        on c.id=a.category_id
-        left join t_article_tag at on at.article_id=a.id
-        left join t_tag t on t.id= at.tag_id
-        where
-        sa.id=a.id
         <if test="article.tagId!=null">
-            and at.tag_id=#{article.tagId}
+            and a.id in (select distinct at.article_id as id
+            from t_article_tag at left join t_tag t on at.tag_id=t.id
+            where at.tag_id =#{article.tagId})
         </if>
-        and
-        (t.deleted is null
-        or t.deleted=0)) as article
     </select>
     <!--    管理员详细查询-->
     <select id="getArticleDto" resultMap="BaseDtoMap">

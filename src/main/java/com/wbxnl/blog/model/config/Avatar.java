@@ -34,8 +34,8 @@ public class Avatar {
         // 默认的头像配置
         Avatar userDefault = new Avatar("User","用户默认头像","");
         Avatar visitorDefault = new Avatar("Visitor","游客默认头像","");
-//        Avatar anonymousDefault = new Avatar("Anonymous","匿名用户默认头像","http://");
-        Avatar[] at={userDefault,visitorDefault};
+        Avatar anonymousDefault = new Avatar("Anonymous","匿名用户默认头像","");
+        Avatar[] at={userDefault,visitorDefault,anonymousDefault};
         DEFAULT_CONFIG.setValue(JSON.toJSONString(at));
     }
 

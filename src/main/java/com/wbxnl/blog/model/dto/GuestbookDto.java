@@ -67,6 +67,15 @@ public class GuestbookDto implements Serializable {
 
     private String qq;
 
+    /**
+     * 额外
+     */
+    private String userAvatar;
+    /**
+     * 额外
+     */
+    private String userNickname;
+
     private Integer hidden;
 
     private Integer review;

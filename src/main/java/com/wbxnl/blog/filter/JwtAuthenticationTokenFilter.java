@@ -69,7 +69,8 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                     String redisKey = UserPrefix.getUserInfoKey(username);
                     UserDto userDto = redisUtils.getCacheObject(redisKey);
                     if (Objects.isNull(userDto)) {
-                        throw new InsufficientAuthenticationException("登录信息丢失，请重新登录！");
+                        this.authenticationEntryPoint.commence(request, response, new InsufficientAuthenticationException("登录信息丢失，请重新登录！"));
+                        return;
                     }
                     UserDetailsDto userDetailsDto = new UserDetailsDto(userDto);
 //                Collection<? extends GrantedAuthority> authorities = userDetailsDto.getAuthorities();

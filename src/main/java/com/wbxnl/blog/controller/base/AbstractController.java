@@ -55,8 +55,8 @@ public abstract class AbstractController<S extends BaseService<E,T,V>,E,T, V> {
     @Log(type = OperationType.ADD,desc ="添加数据")
     @Operation(summary = "保存数据")
     public Result<T> save(@Validated(Add.class) @RequestBody V vo) throws IllegalAccessException {
-        service.saveVo(vo);
-        return new Result().setMessage("保存成功！");
+        E e = service.saveVo(vo);
+        return new Result().setMessage("保存成功！").setData(e);
     }
 
     @PostMapping("/batch")

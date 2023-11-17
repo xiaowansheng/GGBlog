@@ -44,8 +44,9 @@ public class Cover {
         Cover friend = new Cover().setName("Friend").setLabel("友链");
         Cover guestbook = new Cover().setName("Guestbook").setLabel("留言板");
         Cover about = new Cover().setName("About").setLabel("关于");
-        Cover other = new Cover().setName("Other").setLabel("其它");
-        Cover[] covers={welcome,home,archive,category,tag,talk,album,friend,guestbook,about,other};
+        Cover information = new Cover().setName("Information").setLabel("个人信息");
+        Cover defaultCover = new Cover().setName("Default").setLabel("默认");
+        Cover[] covers={welcome,home,archive,category,tag,talk,album,friend,guestbook,about,information,defaultCover};
         DEFAULT_CONFIG.setValue(JSON.toJSONString(covers));
     }
 

@@ -193,4 +193,10 @@ public class CommentDto implements Serializable {
      */
     @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
+
+
+//    /**
+//     * 是否删除
+//     */
+//    private Integer deleted;
 }

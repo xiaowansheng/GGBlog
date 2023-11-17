@@ -21,6 +21,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  * 留言簿 服务实现类
@@ -35,6 +37,8 @@ public class GuestbookServiceImpl extends AbstractServiceImpl<GuestbookDao, Gues
     private HttpServletRequest request;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private GuestbookDao guestbookDao;
 
     @Override
     public PageData<GuestbookDto> getReviews(PageParams pageParams) {
@@ -47,6 +51,15 @@ public class GuestbookServiceImpl extends AbstractServiceImpl<GuestbookDao, Gues
                 .orderByDesc(Guestbook::getCreateTime);
         Page<Guestbook> selectPage = baseMapper.selectPage(guestbookPage, chainWrapper);
         return PageUtils.getPageData(selectPage, GuestbookDto.class);
+    }
+
+    @Override
+    public PageData<GuestbookDto> getPageByUser(PageParams pageParams, QueryParams queryParams) {
+        setQueryParamsByUser(queryParams);
+        GuestbookParams params = (GuestbookParams) queryParams;
+        List<GuestbookDto> list=guestbookDao.getPageByUser((pageParams.getPage()-1)*pageParams.getLimit(),pageParams.getLimit(), params);
+        Long count = lambdaQuery().eq(Guestbook::getHidden, params.getHidden()).eq(Guestbook::getReview, params.getReview()).count();
+        return new PageData<>(list,count);
     }
 
     @Override

@@ -15,7 +15,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UserType {
 
-    String message() default "用户状态不存在";
+    String message() default "用户类型不存在";
 
     Class<?>[] groups() default {};
 

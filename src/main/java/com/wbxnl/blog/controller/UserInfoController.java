@@ -51,7 +51,7 @@ public class UserInfoController extends AbstractController<UserInfoService, User
     @Log(type = OperationType.UPDATE,desc = "修改当前用户的个人信息")
     public Result updateInformation(@Validated({Update.class}) @RequestBody UserInfoVo userInfoVo){
         //获取当前用户id
-        Integer userInfoId = SecurityUtils.getUserInfoId();
+//        Integer userInfoId = SecurityUtils.getUserInfoId();
         userInfoVo.setId(SecurityUtils.getUserInfoId());
         userInfoService.update(userInfoVo);
         return new Result();

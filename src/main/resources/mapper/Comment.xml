@@ -63,7 +63,7 @@
         <result column="review" property="review"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
-        <result column="deleted" property="deleted"/>
+        <!--        <result column="deleted" property="deleted"/>-->
     </resultMap>
     <!--    用户分页查询数据-->
     <!--    TODO 还能优化-->
@@ -104,7 +104,7 @@
         where
         r.topic_type=#{comment.topicType}
         <if test="comment.topicId !=null">
-            and c.topicId=#{comment.topicId}
+            and r.topic_id=#{comment.topicId}
         </if>
         and
         r.parent_id=0
@@ -113,7 +113,7 @@
         and
         r.hidden=0
         and
-        c.review=1
+        r.review=1
         order by create_time asc
         limit #{current},#{limit}
         ) as r,t_comment co
@@ -132,9 +132,9 @@
     <select id="getRootCountByUser" resultType="Long">
         select count(c.id) as count from t_comment c
         where
-        c.topic_type=#{commentVo.topicType}
+        c.topic_type=#{comment.topicType}
         <if test="comment.topicId !=null">
-            and c.topicId=#{comment.topicId}
+            and c.topic_id=#{comment.topicId}
         </if>
         and
         c.deleted=0
@@ -152,18 +152,14 @@
         where
         c.topic_type=#{comment.topicType}
         <if test="comment.topicId !=null">
-            and c.topicId=#{comment.topicId}
+            and c.topic_id=#{comment.topicId}
         </if>
         and
-        c.deleted=0
+            c.deleted=0
         and
-        c.hidden=0
+            c.hidden=0
         and
-        c.review_state!=-1
-        <if test="commentVo.review !=null and commentVo.review ==1">
-            and c.review=1
-            and c.review_state=1
-        </if>
+            c.review=1
     </select>
     <!--管理员分页查询评论列表-->
     <!--    TODO 还能优化-->
@@ -207,7 +203,7 @@
             and c.topic_type=#{comment.topicType}
         </if>
         <if test="comment.topicId !=null">
-            and c.topicId=#{comment.topicId}
+            and c.topic_id=#{comment.topicId}
         </if>
         <if test="comment.content!=null and comment.content!=''">
             and c.content like concat('%',#{comment.content},'%')
@@ -276,7 +272,7 @@
             and c.topic_type=#{comment.topicType}
         </if>
         <if test="comment.topicId !=null">
-            and c.topicId=#{comment.topicId}
+            and c.topic_id=#{comment.topicId}
         </if>
         <if test="comment.content!=null and comment.content!=''">
             and c.content like concat('%',#{comment.content},'%')

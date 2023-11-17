@@ -36,6 +36,10 @@ dependencies {
     // 邮件服务
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
     implementation 'org.springframework.boot:spring-boot-starter-mail'
+    // Caused by: java.lang.RuntimeException: Provider for jakarta.activation.spi.MimeTypeRegistryProvider cannot be found
+//    implementation 'com.sun.mail:jakarta.mail:2.0.1'
+    implementation 'com.sun.activation:jakarta.activation:2.0.1'
+
     // 配置提示生成
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-configuration-processor
     implementation 'org.springframework.boot:spring-boot-configuration-processor'
