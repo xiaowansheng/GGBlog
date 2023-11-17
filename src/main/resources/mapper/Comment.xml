@@ -197,7 +197,7 @@
             and c.id=#{comment.id}
         </if>
         <if test="comment.userAuthId !=null">
-            and c.userAuthId=#{comment.userAuthId}
+            and c.user_auth_id=#{comment.userAuthId}
         </if>
         <if test="comment.topicType!=null and comment.topicType!=''">
             and c.topic_type=#{comment.topicType}
@@ -209,7 +209,7 @@
             and c.content like concat('%',#{comment.content},'%')
         </if>
         <if test="comment.ipSource!=null and comment.ipSource!=''">
-            and c.ipSource like concat('%',#{comment.ipSource},'%')
+            and c.ip_source like concat('%',#{comment.ipSource},'%')
         </if>
         <if test="comment.device!=null and comment.device!=''">
             and c.device like concat('%',#{comment.device},'%')
@@ -221,10 +221,10 @@
             and c.location like concat('%',#{comment.location},'%')
         </if>
         <if test="comment.rootId !=null">
-            and c.rootId=#{comment.rootId}
+            and c.root_id=#{comment.rootId}
         </if>
         <if test="comment.parentId !=null">
-            and c.parentId=#{comment.parentId}
+            and c.parent_id=#{comment.parentId}
         </if>
         <if test="comment.email!=null and comment.email!=''">
             and c.email like concat('%',#{comment.email},'%')
@@ -266,7 +266,7 @@
             and c.id=#{comment.id}
         </if>
         <if test="comment.userAuthId !=null">
-            and c.userAuthId=#{comment.userAuthId}
+            and c.user_auth_id=#{comment.userAuthId}
         </if>
         <if test="comment.topicType!=null and comment.topicType!=''">
             and c.topic_type=#{comment.topicType}
@@ -278,7 +278,7 @@
             and c.content like concat('%',#{comment.content},'%')
         </if>
         <if test="comment.ipSource!=null and comment.ipSource!=''">
-            and c.ipSource like concat('%',#{comment.ipSource},'%')
+            and c.ip_source like concat('%',#{comment.ipSource},'%')
         </if>
         <if test="comment.device!=null and comment.device!=''">
             and c.device like concat('%',#{comment.device},'%')
@@ -290,10 +290,10 @@
             and c.location like concat('%',#{comment.location},'%')
         </if>
         <if test="comment.rootId !=null">
-            and c.rootId=#{comment.rootId}
+            and c.root_id=#{comment.rootId}
         </if>
         <if test="comment.parentId !=null">
-            and c.parentId=#{comment.parentId}
+            and c.parent_id=#{comment.parentId}
         </if>
         <if test="comment.email!=null and comment.email!=''">
             and c.email like concat('%',#{comment.email},'%')
