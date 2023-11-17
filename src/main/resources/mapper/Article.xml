@@ -79,14 +79,17 @@
         <if test="article.categoryId!=null and article.categoryId!=''">
             and c.id=#{article.categoryId}
         </if>
-        <if test="article.tagId!=null and article.tagId!=''">
-            and a.id in (
-            select distinct article_id as id
-            from t_article_tag at
-            left join t_tag t on at.tag_id = t.id and t.deleted=0
-            where at.tag_id=#{article.tagId} and t.hidden=0
-            )
+        and
+        a.id not in (
+        select distinct article_id as id
+        from t_article_tag at
+        right join t_tag t on at.tag_id = t.id and t.deleted=0
+        where t.hidden=1
+
+        <if test="article.tagId !=null">
+            or t.id!=#{article.tagId}
         </if>
+        )
         order by top desc, a.update_time desc
         limit #{current},#{limit}
     </select>
@@ -111,9 +114,15 @@
         <if test="article.categoryId !=null">
             and c.id=#{article.categoryId}
         </if>
+        and a.id not in (
+        select distinct article_id as id
+        from t_article_tag at
+        right join t_tag t on at.tag_id = t.id and t.deleted=0
+        where t.hidden=1
         <if test="article.tagId !=null">
-            and t.id=#{article.tagId}
-        </if>) as ids
+            or t.id != #{article.tagId}
+        </if>)
+        ) as ids
     </select>
     <!--    用户根据ID查询文章详细信息-->
     <select id="getArticleDtoByUser" resultMap="BaseDtoMap">
@@ -190,6 +199,12 @@
         <if test="article.type!=null and article.type!=''">
             and a.type != #{article.type}
         </if>
+        and a.id not in (
+        select distinct article_id as id
+        from t_article_tag at
+        left join t_tag t on at.tag_id = t.id and t.deleted=0
+        where t.hidden=1
+        )
         order by a.create_time desc
         limit #{current}, #{limit}
     </select>
