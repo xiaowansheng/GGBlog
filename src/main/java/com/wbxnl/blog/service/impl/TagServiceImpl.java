@@ -1,5 +1,8 @@
 package com.wbxnl.blog.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.wbxnl.blog.common.PageData;
 import com.wbxnl.blog.enums.ArticleTypeEums;
 import com.wbxnl.blog.enums.ContentStateEums;
@@ -51,7 +54,12 @@ public class TagServiceImpl extends AbstractServiceImpl<TagDao, Tag, TagDto, Tag
         Long page = pageParams.getPage();
         Long limit = pageParams.getLimit();
         List<TagDto> details = tagDao.getDetailPage((page - 1) * limit, limit, tagParams);
-        long count = count();
+        LambdaQueryWrapper<Tag> tagLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        tagLambdaQueryWrapper
+                .eq(ObjectUtils.isNotNull(tagParams.getId()),Tag::getId,tagParams.getId())
+                .like(StringUtils.isNotBlank(tagParams.getName()),Tag::getName,tagParams.getName())
+                .eq(ObjectUtils.isNotNull(tagParams.getHidden()),Tag::getHidden,tagParams.getHidden());
+        long count = count(tagLambdaQueryWrapper);
         return new PageData<>(details,count);
     }
 }

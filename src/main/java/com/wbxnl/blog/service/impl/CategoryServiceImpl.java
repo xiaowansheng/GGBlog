@@ -1,5 +1,8 @@
 package com.wbxnl.blog.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.wbxnl.blog.common.PageData;
 import com.wbxnl.blog.enums.ArticleTypeEums;
 import com.wbxnl.blog.enums.ContentStateEums;
@@ -7,6 +10,7 @@ import com.wbxnl.blog.model.dto.CategoryDto;
 import com.wbxnl.blog.model.dto.extra.NameValueDto;
 import com.wbxnl.blog.model.entity.Category;
 import com.wbxnl.blog.dao.CategoryDao;
+import com.wbxnl.blog.model.entity.Tag;
 import com.wbxnl.blog.model.vo.CategoryVo;
 import com.wbxnl.blog.model.vo.params.ArticleParams;
 import com.wbxnl.blog.model.vo.params.CategoryParams;
@@ -57,7 +61,12 @@ public class CategoryServiceImpl extends AbstractServiceImpl<CategoryDao, Catego
         Long page = pageParams.getPage();
         Long limit = pageParams.getLimit();
         List<CategoryDto> details = categoryDao.getDetails((page - 1) * limit, limit, categoryParams);
-        Long count = count();
+        LambdaQueryWrapper<Category> categoryLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        categoryLambdaQueryWrapper
+                .eq(ObjectUtils.isNotNull(categoryParams.getId()),Category::getId,categoryParams.getId())
+                .like(StringUtils.isNotBlank(categoryParams.getName()),Category::getName,categoryParams.getName())
+                .eq(ObjectUtils.isNotNull(categoryParams.getHidden()),Category::getHidden,categoryParams.getHidden());
+        long count = count(categoryLambdaQueryWrapper);
         return new PageData<CategoryDto>(details,count);
     }
 }
