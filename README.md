@@ -4,9 +4,9 @@
 
 当前项目是个人博客项目的 2.0 版本。
 
-由于 1.0 版本的开发过于仓促和草率，忙着完成上线运行，各方面功能没有设计好，也没有留有更好的扩展方式，同时功能设计上也有些不足，所以第一个版本没有进行开源，同时各方面的依赖也是停留在了 `jdk 11 + Springboot 2.7.x`的版本上，也有部分 bug 不想改了，所以只是留以自用，且当前部署到服务器的博客系统依旧还是 1.0 版本，等到前台系统的 2.0 开发完成，将会整体迁移到 2.0 版本上线运行。
+由于 1.0 版本的开发过于仓促和草率，忙着完成上线运行，各方面功能没有设计好，也没有留有更好的扩展方式，同时功能设计上也有些不足，所以第一个版本没有进行开源，也有部分 bug 不想改了，所以只是版本暂存。 2.0 版本系统功能设计上是基于第一个版本的开发和扩展，同时各种依赖也升级到了最新的版本。
 
-当前 2.0 版本系统功能设计上是基于第一个版本的开发和扩展，同时各种依赖也升级到了最新的版本。后端服务器是在第一个版本基础上升级和扩展的，但是前端后台和前台页面是推翻了重写的，跟第一个版本没有任何联系。
+当前部署到服务器的博客系统已经是2.0版本，通过链接可以查看相关功能。
 
 
 
@@ -20,7 +20,7 @@
 
 同时，还可以巩固学到的新知识，新技术，整理完善还能作为笔记，可以时时翻阅查看。同时还能当作日记本，记录日常，发发日常，发发牢骚，只给自己看，只给有缘人看。我相信应该不只是我一个人不喜欢发空间和朋友圈，不喜欢被熟人看到自己。
 
-所以，就想着不如好好的写一个自己的开源项目，既可以解决自己上述发博客，发说说的问题，又可以很好的实践新学的技术，不断的给网站添加新的功能。
+所以，就想着不如好好的写一个自己的开源项目，既可以解决自己上述发博客，发说说的问题，又可以很好的实践新学的技术，不断的给网站添加新的功能，不断的进步提升。
 
 于是，这个项目就这样开始了。但是由于水平有限，很多功能上可能写的不太好，代码上写的不够规范，多多见谅。
 
@@ -32,23 +32,25 @@
 
 **后端服务器仓库：**
 
-[Springboot-GGBlog](https://github.com/xiaowansheng/GGBlog )
+[GGBlog-Server](https://github.com/xiaowansheng/GGBlog )
 
 **后台管理仓库：**
 
-[Vue-GGBlog-Admin](https://github.com/xiaowansheng/GGBlog-Admin)
+[GGBlog-Admin](https://github.com/xiaowansheng/GGBlog-Admin)
 
 **前台系统仓库：**
 
-[Vue-GGBlog-Main（正在开发）](https://github.com/xiaowansheng/GGBlog-Main)
+[GGBlog-Main](https://github.com/xiaowansheng/GGBlog-Main)
 
-当前版本未开发完成，可大概参考第一个版本的功能样式：[WBXNL.COM](https://wbxnl.com)
+前台地址：[WBXNL.COM](https://wbxnl.com)
+
+后台地址：[ADMIN.WBXNL.COM](https://admin.wbxnl.com)
 
 
 
 ## 依赖信息
 
-博客系统基于` jdk17 + Springboot 3.1.1 + SpringSecurity 3.1.1 + Mysql 8.0.28 + Redis 7.0.12 +RabbitMQ（还未整合） + Elasticsearch （暂未整合）`实现。
+博客系统基于` jdk17 + Springboot 3.1.1 + SpringSecurity 3.1.1 + Mysql 8.0.28 + Redis 7.0.12 +RabbitMQ 3.10.7 + Elasticsearch （暂未整合）`实现。
 
 项目主要依赖如下：
 
@@ -61,6 +63,7 @@
 | mysql-connector-java                | 8.0.28  |
 | druid-spring-boot-starter           | 1.2.18  |
 | spring-boot-starter-data-redis      | 3.1.1   |
+| spring-boot-starter-amqp            | 3.1.1   |
 | java-jwt                            | 4.4.0   |
 | spring-boot-starter-mail            | 3.1.1   |
 | UserAgentUtils                      | 1.21    |
@@ -69,6 +72,8 @@
 | springdoc-openapi-starter-webmvc-ui | 2.1     |
 | fastjson2                           | 2.0.39  |
 | spring-boot-starter-thymeleaf       | 3.1.2   |
+
+
 
 
 
@@ -313,8 +318,4 @@
 
 ## 前台主要功能设计
 
-**由于前台还停留在第一个版本，第二个版本暂未开发完成。**
-
-可参考第一个版本样式：[WBXNL.COM](https://wbxnl.com)
-
-开发进度可以关注仓库：[Vue-GGBlog-Main（正在开发）](https://github.com/xiaowansheng/GGBlog-Main)
+预览：[WBXNL.COM](https://wbxnl.com)
