@@ -2,8 +2,8 @@ services:
   rabbitmq:
     image: 'rabbitmq:latest'
     environment:
-      - 'RABBITMQ_DEFAULT_PASS=secret'
-      - 'RABBITMQ_DEFAULT_USER=myuser'
+      - 'RABBITMQ_DEFAULT_USER=root'
+      - 'RABBITMQ_DEFAULT_PASS=root'
     ports:
       - '5672'
   redis:
