@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.wbxnl.blog.enums.LoginTypeEmus;
 import com.wbxnl.blog.enums.TopicTypeEums;
 import com.wbxnl.blog.enums.UserTypeEums;
+import com.wbxnl.blog.message.EmailMessage;
 import com.wbxnl.blog.model.config.Notice;
 import com.wbxnl.blog.model.dto.CommentDto;
 import com.wbxnl.blog.model.dto.MailDto;
@@ -19,6 +20,7 @@ import com.wbxnl.blog.model.entity.UserInfo;
 import com.wbxnl.blog.service.*;
 import com.wbxnl.blog.utils.EmailUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -35,6 +37,8 @@ import java.util.List;
  */
 @Service
 public class EmailServiceImpl implements EmailService {
+    @Value("${blog.logo}")
+    private String logo;
     /**
      * 验证码邮件模板名称
      */
@@ -60,6 +64,8 @@ public class EmailServiceImpl implements EmailService {
      * "与我相关"回复通知邮件模板名
      */
     private static final String REPLIED_NOTICE_TEMPLATE_NAME = "repliedNotice";
+    @Autowired
+    private EmailMessage emailMessage;
     @Autowired
     private EmailUtils emailUtils;
     @Autowired
@@ -96,7 +102,10 @@ public class EmailServiceImpl implements EmailService {
         // 设置使用期限展示
         context.setVariable("expire", 15);
         String htmlStr = generateHtmlStr(VERIFICATION_TEMPLATE_NAME, context);
-        return emailUtils.sentHtmlMail(new MailDto(receiverMailbox, "系统验证码", htmlStr));
+        MailDto mailDto = new MailDto(receiverMailbox, "系统验证码", htmlStr);
+//        return emailUtils.sentHtmlMail(mailDto);
+        emailMessage.sendEmailMessage(mailDto);
+        return true;
     }
 
     @Override
@@ -112,7 +121,9 @@ public class EmailServiceImpl implements EmailService {
         context.setVariable("ipAddress", ipAddress);
         context.setVariable("ipSource", ipSource);
         String htmlStr = generateHtmlStr(REGISTER_NOTICE_TEMPLATE_NAME, context);
-        emailUtils.sentHtmlMail(new MailDto(emailUtils.mailSender, "网站新用户注册通知~", htmlStr));
+        MailDto mailDto = new MailDto(emailUtils.mailSender, "网站新用户注册通知~", htmlStr);
+//        emailUtils.sentHtmlMail(mailDto);
+        emailMessage.sendEmailMessage(mailDto);
     }
 
     @Override
@@ -175,7 +186,8 @@ public class EmailServiceImpl implements EmailService {
             MailDto mailDto = new MailDto().setReceiver(targetEmail)
                     .setSubject("作品有了新的评论哟~")
                     .setContent(generateHtmlStr(COMMENT_NOTICE_TEMPLATE_NAME, context));
-            emailUtils.sentHtmlMail(mailDto);
+//            emailUtils.sentHtmlMail(mailDto);
+            emailMessage.sendEmailMessage(mailDto);
         } else {
             // 回复的是用户，则先查询被回复人的信息
             // 根据配置是否需要通知
@@ -221,7 +233,8 @@ public class EmailServiceImpl implements EmailService {
             MailDto mailDto = new MailDto().setReceiver(targetEmail)
                     .setSubject("您的评论被小伙伴回复了哟~")
                     .setContent(generateHtmlStr(REPLIED_NOTICE_TEMPLATE_NAME, context));
-            emailUtils.sentHtmlMail(mailDto);
+//            emailUtils.sentHtmlMail(mailDto);
+            emailMessage.sendEmailMessage(mailDto);
         }
 
     }
@@ -242,7 +255,8 @@ public class EmailServiceImpl implements EmailService {
         context.setVariable("device", deviceType);
         context.setVariable("browser", browserName);
         MailDto mailDto = new MailDto(emailUtils.mailSender, "有用户登录网站了哦", generateHtmlStr(LOGIN_NOTICE_TEMPLATE_NAME, context));
-        emailUtils.sentHtmlMail(mailDto);
+//        emailUtils.sentHtmlMail(mailDto);
+        emailMessage.sendEmailMessage(mailDto);
     }
 
     @Override
@@ -294,7 +308,8 @@ public class EmailServiceImpl implements EmailService {
         context.setVariable("device", guestbook.getDevice());
         context.setVariable("browser", guestbook.getBrowser());
         MailDto mailDto = new MailDto(emailUtils.mailSender, "留言板上有新留言了哟~", generateHtmlStr(LEAVE_WORD_NOTICE_TEMPLATE_NAME, context));
-        emailUtils.sentHtmlMail(mailDto);
+//        emailUtils.sentHtmlMail(mailDto);
+        emailMessage.sendEmailMessage(mailDto);
     }
 
     /**
@@ -344,8 +359,8 @@ public class EmailServiceImpl implements EmailService {
         String datetime = now.format(formatter);
         // 设置显示时间
         context.setVariable("datetime", datetime);
-        // TODO 设置显示的图标
-        context.setVariable("logo", "http://");
+        // 设置显示的图标
+        context.setVariable("logo", logo);
         return context;
     }
 
