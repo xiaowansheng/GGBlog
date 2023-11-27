@@ -40,7 +40,7 @@ public class SystemConfigController extends AbstractController<SystemConfigServi
     @Autowired
     private PageViewService pageViewService;
 
-    @GetMapping("/config/list")
+    @GetMapping("/list")
     @Operation(summary = "用户获取所有配置信息")
     public Result<Map<String,Object>> getConfigList(){
         Map<String,Object> data=systemConfigService.getConfigList();

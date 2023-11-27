@@ -5,6 +5,7 @@ import com.wbxnl.blog.common.PageData;
 import com.wbxnl.blog.common.Result;
 import com.wbxnl.blog.constant.types.OperationType;
 import com.wbxnl.blog.controller.base.AbstractController;
+import com.wbxnl.blog.model.dto.CategoryDto;
 import com.wbxnl.blog.model.dto.extra.IDNameDto;
 import com.wbxnl.blog.model.dto.TagDto;
 import com.wbxnl.blog.model.entity.Category;
@@ -13,6 +14,7 @@ import com.wbxnl.blog.model.vo.TagVo;
 import com.wbxnl.blog.model.vo.extra.StatusVo;
 import com.wbxnl.blog.model.vo.params.PageParams;
 import com.wbxnl.blog.model.vo.params.TagParams;
+import com.wbxnl.blog.utils.ConvertUtils;
 import com.wbxnl.blog.validator.group.Update;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springdoc.core.annotations.ParameterObject;
@@ -41,6 +43,18 @@ import java.util.stream.Collectors;
 public class TagController extends AbstractController<TagService, Tag, TagDto, TagVo> {
     @Autowired
     private TagService tagService;
+
+    @GetMapping("/detail/{id}")
+    @Operation(summary = "用户根据id查询标签信息")
+    public Result<TagDto> getDetailByUser(@PathVariable("id")String id){
+        Tag tag = tagService.lambdaQuery().eq(Tag::getHidden, 0).eq(Tag::getId, id).one();
+        if(tag==null){
+            tag=new Tag();
+        }
+        TagDto tagDto = ConvertUtils.sourceToTarget(tag, TagDto.class);
+        return new Result().ok(tagDto);
+    }
+
 
 
     @PutMapping("/status")

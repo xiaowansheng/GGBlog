@@ -14,6 +14,7 @@ import com.wbxnl.blog.model.vo.CategoryVo;
 import com.wbxnl.blog.model.vo.extra.StatusVo;
 import com.wbxnl.blog.model.vo.params.CategoryParams;
 import com.wbxnl.blog.model.vo.params.PageParams;
+import com.wbxnl.blog.utils.ConvertUtils;
 import com.wbxnl.blog.validator.group.Update;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -44,6 +45,17 @@ public class CategoryController extends AbstractController<CategoryService, Cate
 
     @Autowired
     private CategoryService categoryService;
+
+    @GetMapping("/detail/{id}")
+    @Operation(summary = "用户根据id查询分类信息")
+    public Result<CategoryDto> getDetailByUser(@PathVariable("id")String id){
+        Category category = categoryService.lambdaQuery().eq(Category::getHidden, 0).eq(Category::getId, id).one();
+        if(category==null){
+            category=new Category();
+        }
+        CategoryDto categoryDto = ConvertUtils.sourceToTarget(category, CategoryDto.class);
+        return new Result().ok(categoryDto);
+    }
 
     @PutMapping("/status")
     @Operation(summary = "改变分类状态信息")
