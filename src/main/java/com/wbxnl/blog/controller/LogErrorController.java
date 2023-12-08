@@ -9,6 +9,7 @@ import com.wbxnl.blog.model.entity.LogError;
 //import io.swagger.annotations.Api;
 import com.wbxnl.blog.model.vo.params.ErrorLogParams;
 import com.wbxnl.blog.model.vo.params.PageParams;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,7 @@ public class LogErrorController extends AbstractController<LogErrorService, LogE
     private LogErrorService logErrorService;
 
     @GetMapping("/page")
+    @Operation(summary = "分页获取异常日志信息")
     public Result<PageData<LogErrorDto>> getPage(@ParameterObject PageParams pageParams,@ParameterObject ErrorLogParams errorLogParams){
         PageData<LogErrorDto> pageData = logErrorService.getPage(pageParams, errorLogParams);
         return new Result().ok(pageData);

@@ -7,6 +7,7 @@ import com.wbxnl.blog.model.dto.LogOperationDto;
 import com.wbxnl.blog.model.entity.LogOperation;
 import com.wbxnl.blog.model.vo.params.OperationLogParams;
 import com.wbxnl.blog.model.vo.params.PageParams;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ public class LogOperationController extends AbstractController<LogOperationServi
 
 
     @GetMapping("/page")
+    @Operation(summary = "分页获取操作日志信息")
     public Result<PageData<LogOperationDto>> getPage(@ParameterObject PageParams pageParams, @ParameterObject OperationLogParams operationLogParams){
         PageData<LogOperationDto> pageData = logOperationService.getPage(pageParams, operationLogParams);
         return new Result().ok(pageData);

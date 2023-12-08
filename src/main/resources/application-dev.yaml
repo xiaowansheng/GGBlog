@@ -48,6 +48,17 @@ spring:
       host: 127.0.0.1
       port: 6379
       password: root
+      rabbitmq:
+        host: 192.168.0.88
+        port: 5672
+        username: root
+        password: root
+        listener:
+          simple:
+            retry:
+              enabled: true
+              max-attempts: 5 #??????
+              initial-interval: 3000 #????????????
   mail:
     host: smtp.qq.com
     username: XXXXXXXXXX@foxmail.com
