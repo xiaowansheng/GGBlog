@@ -36,7 +36,7 @@ public class ScheduleTasks {
      * 每天凌晨4点执行一次
      * 定时把redis的新访客，新访问量存储到数据库
      */
-//    @Scheduled(fixedRate = 12 * 60 * 60 * 1000) // 每12小时执行一次
+//    @Scheduled(fixedRate = 60 * 1000) // 每60s执行一次
     @Scheduled(cron = "0 0 4 * * *")
     @Transactional(rollbackFor = Exception.class)
     public void executeSaveBatchVisitor() {
@@ -52,7 +52,12 @@ public class ScheduleTasks {
                 // 获取以后，清除待更新的 VISITOR 列表
                 redisUtils.deleteObject(KeyOfView.NEW_VISITOR);
                 visitors = new ArrayList<>(visitorMap.values());
-                visitorService.saveOrUpdateBatch(visitors, visitors.size());
+                // 批量操作有bug，先不用了
+//                visitorService.saveOrUpdateBatch(visitors, visitors.size());
+                // 换成循环
+                for (int i = 0; i < visitors.size(); i++) {
+                    visitorService.saveOrUpdate(visitors.get(i));
+                }
                 // 更新redis的访客信息缓存
                 for (Visitor visitor : visitors) {
                     redisUtils.setCacheObject(KeyOfView.PAGE_VISITOR, visitor.getUuid());
@@ -65,13 +70,19 @@ public class ScheduleTasks {
                 // 获取以后，清除待更新的 pageView 列表
                 redisUtils.deleteObject(KeyOfView.NEW_PAGE_VIEW);
                 pageViews = new ArrayList<>(pageViewMap.values());
-                pageViewService.saveOrUpdateBatch(pageViews, pageViews.size());
+                // 批量有bug
+//                pageViewService.saveOrUpdateBatch(pageViews, pageViews.size());
+                // 换成循环
+                for (int i = 0; i < pageViews.size(); i++) {
+                    pageViewService.saveOrUpdate(pageViews.get(i));
+                }
                 // 更新redis的访客最新值
                 for (PageView pageView : pageViews) {
                     String uuid = pageView.getViewType() + pageView.getViewId();
                     redisUtils.setCacheMapValue(KeyOfView.PAGE_VIEW, uuid, pageView);
                 }
             }
+            log.info("访问量和访客信息同步成功！");
         } catch (Exception e) {
             log.error("redis数据持久化到数据库操作失败。");
             e.printStackTrace();
