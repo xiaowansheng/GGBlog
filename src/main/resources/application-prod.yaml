@@ -7,6 +7,11 @@ blog:
 
 debug: false
 
+upload:
+  prefix:
+    path: D:/xxxxx/
+    linK: https://xxxxxxx.com/upload/
+
 # 文档地址
 # swagger-ui custom path
 springdoc:

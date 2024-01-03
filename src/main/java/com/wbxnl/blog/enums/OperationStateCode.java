@@ -132,7 +132,7 @@ public enum OperationStateCode {
     /**
      * 枚举类型
      */
-    ENUM_TYPE_NO_EXIST(43004,"枚举的类型不是预定义类型！" ),
+    ENUM_TYPE_NO_EXIST(43004, "枚举的类型不是预定义类型！"),
     /**
      * 请求的参数丢失，导致参数不匹配
      */
@@ -141,9 +141,14 @@ public enum OperationStateCode {
      * JSON字符串格式错误
      */
     JSON_FORMAT_ERROR(43006, "JSON字符串格式错误,不能转为JSON"),
-    //    其它
-    OTHER(50000, "其它错误");
-
+    /**
+     * 文件不能为空
+     */
+    FILE_IS_EMPTY(43007, "文件不能为空！"),
+    /**
+     * 文件保存失败
+     */
+    FILE_SAVE_FAILURE(43008, "文件保存失败！");
     /**
      * 状态码
      */

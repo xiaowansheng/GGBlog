@@ -52,6 +52,7 @@ import java.util.stream.Collectors;
             return;
         }
         resourceRoleList = systemResourceService.getResourceRoles();
+        log.info("更新了最新的权限信息。");
     }
 
     /**
@@ -59,7 +60,9 @@ import java.util.stream.Collectors;
      * 清空接口角色信息
      */
     public void clearDataSource() {
+        // 清理旧的数据
         resourceRoleList = null;
+        log.info("清理了旧的权限信息，等待更新。");
     }
 
     @Override

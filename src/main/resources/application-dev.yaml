@@ -1,3 +1,5 @@
+debug: true
+
 config:
   author: xiaowansheng
   version: 2.0
@@ -5,7 +7,10 @@ config:
 blog:
   logo: https://xxxxxx.xxx/logo.png
 
-debug: true
+upload:
+  prefix:
+    path: D:/xxxxx/
+    linK: https://xxxxxxx.com/upload/
 
 # 文档地址
 # swagger-ui custom path
