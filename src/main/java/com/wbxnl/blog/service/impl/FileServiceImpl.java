@@ -61,6 +61,7 @@ public class FileServiceImpl implements FileService {
         // 将file转换到指定目录
         try {
             file.transferTo(new File(saveFilePath));
+            log.info("文件【{}】保存的路径：{}",fileName,saveFilePath);
         } catch (IOException e) {
             throw new BlogException(OperationStateCode.FILE_SAVE_FAILURE);
         }

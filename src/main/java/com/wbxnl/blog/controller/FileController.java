@@ -1,6 +1,8 @@
 package com.wbxnl.blog.controller;
 
+import com.wbxnl.blog.annotation.Log;
 import com.wbxnl.blog.common.Result;
+import com.wbxnl.blog.constant.types.OperationType;
 import com.wbxnl.blog.model.dto.FileDto;
 import com.wbxnl.blog.model.vo.FileUploadVo;
 import com.wbxnl.blog.service.FileService;
@@ -24,7 +26,8 @@ public class FileController {
 
     @RequestMapping("/upload")
     @Operation(summary = "上传文件")
-    public Result<FileDto> upload(FileUploadVo fileUploadVo,@RequestPart(value = "file")MultipartFile file) {
+    @Log(type = OperationType.ADD,desc = "上传文件")
+    public Result<FileDto> upload(FileUploadVo fileUploadVo,@RequestParam(value = "file")MultipartFile file) {
         FileDto fileDto = fileService.upload(fileUploadVo,file);
         return new Result<FileDto>().ok(fileDto);
     }
