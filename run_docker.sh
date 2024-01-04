@@ -42,7 +42,7 @@ fi
 docker build -t  "${docker_image_name}:${docker_image_version}" .
 
 # Run Docker container
-docker run --restart=always -d -p 8080:8080  --privileged=true -v /opt/springboot/GGBlog/logs:/app/logs -v /opt/springboot/GGBlog/application-prod.yaml:/app/application.yaml  --name "${docker_container_name}" "${docker_image_name}:${docker_image_version}"
+docker run --restart=always -d -p 8080:8080  --privileged=true -v /opt/springboot/GGBlog/logs:/app/logs -v /opt/springboot/GGBlog/application-prod.yaml:/app/application.yaml -v /opt/nginx/html/resources/:/app/resources   --name "${docker_container_name}" "${docker_image_name}:${docker_image_version}"
 
 
 # 输出容器启动完成的信息

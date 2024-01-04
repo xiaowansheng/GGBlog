@@ -9,7 +9,7 @@ debug: false
 
 upload:
   prefix:
-    path: D:/xxxxx/
+    path: /app/resources
     linK: https://xxxxxxx.com/upload/
 
 # 文档地址

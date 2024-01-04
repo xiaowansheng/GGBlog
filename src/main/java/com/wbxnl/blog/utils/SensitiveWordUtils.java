@@ -32,7 +32,9 @@ public class SensitiveWordUtils {
      * @return
      */
     public static String replace(String text){
-        return wordBs.replace(text);
+        // TODO 关闭敏感词过滤
+//        return wordBs.replace(text);
+        return text;
     }
 
     /**
