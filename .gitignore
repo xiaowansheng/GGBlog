@@ -36,7 +36,6 @@ out/
 ### VS Code ###
 .vscode/
 src/test/
-gradle/
 
 
 ### 去除本地开发的测试配置文件 ###
