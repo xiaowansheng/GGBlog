@@ -1,12 +1,55 @@
+version: 1.0.0
+name: my-dev-soft
 services:
-  rabbitmq:
-    image: 'rabbitmq:latest'
+  mysql:
+    image: mysql:8.0.37
+    restart: always
+    container_name: mysql
     environment:
-      - 'RABBITMQ_DEFAULT_USER=root'
-      - 'RABBITMQ_DEFAULT_PASS=root'
+      - MYSQL_ROOT_PASSWORD=root
     ports:
-      - '5672'
+      - "3306:3306"
+    volumes:
+      - mysql-config:/etc/mysql/conf.d
+      - mysql-data:/var/lib/mysql
+    networks:
+      - my_network
   redis:
-    image: 'redis:latest'
+    image: redis:latest
+    restart: always
+    container_name: redis
+    environment:
+      - REDIS_PASSWORD=123456
     ports:
-      - '6379'
+      - '6379:6379'
+    volumes:
+      - redis-data:/data
+      - redis-config:/etc/redis
+    networks:
+      - my_network
+  rabbit:
+    image: rabbitmq:3.12.14-management
+    restart: always
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=rabbit
+      - RABBITMQ_DEFAULT_PASS=rabbit
+      - RABBITMQ_DEFAULT_VHOST=dev
+    volumes:
+      - rabbit-data:/var/lib/rabbitmq
+      - rabbit-app:/etc/rabbitmq
+    networks:
+      - my_network
+volumes:
+  redis-data:
+  redis-config:
+  mysql-config:
+  mysql-data:
+  rabbit-data:
+  rabbit-app:
+networks:
+  my_network:
+    driver: bridge
