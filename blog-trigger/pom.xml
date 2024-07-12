@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.wbxnl</groupId>
+    <artifactId>blog-trigger</artifactId>
+    <version>3.0.0</version>
+    <packaging>jar</packaging>
+    <parent>
+        <groupId>com.wbxnl</groupId>
+        <artifactId>gg-blog</artifactId>
+        <version>3.0.0</version>
+    </parent>
+    <properties>
+        <!-- You can define properties here if needed -->
+    </properties>
+
+    <dependencies>
+        <!-- 引入系统模块 -->
+        <dependency>
+            <groupId>com.wbxnl</groupId>
+            <artifactId>blog-api</artifactId>
+            <version>${project.version}</version> <!-- Define the version in properties or replace with an actual version -->
+        </dependency>
+        <dependency>
+            <groupId>com.wbxnl</groupId>
+            <artifactId>blog-domain</artifactId>
+            <version>${project.version}</version> <!-- Define the version in properties or replace with an actual version -->
+        </dependency>
+        <dependency>
+            <groupId>com.wbxnl</groupId>
+            <artifactId>blog-common</artifactId>
+            <version>${project.version}</version> <!-- Define the version in properties or replace with an actual version -->
+        </dependency>
+
+
+    </dependencies>
+
+    <build>
+        <plugins>
+        </plugins>
+    </build>
+
+</project>
