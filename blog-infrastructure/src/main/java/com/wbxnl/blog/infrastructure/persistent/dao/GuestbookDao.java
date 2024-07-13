@@ -1,11 +1,8 @@
 package com.wbxnl.blog.infrastructure.persistent.dao;
 
 import com.wbxnl.blog.infrastructure.persistent.dao.base.BaseDao;
-import com.wbxnl.blog.model.dto.GuestbookDto;
 import com.wbxnl.blog.infrastructure.persistent.po.Guestbook;
-import com.wbxnl.blog.model.vo.params.GuestbookParams;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -19,12 +16,12 @@ import java.util.List;
  */
 @Mapper
 public interface GuestbookDao extends BaseDao<Guestbook> {
-    /**
-     * 获取详细的留言信息
-     * @param page
-     * @param current
-     * @param queryParams
-     * @return
-     */
-    List<GuestbookDto> getPageByUser(@Param("page") Long page,@Param("current") long current,@Param("params") GuestbookParams queryParams);
+//    /**
+//     * 获取详细的留言信息
+//     * @param page
+//     * @param current
+//     * @param queryParams
+//     * @return
+//     */
+//    List<GuestbookDto> getPageByUser(@Param("page") Long page,@Param("current") long current,@Param("params") GuestbookParams queryParams);
 }

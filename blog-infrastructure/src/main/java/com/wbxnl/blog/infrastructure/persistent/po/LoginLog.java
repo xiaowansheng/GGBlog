@@ -1,5 +1,6 @@
 package com.wbxnl.blog.infrastructure.persistent.po;
 
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

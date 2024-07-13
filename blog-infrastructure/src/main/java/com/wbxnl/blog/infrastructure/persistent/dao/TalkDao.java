@@ -1,13 +1,8 @@
 package com.wbxnl.blog.infrastructure.persistent.dao;
 
 import com.wbxnl.blog.infrastructure.persistent.dao.base.BaseDao;
-import com.wbxnl.blog.model.dto.extra.NameValueDto;
 import com.wbxnl.blog.infrastructure.persistent.po.Talk;
-import com.wbxnl.blog.model.vo.params.DateIntervalParams;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
 
 /**
  * <p>
@@ -20,10 +15,10 @@ import java.util.List;
 @Mapper
 public interface TalkDao extends BaseDao<Talk> {
 
-    /**
-     * 根据时间统计查询说说数量
-     * @param dateIntervalParams
-     * @return
-     */
-    List<NameValueDto> getStatisticsOfCount(@Param("queryParams") DateIntervalParams dateIntervalParams);
+//    /**
+//     * 根据时间统计查询说说数量
+//     * @param dateIntervalParams
+//     * @return
+//     */
+//    List<NameValueDto> getStatisticsOfCount(@Param("queryParams") DateIntervalParams dateIntervalParams);
 }

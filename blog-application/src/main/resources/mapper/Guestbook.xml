@@ -1,62 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.wbxnl.blog.dao.GuestbookDao">
+<mapper namespace="com.wbxnl.blog.infrastructure.persistent.dao.GuestbookDao">
 
-    <!-- 通用查询映射结果 -->
-    <resultMap id="guestbookDto" type="com.wbxnl.blog.model.dto.GuestbookDto">
-        <id column="id" property="id" />
-        <result column="user_auth_id" property="userAuthId" />
-        <result column="content" property="content" />
-        <result column="ip_address" property="ipAddress" />
-        <result column="ip_source" property="ipSource" />
-        <result column="device" property="device" />
-        <result column="browser" property="browser" />
-        <result column="type" property="type" />
-        <result column="nickname" property="nickname" />
-        <result column="email" property="email" />
-        <result column="qq" property="qq" />
-        <result column="hidden" property="hidden" />
-        <result column="review" property="review" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
-        <result column="deleted" property="deleted" />
-        <result column="user_avatar" property="userAvatar" />
-        <result column="user_nickname" property="userNickname" />
-    </resultMap>
+<!--    &lt;!&ndash; 通用查询映射结果 &ndash;&gt;-->
+<!--    <resultMap id="guestbookDto" type="com.wbxnl.blog.model.dto.GuestbookDto">-->
+<!--        <id column="id" property="id" />-->
+<!--        <result column="user_auth_id" property="userAuthId" />-->
+<!--        <result column="content" property="content" />-->
+<!--        <result column="ip_address" property="ipAddress" />-->
+<!--        <result column="ip_source" property="ipSource" />-->
+<!--        <result column="device" property="device" />-->
+<!--        <result column="browser" property="browser" />-->
+<!--        <result column="type" property="type" />-->
+<!--        <result column="nickname" property="nickname" />-->
+<!--        <result column="email" property="email" />-->
+<!--        <result column="qq" property="qq" />-->
+<!--        <result column="hidden" property="hidden" />-->
+<!--        <result column="review" property="review" />-->
+<!--        <result column="create_time" property="createTime" />-->
+<!--        <result column="update_time" property="updateTime" />-->
+<!--        <result column="deleted" property="deleted" />-->
+<!--        <result column="user_avatar" property="userAvatar" />-->
+<!--        <result column="user_nickname" property="userNickname" />-->
+<!--    </resultMap>-->
 
-    <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
-        id, user_auth_id, content, ip_address, ip_source,device,browser, type, nickname, email, qq, hidden, review, create_time, update_time, deleted
-    </sql>
+<!--    &lt;!&ndash; 通用查询结果列 &ndash;&gt;-->
+<!--    <sql id="Base_Column_List">-->
+<!--        id, user_auth_id, content, ip_address, ip_source,device,browser, type, nickname, email, qq, hidden, review, create_time, update_time, deleted-->
+<!--    </sql>-->
 
-    <select id="getPageByUser" resultMap="guestbookDto">
-        select
-            g.id,
-            g.user_auth_id,
-            g.content,
-            g.ip_address,
-            g.ip_source,
-            g.device,
-            g.browser,
-            g.type,
-            g.nickname,
-            g.email,
-            g.qq,
-            g.create_time,
-            ui.nickname as user_nickname,
-            ui.avatar as user_avatar
-        from t_guestbook g
-        left join t_user_auth ua on ua.id=g.user_auth_id
-        left join t_user_info ui on ui.id=ua.user_info_id
-        where
-            g.deleted=0
-        and
-            g.hidden=0
-        and
-            g.review=1
-        order by
-            g.create_time desc
-        limit #{page},#{current}
+<!--    <select id="getPageByUser" resultMap="guestbookDto">-->
+<!--        select-->
+<!--            g.id,-->
+<!--            g.user_auth_id,-->
+<!--            g.content,-->
+<!--            g.ip_address,-->
+<!--            g.ip_source,-->
+<!--            g.device,-->
+<!--            g.browser,-->
+<!--            g.type,-->
+<!--            g.nickname,-->
+<!--            g.email,-->
+<!--            g.qq,-->
+<!--            g.create_time,-->
+<!--            ui.nickname as user_nickname,-->
+<!--            ui.avatar as user_avatar-->
+<!--        from t_guestbook g-->
+<!--        left join t_user_auth ua on ua.id=g.user_auth_id-->
+<!--        left join t_user_info ui on ui.id=ua.user_info_id-->
+<!--        where-->
+<!--            g.deleted=0-->
+<!--        and-->
+<!--            g.hidden=0-->
+<!--        and-->
+<!--            g.review=1-->
+<!--        order by-->
+<!--            g.create_time desc-->
+<!--        limit #{page},#{current}-->
 
-    </select>
+<!--    </select>-->
 </mapper>

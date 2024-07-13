@@ -1,76 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.wbxnl.blog.dao.TagDao">
+<mapper namespace="com.wbxnl.blog.infrastructure.persistent.dao.TagDao">
 
-    <!--    tagDto-->
-    <resultMap id="BaseDtoMap" type="com.wbxnl.blog.model.dto.TagDto">
-        <id column="id" property="id"/>
-        <result column="name" property="name"/>
-        <result column="hidden" property="hidden"/>
-        <result column="description" property="description"/>
-        <result column="create_time" property="createTime"/>
-        <result column="update_time" property="updateTime"/>
-        <result column="count" property="count"/>
-    </resultMap>
-    <!--    管理员分页查询标签详细数据-->
-    <select id="getDetailPage" resultMap="BaseDtoMap">
-        select
-        t.id,
-        t.name,
-        t.hidden,
-        t.description,
-        t.create_time,
-        t.update_time,
-        count(a.id) as count
-        from
-        t_tag t left join
-        t_article_tag at on t.id=at.tag_id
-        left join t_article a on a.id=at.article_id and a.deleted=0
-        <where>
-            t.deleted=0
-            and
-            (at.id is null or at.tag_id=t.id)
-            <if test="tag.id != null">
-                AND c.id = #{tag.id}
-            </if>
-            <if test="tag.name != null and tag.name != ''">
-                AND name like concat('%',#{tag.name},'%')
-            </if>
-            <if test="tag.hidden != null">
-                AND c.hidden=#{tag.hidden}
-            </if>
-        </where>
-        group by t.id
-        order by t.create_time desc,t.id
-        limit #{current},#{limit};
-    </select>
+<!--    &lt;!&ndash;    tagDto&ndash;&gt;-->
+<!--    <resultMap id="BaseDtoMap" type="com.wbxnl.blog.model.dto.TagDto">-->
+<!--        <id column="id" property="id"/>-->
+<!--        <result column="name" property="name"/>-->
+<!--        <result column="hidden" property="hidden"/>-->
+<!--        <result column="description" property="description"/>-->
+<!--        <result column="create_time" property="createTime"/>-->
+<!--        <result column="update_time" property="updateTime"/>-->
+<!--        <result column="count" property="count"/>-->
+<!--    </resultMap>-->
+<!--    &lt;!&ndash;    管理员分页查询标签详细数据&ndash;&gt;-->
+<!--    <select id="getDetailPage" resultMap="BaseDtoMap">-->
+<!--        select-->
+<!--        t.id,-->
+<!--        t.name,-->
+<!--        t.hidden,-->
+<!--        t.description,-->
+<!--        t.create_time,-->
+<!--        t.update_time,-->
+<!--        count(a.id) as count-->
+<!--        from-->
+<!--        t_tag t left join-->
+<!--        t_article_tag at on t.id=at.tag_id-->
+<!--        left join t_article a on a.id=at.article_id and a.deleted=0-->
+<!--        <where>-->
+<!--            t.deleted=0-->
+<!--            and-->
+<!--            (at.id is null or at.tag_id=t.id)-->
+<!--            <if test="tag.id != null">-->
+<!--                AND c.id = #{tag.id}-->
+<!--            </if>-->
+<!--            <if test="tag.name != null and tag.name != ''">-->
+<!--                AND name like concat('%',#{tag.name},'%')-->
+<!--            </if>-->
+<!--            <if test="tag.hidden != null">-->
+<!--                AND c.hidden=#{tag.hidden}-->
+<!--            </if>-->
+<!--        </where>-->
+<!--        group by t.id-->
+<!--        order by t.create_time desc,t.id-->
+<!--        limit #{current},#{limit};-->
+<!--    </select>-->
 
-    <!--    用户查询-->
-    <!--    用户查询所有的标签-->
-    <!--    TODO count数量不对，可能有其它隐藏的便签已被计入-->
-    <select id="getAllDetailByUser" resultMap="BaseDtoMap">
-        select t.id,
-               t.name,
-               t.hidden,
-               t.description,
-               t.create_time,
-               t.update_time,
-               count(a.id) as count
-        from
-            t_tag t
-            left join t_article_tag at on at.tag_id=t.id
-            left join t_article a on a.id= at.article_id and a.deleted=0 and a.status=#{params.status} and a.type!=#{params.type}
-        where
-            t.deleted=0
-          and
-            t.hidden=0
-            and
-            at.article_id not in(
-                select article_id as id
-                from t_article_tag at left join t_tag t on t.id=at.tag_id and t.deleted=0
-                where t.hidden=1
-            )
-        group by t.id
-        order by t.create_time desc, t.id
-    </select>
+<!--    &lt;!&ndash;    用户查询&ndash;&gt;-->
+<!--    &lt;!&ndash;    用户查询所有的标签&ndash;&gt;-->
+<!--    &lt;!&ndash;    TODO count数量不对，可能有其它隐藏的便签已被计入&ndash;&gt;-->
+<!--    <select id="getAllDetailByUser" resultMap="BaseDtoMap">-->
+<!--        select t.id,-->
+<!--               t.name,-->
+<!--               t.hidden,-->
+<!--               t.description,-->
+<!--               t.create_time,-->
+<!--               t.update_time,-->
+<!--               count(a.id) as count-->
+<!--        from-->
+<!--            t_tag t-->
+<!--            left join t_article_tag at on at.tag_id=t.id-->
+<!--            left join t_article a on a.id= at.article_id and a.deleted=0 and a.status=#{params.status} and a.type!=#{params.type}-->
+<!--        where-->
+<!--            t.deleted=0-->
+<!--          and-->
+<!--            t.hidden=0-->
+<!--            and-->
+<!--            at.article_id not in(-->
+<!--                select article_id as id-->
+<!--                from t_article_tag at left join t_tag t on t.id=at.tag_id and t.deleted=0-->
+<!--                where t.hidden=1-->
+<!--            )-->
+<!--        group by t.id-->
+<!--        order by t.create_time desc, t.id-->
+<!--    </select>-->
 </mapper>

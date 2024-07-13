@@ -1,80 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.wbxnl.blog.dao.CategoryDao">
-    <!--    categoryDto-->
-    <resultMap id="BaseDtoMap" type="com.wbxnl.blog.model.dto.CategoryDto">
-        <id column="id" property="id"/>
-        <result column="name" property="name"/>
-        <result column="hidden" property="hidden"/>
-        <result column="description" property="description"/>
-        <result column="create_time" property="createTime"/>
-        <result column="update_time" property="updateTime"/>
-        <result column="count" property="count"/>
-    </resultMap>
-    <!--    管理员查询具体详情-->
-    <select id="getDetails" resultMap="BaseDtoMap">
-        select
-        c.id,
-        c.name,
-        c.hidden,
-        c.description,
-        c.create_time,
-        c.update_time,
-        count(a.id) as count
-        from
-        t_category c
-        left join t_article a on a.category_id=c.id and a.deleted=0
-        <where>
-            c.deleted=0
-            <if test="category.id != null">
-                AND c.id = #{category.id}
-            </if>
-            <if test="category.name != null and category.name != ''">
-                AND name like concat('%',#{category.name},'%')
-            </if>
-            <if test="category.hidden != null">
-                AND c.hidden=#{category.hidden}
-            </if>
-        </where>
-        group by c.id
-        order by create_time desc,c.id
-        limit #{current},#{limit};
-    </select>
+<mapper namespace="com.wbxnl.blog.infrastructure.persistent.dao.CategoryDao">
+<!--    &lt;!&ndash;    categoryDto&ndash;&gt;-->
+<!--    <resultMap id="BaseDtoMap" type="com.wbxnl.blog.model.dto.CategoryDto">-->
+<!--        <id column="id" property="id"/>-->
+<!--        <result column="name" property="name"/>-->
+<!--        <result column="hidden" property="hidden"/>-->
+<!--        <result column="description" property="description"/>-->
+<!--        <result column="create_time" property="createTime"/>-->
+<!--        <result column="update_time" property="updateTime"/>-->
+<!--        <result column="count" property="count"/>-->
+<!--    </resultMap>-->
+<!--    &lt;!&ndash;    管理员查询具体详情&ndash;&gt;-->
+<!--    <select id="getDetails" resultMap="BaseDtoMap">-->
+<!--        select-->
+<!--        c.id,-->
+<!--        c.name,-->
+<!--        c.hidden,-->
+<!--        c.description,-->
+<!--        c.create_time,-->
+<!--        c.update_time,-->
+<!--        count(a.id) as count-->
+<!--        from-->
+<!--        t_category c-->
+<!--        left join t_article a on a.category_id=c.id and a.deleted=0-->
+<!--        <where>-->
+<!--            c.deleted=0-->
+<!--            <if test="category.id != null">-->
+<!--                AND c.id = #{category.id}-->
+<!--            </if>-->
+<!--            <if test="category.name != null and category.name != ''">-->
+<!--                AND name like concat('%',#{category.name},'%')-->
+<!--            </if>-->
+<!--            <if test="category.hidden != null">-->
+<!--                AND c.hidden=#{category.hidden}-->
+<!--            </if>-->
+<!--        </where>-->
+<!--        group by c.id-->
+<!--        order by create_time desc,c.id-->
+<!--        limit #{current},#{limit};-->
+<!--    </select>-->
 
-    <!--    用户查询所有分类-->
-    <select id="getAllDetailByUser" resultMap="BaseDtoMap">
-        select c.id,
-               c.name,
-               c.hidden,
-               c.description,
-               c.create_time,
-               c.update_time,
-               count(a.id) as count
-        from
-            t_category c
-            left join t_article a
-        on a.category_id= c.id and a.deleted=0 and a.status=#{params.status} and a.type!=#{params.type}
-        where
-            c.deleted=0
-          and
-            c.hidden=0
-        group by c.id
-        order by create_time desc, c.id
-    </select>
-    <resultMap id="NameValueMap" type="com.wbxnl.blog.model.dto.extra.NameValueDto">
-        <id column="name" property="name"/>
-        <result column="count" property="value"/>
-    </resultMap>
-    <!--    查询分类对应文章数量统计-->
-    <select id="getCategoryStatistics" resultMap="NameValueMap">
-        select c.name,
-               count(a.id) as count
-        from
-            t_category c
-            left join t_article a
-        on a.category_id= c.id and a.deleted=0
-        where
-            c.deleted=0
-        group by c.id
-    </select>
+<!--    &lt;!&ndash;    用户查询所有分类&ndash;&gt;-->
+<!--    <select id="getAllDetailByUser" resultMap="BaseDtoMap">-->
+<!--        select c.id,-->
+<!--               c.name,-->
+<!--               c.hidden,-->
+<!--               c.description,-->
+<!--               c.create_time,-->
+<!--               c.update_time,-->
+<!--               count(a.id) as count-->
+<!--        from-->
+<!--            t_category c-->
+<!--            left join t_article a-->
+<!--        on a.category_id= c.id and a.deleted=0 and a.status=#{params.status} and a.type!=#{params.type}-->
+<!--        where-->
+<!--            c.deleted=0-->
+<!--          and-->
+<!--            c.hidden=0-->
+<!--        group by c.id-->
+<!--        order by create_time desc, c.id-->
+<!--    </select>-->
+<!--    <resultMap id="NameValueMap" type="com.wbxnl.blog.model.dto.extra.NameValueDto">-->
+<!--        <id column="name" property="name"/>-->
+<!--        <result column="count" property="value"/>-->
+<!--    </resultMap>-->
+<!--    &lt;!&ndash;    查询分类对应文章数量统计&ndash;&gt;-->
+<!--    <select id="getCategoryStatistics" resultMap="NameValueMap">-->
+<!--        select c.name,-->
+<!--               count(a.id) as count-->
+<!--        from-->
+<!--            t_category c-->
+<!--            left join t_article a-->
+<!--        on a.category_id= c.id and a.deleted=0-->
+<!--        where-->
+<!--            c.deleted=0-->
+<!--        group by c.id-->
+<!--    </select>-->
 </mapper>

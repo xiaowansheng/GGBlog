@@ -1,7 +1,6 @@
 package com.wbxnl.blog.infrastructure.persistent.dao;
 
 import com.wbxnl.blog.infrastructure.persistent.dao.base.BaseDao;
-import com.wbxnl.blog.model.dto.RoleResourceDto;
 import com.wbxnl.blog.infrastructure.persistent.po.Role;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -17,9 +16,9 @@ import java.util.List;
  */
 @Mapper
 public interface RoleDao extends BaseDao<Role> {
-    /**
-     * 查询各个角色对应的资源列表
-     * @return
-     */
-    List<RoleResourceDto> roleSources();
+//    /**
+//     * 查询各个角色对应的资源列表
+//     * @return
+//     */
+//    List<RoleResourceDto> roleSources();
 }

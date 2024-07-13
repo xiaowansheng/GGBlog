@@ -14,10 +14,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface RoleResourceDao extends BaseDao<RoleResource> {
-//    /**
-//     * 获取角色对应的资源信息列表
-//     * @param roleId
-//     * @return
-//     */
-//    List<SystemResourceDto> getRoleResources(@Param("roleId") int roleId);
+
 }
