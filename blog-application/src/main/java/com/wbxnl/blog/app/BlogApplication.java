@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Description:博客系统
  * @Version: 3.0
  * @Author: xiaowansheng
- * @Date: 2024/7/13 00:14
+ * @since: 2024/7/13 00:14
  */
 @SpringBootApplication
 //@EnableScheduling //允许定时任务
