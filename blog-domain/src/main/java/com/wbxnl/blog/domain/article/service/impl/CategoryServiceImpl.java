@@ -1,0 +1,76 @@
+package com.wbxnl.blog.domain.article.service.impl;
+
+import com.wbxnl.blog.common.vo.PageData;
+import com.wbxnl.blog.common.vo.PageParams;
+import com.wbxnl.blog.domain.article.model.aggregate.CategoryAggregate;
+import com.wbxnl.blog.domain.article.model.entity.CategoryEntity;
+import com.wbxnl.blog.domain.article.model.entity.CategoryQueryEntity;
+import com.wbxnl.blog.domain.article.model.entity.CategorySimpleInfoEntity;
+import com.wbxnl.blog.domain.article.model.entity.CategoryUpdateEntity;
+import com.wbxnl.blog.domain.article.model.vo.CategoryVo;
+import com.wbxnl.blog.domain.article.repository.ICategoryRepository;
+import com.wbxnl.blog.domain.article.service.ICategoryService;
+import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+
+/**
+ * description: 略
+ *
+ * @author xiaowansheng
+ * @since 2024/7/15 21:18
+ */
+@RequiredArgsConstructor
+public class CategoryServiceImpl implements ICategoryService {
+
+    private ICategoryRepository categoryRepository;
+    @Override
+    public CategoryEntity addArticleCategory(CategoryVo categoryVo) {
+        return categoryRepository.addCategory(categoryVo);
+    }
+
+    @Override
+    public boolean updateArticleCategory(CategoryUpdateEntity categoryUpdateEntity) {
+        return categoryRepository.updateCategory(categoryUpdateEntity);
+    }
+
+    @Override
+    public boolean updateArticleCategoryStatus(Integer id, String status) {
+        return categoryRepository.updateCategoryStatus(id, status);
+    }
+
+    @Override
+    public boolean deleteArticleCategory(Integer id) {
+        return categoryRepository.deleteCategory(id);
+    }
+
+    @Override
+    public boolean deleteArticleCategory(Integer[] ids) {
+        return categoryRepository.deleteCategory(ids);
+    }
+
+    @Override
+    public CategoryEntity getCategory(Integer id) {
+        return categoryRepository.getCategory(id);
+    }
+
+    @Override
+    public List<CategorySimpleInfoEntity> getAllCategories() {
+        return categoryRepository.getAllCategories();
+    }
+
+    @Override
+    public PageData<CategoryEntity> getPageCategories(PageParams pageParams, CategoryQueryEntity categoryQueryEntity) {
+        return categoryRepository.getPageCategories(pageParams, categoryQueryEntity);
+    }
+
+    @Override
+    public List<CategoryAggregate> getAllCategoryDetailsByUser() {
+        return categoryRepository.getAllCategoryDetailsByUser();
+    }
+
+    @Override
+    public Long getCategoryQuantityByUser() {
+        return categoryRepository.getCategoryQuantityByUser();
+    }
+}

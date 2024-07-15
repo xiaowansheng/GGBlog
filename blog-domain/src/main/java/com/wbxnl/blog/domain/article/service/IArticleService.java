@@ -81,14 +81,13 @@ public interface IArticleService {
      */
     ArticleEntity getArticle(Integer id);
 
-
     /**
      * 获取文章信息
      *
      * @param id 文章id
      * @return 文章信息
      */
-    ArticleAggregate getArticleDetail(Integer id);
+    ArticleAggregate getArticleDetail(Integer id,boolean isVisitor);
 
     /**
      * 获取文章列表

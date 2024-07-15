@@ -36,6 +36,14 @@ public interface ICategoryService {
     boolean updateArticleCategory(CategoryUpdateEntity categoryUpdateEntity);
 
     /**
+     * 修改文章分类状态
+     * @param id 分类ID
+     * @param status 分类状态
+     * @return 是否修改成功
+     */
+    boolean updateArticleCategoryStatus(Integer id, String status);
+
+    /**
      * 删除文章分类信息
      *
      * @param id 分类ID
