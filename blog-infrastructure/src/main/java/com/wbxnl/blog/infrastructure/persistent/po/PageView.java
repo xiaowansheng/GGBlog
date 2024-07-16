@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
+
 
 /**
  * <p>
@@ -45,11 +46,11 @@ public class PageView implements Serializable {
 
     ////@ApiModelProperty("创建时间")
     @TableField(value = "create_time", fill = FieldFill.INSERT)
-    private Date createTime;
+    private LocalDateTime createTime;
 
     ////@ApiModelProperty("修改时间")
     @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
     ////@ApiModelProperty("是否已删除")
     @TableField("deleted")

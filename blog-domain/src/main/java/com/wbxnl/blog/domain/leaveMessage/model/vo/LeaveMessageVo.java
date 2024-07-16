@@ -2,7 +2,7 @@ package com.wbxnl.blog.domain.leaveMessage.model.vo;
 
 import lombok.Data;
 
-import java.util.Date;
+
 
 /**
  * description: 略

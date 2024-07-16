@@ -3,7 +3,7 @@ package com.wbxnl.blog.domain.friendLink.model.entity;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+
 
 /**
  * description: 略

@@ -3,7 +3,7 @@ package com.wbxnl.blog.domain.leaveMessage.model.entity;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+
 
 /**
  * description: 略

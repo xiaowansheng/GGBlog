@@ -5,7 +5,8 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
+
 
 /**
  * <p>
@@ -88,10 +89,10 @@ public class Guestbook implements Serializable {
     private Integer review;
 
     @TableField(value = "create_time", fill = FieldFill.INSERT)
-    private Date createTime;
+    private LocalDateTime createTime;
 
     @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
     ////@ApiModelProperty("是否已删除")
     @TableField("deleted")
