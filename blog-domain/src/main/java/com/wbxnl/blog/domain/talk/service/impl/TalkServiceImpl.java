@@ -1,7 +1,16 @@
 package com.wbxnl.blog.domain.talk.service.impl;
 
+import com.wbxnl.blog.common.vo.PageData;
+import com.wbxnl.blog.common.vo.PageParams;
+import com.wbxnl.blog.domain.talk.model.aggregate.TalkAggregate;
+import com.wbxnl.blog.domain.talk.model.entity.TalkEntity;
+import com.wbxnl.blog.domain.talk.model.entity.TalkQueryEntity;
+import com.wbxnl.blog.domain.talk.model.entity.TalkUpdateEntity;
+import com.wbxnl.blog.domain.talk.model.vo.TalkVo;
+import com.wbxnl.blog.domain.talk.repository.ITalkRepository;
 import com.wbxnl.blog.domain.talk.service.ITalkService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 /**
  * description: 略
@@ -9,7 +18,59 @@ import lombok.RequiredArgsConstructor;
  * @author xiaowansheng
  * @since 2024/7/15 22:19
  */
+@Service
 @RequiredArgsConstructor
 public class TalkServiceImpl implements ITalkService {
 
+    private final ITalkRepository talkRepository;
+
+    @Override
+    public TalkEntity addTalk(TalkVo talkVo) {
+        return talkRepository.addTalk(talkVo);
+    }
+
+    @Override
+    public boolean deleteTalk(Integer id) {
+        return talkRepository.deleteTalk(id);
+    }
+
+    @Override
+    public boolean deleteTalk(Integer[] ids) {
+        return talkRepository.deleteTalk(ids);
+    }
+
+    @Override
+    public boolean updateTalk(TalkUpdateEntity talkUpdateEntity) {
+        return talkRepository.updateTalk(talkUpdateEntity);
+    }
+
+    @Override
+    public boolean updateTalkStatus(Integer id, String status) {
+        return talkRepository.updateTalkStatus(id, status);
+    }
+
+    @Override
+    public boolean updateTalkTop(Integer id, Integer top) {
+        return talkRepository.updateTalkTop(id, top);
+    }
+
+    @Override
+    public TalkEntity getTalk(Integer id) {
+        return talkRepository.getTalk(id);
+    }
+
+    @Override
+    public TalkAggregate getTalkDetail(Integer id, boolean isVisitor) {
+        return talkRepository.getTalkDetail(id, isVisitor);
+    }
+
+    @Override
+    public PageData<TalkAggregate> getPageTalkDetails(PageParams pageParams, TalkQueryEntity talkQueryEntity) {
+        return talkRepository.getPageTalkDetails(pageParams, talkQueryEntity);
+    }
+
+    @Override
+    public PageData<TalkAggregate> getPageTalkDetailsOfVisitor(PageParams pageParams) {
+        return talkRepository.getPageTalkDetailsOfVisitor(pageParams);
+    }
 }

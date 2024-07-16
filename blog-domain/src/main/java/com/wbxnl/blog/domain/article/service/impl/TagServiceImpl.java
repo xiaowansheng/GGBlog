@@ -8,6 +8,7 @@ import com.wbxnl.blog.domain.article.model.vo.TagVo;
 import com.wbxnl.blog.domain.article.repository.ITagRepository;
 import com.wbxnl.blog.domain.article.service.ITagService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ import java.util.List;
  * @author xiaowansheng
  * @since 2024/7/15 21:18
  */
+@Service
 @RequiredArgsConstructor
 public class TagServiceImpl implements ITagService {
 

@@ -11,6 +11,7 @@ import com.wbxnl.blog.domain.article.model.vo.CategoryVo;
 import com.wbxnl.blog.domain.article.repository.ICategoryRepository;
 import com.wbxnl.blog.domain.article.service.ICategoryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ import java.util.List;
  * @author xiaowansheng
  * @since 2024/7/15 21:18
  */
+@Service
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements ICategoryService {
 

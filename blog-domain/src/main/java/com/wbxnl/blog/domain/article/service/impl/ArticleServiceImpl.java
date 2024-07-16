@@ -11,6 +11,7 @@ import com.wbxnl.blog.domain.article.repository.ICategoryRepository;
 import com.wbxnl.blog.domain.article.repository.ITagRepository;
 import com.wbxnl.blog.domain.article.service.IArticleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 /**
  * description: 略
@@ -18,6 +19,7 @@ import lombok.RequiredArgsConstructor;
  * @author xiaowansheng
  * @since 2024/7/15 21:17
  */
+@Service
 @RequiredArgsConstructor
 public class ArticleServiceImpl implements IArticleService {
 
