@@ -1,4 +1,4 @@
-package com.wbxnl.blog.domain.User.model.vo;
+package com.wbxnl.blog.domain.user.model.vo;
 
 import lombok.Data;
 

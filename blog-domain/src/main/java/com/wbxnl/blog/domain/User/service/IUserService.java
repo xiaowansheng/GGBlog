@@ -1,10 +1,14 @@
-package com.wbxnl.blog.domain.User.service;
+package com.wbxnl.blog.domain.user.service;
 
-import com.wbxnl.blog.domain.User.model.aggregate.UserBaseInfoAggregate;
-import com.wbxnl.blog.domain.User.model.entity.EmailLoginEntity;
-import com.wbxnl.blog.domain.User.model.entity.UserAuthEntity;
-import com.wbxnl.blog.domain.User.model.entity.UserUpdateEntity;
-import com.wbxnl.blog.domain.User.model.vo.UserRegisterVo;
+import com.wbxnl.blog.common.vo.PageData;
+import com.wbxnl.blog.common.vo.PageParams;
+import com.wbxnl.blog.domain.user.model.aggregate.UserBaseInfoAggregate;
+import com.wbxnl.blog.domain.user.model.entity.EmailLoginEntity;
+import com.wbxnl.blog.domain.user.model.entity.UserQueryEntity;
+import com.wbxnl.blog.domain.user.model.entity.UserUpdateEntity;
+import com.wbxnl.blog.domain.user.model.vo.UserRegisterVo;
+import com.wbxnl.blog.domain.user.model.aggregate.UserDetailAggregate;
+
 
 /**
  * @description:
@@ -38,4 +42,21 @@ public interface IUserService {
      * @return 更新结果
      */
     boolean updateUserInfo(UserUpdateEntity userUpdateEntity);
+
+    /**
+     * 禁用用户
+     * @param id 用户id
+     * @param disable 禁用状态
+     * @return 结果
+     */
+    boolean setUserStatus(Integer id, Integer disable);
+
+    /**
+     * 获取用户信息
+     * @param pageParams 分页信息
+     * @param userQueryEntity 查询信息
+     * @return 用户信息
+     */
+    PageData<UserDetailAggregate> getPageUserDetails(PageParams pageParams, UserQueryEntity userQueryEntity);
+
 }

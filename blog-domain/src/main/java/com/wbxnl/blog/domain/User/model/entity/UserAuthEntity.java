@@ -1,4 +1,4 @@
-package com.wbxnl.blog.domain.User.model.entity;
+package com.wbxnl.blog.domain.user.model.entity;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.wbxnl.blog.domain.User.model.aggregate;
+package com.wbxnl.blog.domain.user.model.aggregate;
 
 import lombok.Data;
 

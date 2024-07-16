@@ -1,24 +1,23 @@
-package com.wbxnl.blog.domain.user.model.aggregate;
+package com.wbxnl.blog.domain.user.model.entity;
 
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
- * @description:
- * @author: xiaowansheng
- * @date: 2024/7/16 17:53
+ * description: 略
+ *
+ * @author xiaowansheng
+ * @since 2024/7/16 23:02
  */
 @Data
-public class UserDetailAggregate {
+public class UserQueryEntity {
+
     private Integer id;
 
     private Integer userInfoId;
 
     private String username;
-
-    private String password;
 
 //    private String loginType;
 //
@@ -46,7 +45,12 @@ public class UserDetailAggregate {
 
     private String introduction;
 
-    private LocalDateTime createTime;
+    private LocalDateTime beginCreateTime;
 
-    private LocalDateTime updateTime;
+    private LocalDateTime endCreateTime;
+
+    private LocalDateTime beginUpdateTime;
+
+    private LocalDateTime endUpdateTime;
+
 }
