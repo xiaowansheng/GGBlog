@@ -7,6 +7,16 @@ plugins {
 group = "com.wbxnl"
 version = "3.0.0"
 
+tasks {
+    bootJar {
+        enabled = false
+    }
+
+    jar {
+        enabled = true
+    }
+}
+
 java {
     sourceCompatibility = JavaVersion.VERSION_21
     targetCompatibility = JavaVersion.VERSION_21

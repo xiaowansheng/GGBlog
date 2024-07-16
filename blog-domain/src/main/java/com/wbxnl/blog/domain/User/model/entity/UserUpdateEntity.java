@@ -2,7 +2,7 @@ package com.wbxnl.blog.domain.user.model.entity;
 
 import lombok.Data;
 
-import java.util.Date;
+
 
 /**
  * @description:

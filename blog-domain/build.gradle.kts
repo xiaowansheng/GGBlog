@@ -7,6 +7,16 @@ plugins {
 group = "com.wbxnl.blog.app"
 version = "3.0.0"
 
+tasks {
+    bootJar {
+        enabled = false
+    }
+
+    jar {
+        enabled = true
+    }
+}
+
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)

@@ -2,7 +2,8 @@ package com.wbxnl.blog.domain.user.model.entity;
 
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+
 
 /**
  * @description:
@@ -31,8 +32,8 @@ public class UserAuthEntity {
 
     private String ipSourceSignup;
 
-    private Date createTime;
+    private LocalDateTime createTime;
 
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
 }
