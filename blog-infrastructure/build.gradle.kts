@@ -35,6 +35,9 @@ repositories {
 dependencies {
     // 引入必要依赖
     implementation("com.baomidou:mybatis-plus-boot-starter:3.5.7")
+    compileOnly("jakarta.servlet:jakarta.servlet-api:6.1.0")
+
+
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
     // 引入项目依赖
