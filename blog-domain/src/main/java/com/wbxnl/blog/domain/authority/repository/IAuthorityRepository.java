@@ -1,4 +1,4 @@
-package com.wbxnl.blog.domain.authority.service;
+package com.wbxnl.blog.domain.authority.repository;
 
 import com.wbxnl.blog.domain.authority.model.aggregate.MenuRoleAggregate;
 import com.wbxnl.blog.domain.authority.model.aggregate.ResourceRoleAggregate;
@@ -15,75 +15,27 @@ import java.util.List;
  * description: 略
  *
  * @author xiaowansheng
- * @since 2024/7/18 17:51
+ * @since 2024/7/19 9:12
  */
-public interface IAuthorityService {
+public interface IAuthorityRepository {
 
-    /**
-     * 添加系统菜单
-     * @param systemMenuVo 系统菜单信息
-     * @return 系统菜单
-     */
     SystemMenuEntity addSystemMenu(SystemMenuVo systemMenuVo);
 
-    /**
-     * 添加系统
-     * @param systemResourceVo
-     * @return
-     */
     SystemResourceEntity addSystemResource(SystemResourceVo systemResourceVo);
 
-    /**
-     * 更新系统菜单信息
-     * @param systemResourceUpdateEntity 系统菜单信息
-     * @return 是否更新成功
-     */
     boolean updateSystemMenu(SystemMenuUpdateEntity systemResourceUpdateEntity);
 
-    /**
-     * 更新系统资源信息
-     * @param systemResourceUpdateEntity 系统资源
-     * @return 是否更新成功
-     */
     boolean updateSystemResource(SystemResourceUpdateEntity systemResourceUpdateEntity);
 
-    /**
-     * 删除系统菜单
-     * @param id 菜单id
-     * @return 是否删除成功
-     */
     boolean deleteSystemMenu(Integer id);
 
-    /**
-     * 删除系统菜单
-     * @param ids 菜单id
-     * @return 是否删除成功
-     */
     boolean deleteSystemMenu(Integer[] ids);
 
-    /**
-     * 删除系统资源
-     * @param id 资源id
-     * @return 是否删除成功
-     */
     boolean deleteSystemResource(Integer id);
 
-    /**
-     * 删除系统资源
-     * @param ids 资源id
-     * @return 是否删除成功
-     */
     boolean deleteSystemResource(Integer[] ids);
 
-    /**
-     * 获取所有菜单的角色列表信息
-     * @return 返回菜单角色列表
-     */
     List<MenuRoleAggregate> getMenuRoleList();
 
-    /**
-     * 获取所有资源的角色列表信息
-     * @return 返回资源角色列表
-     */
     List<ResourceRoleAggregate> getResourceRoleList();
 }
