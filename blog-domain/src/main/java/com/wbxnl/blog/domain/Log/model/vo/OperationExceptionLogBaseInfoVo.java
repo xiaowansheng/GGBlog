@@ -2,8 +2,6 @@ package com.wbxnl.blog.domain.Log.model.vo;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 
 /**
  * description: 略

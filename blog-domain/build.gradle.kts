@@ -34,13 +34,16 @@ repositories {
 }
 
 dependencies {
+    // 引入项目依赖
+    implementation("org.springframework.boot:spring-boot-starter")// https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api
+    compileOnly("jakarta.servlet:jakarta.servlet-api:6.1.0")// https://mvnrepository.com/artifact/org.springframework/spring-tx
+    implementation("org.springframework:spring-tx:6.1.11")
+    // 引入项目依赖
+    implementation(project(":blog-common"))
+    //
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
 
-    // 引入项目依赖
-    implementation("org.springframework.boot:spring-boot-starter")
-    // 引入项目依赖
-    implementation(project(":blog-common"))
 }
 
 tasks.withType<Test> {

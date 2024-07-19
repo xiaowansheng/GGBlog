@@ -2,7 +2,6 @@ package com.wbxnl.blog.domain.authority.model.eneity;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
 
 /**
  * description: 略
