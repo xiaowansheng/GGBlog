@@ -1,14 +1,18 @@
 package com.wbxnl.blog.domain.talk.service.impl;
 
+import com.wbxnl.blog.common.utils.HttpUtils;
+import com.wbxnl.blog.common.utils.ObjectConvertUtils;
 import com.wbxnl.blog.common.vo.PageData;
 import com.wbxnl.blog.common.vo.PageParams;
 import com.wbxnl.blog.domain.talk.model.aggregate.TalkAggregate;
 import com.wbxnl.blog.domain.talk.model.entity.TalkEntity;
 import com.wbxnl.blog.domain.talk.model.entity.TalkQueryEntity;
 import com.wbxnl.blog.domain.talk.model.entity.TalkUpdateEntity;
+import com.wbxnl.blog.domain.talk.model.vo.TalkInsertVo;
 import com.wbxnl.blog.domain.talk.model.vo.TalkVo;
 import com.wbxnl.blog.domain.talk.repository.ITalkRepository;
 import com.wbxnl.blog.domain.talk.service.ITalkService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,9 +28,17 @@ public class TalkServiceImpl implements ITalkService {
 
     private final ITalkRepository talkRepository;
 
+    private final HttpServletRequest request;
+
     @Override
     public TalkEntity addTalk(TalkVo talkVo) {
-        return talkRepository.addTalk(talkVo);
+        TalkInsertVo talkInsertVo = ObjectConvertUtils.convert(talkVo, TalkInsertVo.class);
+        String ipAddress = HttpUtils.getIpAddress(request);
+        talkInsertVo.setIpAddress(ipAddress);
+        talkInsertVo.setIpSource(ipAddress);
+        talkInsertVo.setDevice(HttpUtils.getRequestDevice(request));
+        talkInsertVo.setBrowser(HttpUtils.getRequestBrowser(request));
+        return talkRepository.addTalk(talkInsertVo);
     }
 
     @Override

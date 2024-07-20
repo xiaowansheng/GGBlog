@@ -6,7 +6,7 @@ import com.wbxnl.blog.domain.talk.model.aggregate.TalkAggregate;
 import com.wbxnl.blog.domain.talk.model.entity.TalkEntity;
 import com.wbxnl.blog.domain.talk.model.entity.TalkQueryEntity;
 import com.wbxnl.blog.domain.talk.model.entity.TalkUpdateEntity;
-import com.wbxnl.blog.domain.talk.model.vo.TalkVo;
+import com.wbxnl.blog.domain.talk.model.vo.TalkInsertVo;
 
 /**
  * @description:
@@ -15,7 +15,7 @@ import com.wbxnl.blog.domain.talk.model.vo.TalkVo;
  */
 public interface ITalkRepository {
 
-    TalkEntity addTalk(TalkVo talkVo);
+    TalkEntity addTalk(TalkInsertVo talkInsertVo);
 
     boolean deleteTalk(Integer id);
 

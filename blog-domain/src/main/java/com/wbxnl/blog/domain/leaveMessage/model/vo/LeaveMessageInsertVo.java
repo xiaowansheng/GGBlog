@@ -3,6 +3,7 @@ package com.wbxnl.blog.domain.leaveMessage.model.vo;
 import lombok.Data;
 
 
+
 /**
  * description: 略
  *
@@ -10,7 +11,7 @@ import lombok.Data;
  * @since 2024/7/17 0:05
  */
 @Data
-public class LeaveMessageVo {
+public class LeaveMessageInsertVo {
 
     private Integer userAuthId;
 
@@ -18,17 +19,17 @@ public class LeaveMessageVo {
 
     private String images;
 
-//    private String ipAddress;
-//
-//    private String ipSource;
-//
-//    private String device;
-//
-//    private String browser;
+    private String ipAddress;
+
+    private String ipSource;
+
+    private String device;
+
+    private String browser;
 
     private byte[] point;
 
-//    private String location;
+    private String location;
 
     private String type;
 

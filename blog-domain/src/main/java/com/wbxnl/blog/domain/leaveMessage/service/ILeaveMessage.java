@@ -5,6 +5,7 @@ import com.wbxnl.blog.common.vo.PageParams;
 import com.wbxnl.blog.domain.leaveMessage.model.entity.LeaveMessageEntity;
 import com.wbxnl.blog.domain.leaveMessage.model.entity.LeaveMessageQueryEntity;
 import com.wbxnl.blog.domain.leaveMessage.model.entity.LeaveMessageSimpleEntity;
+import com.wbxnl.blog.domain.leaveMessage.model.vo.LeaveMessageInsertVo;
 import com.wbxnl.blog.domain.leaveMessage.model.vo.LeaveMessageVo;
 
 /**

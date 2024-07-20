@@ -1,13 +1,17 @@
 package com.wbxnl.blog.domain.leaveMessage.service.impl;
 
+import com.wbxnl.blog.common.utils.HttpUtils;
+import com.wbxnl.blog.common.utils.ObjectConvertUtils;
 import com.wbxnl.blog.common.vo.PageData;
 import com.wbxnl.blog.common.vo.PageParams;
 import com.wbxnl.blog.domain.leaveMessage.model.entity.LeaveMessageEntity;
 import com.wbxnl.blog.domain.leaveMessage.model.entity.LeaveMessageQueryEntity;
 import com.wbxnl.blog.domain.leaveMessage.model.entity.LeaveMessageSimpleEntity;
+import com.wbxnl.blog.domain.leaveMessage.model.vo.LeaveMessageInsertVo;
 import com.wbxnl.blog.domain.leaveMessage.model.vo.LeaveMessageVo;
 import com.wbxnl.blog.domain.leaveMessage.repository.ILeaveMessageRepository;
 import com.wbxnl.blog.domain.leaveMessage.service.ILeaveMessage;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,9 +27,17 @@ public class LeaveMessageImpl implements ILeaveMessage {
 
     private final ILeaveMessageRepository leaveMessageRepository;
 
+    private final HttpServletRequest request;
+
     @Override
     public LeaveMessageEntity addLeaveMessage(LeaveMessageVo leaveMessageVo) {
-        return leaveMessageRepository.addLeaveMessage(leaveMessageVo);
+        LeaveMessageInsertVo messageInsertVo = ObjectConvertUtils.convert(leaveMessageVo, LeaveMessageInsertVo.class);
+        String ipAddress = HttpUtils.getIpAddress(request);
+        messageInsertVo.setIpAddress(ipAddress);
+        messageInsertVo.setIpSource(HttpUtils.getIpSource(ipAddress));
+        messageInsertVo.setBrowser(HttpUtils.getRequestBrowser(request));
+        messageInsertVo.setDevice(HttpUtils.getRequestDevice(request));
+        return leaveMessageRepository.addLeaveMessage(messageInsertVo);
     }
 
     @Override

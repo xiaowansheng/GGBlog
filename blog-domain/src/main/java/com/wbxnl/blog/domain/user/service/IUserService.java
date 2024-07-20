@@ -3,7 +3,9 @@ package com.wbxnl.blog.domain.user.service;
 import com.wbxnl.blog.common.vo.PageData;
 import com.wbxnl.blog.common.vo.PageParams;
 import com.wbxnl.blog.domain.user.model.aggregate.UserBaseInfoAggregate;
+import com.wbxnl.blog.domain.user.model.aggregate.UserLoginLoginAggregate;
 import com.wbxnl.blog.domain.user.model.entity.EmailLoginEntity;
+import com.wbxnl.blog.domain.user.model.entity.UserLoginLogQueryEntity;
 import com.wbxnl.blog.domain.user.model.entity.UserQueryEntity;
 import com.wbxnl.blog.domain.user.model.entity.UserUpdateEntity;
 import com.wbxnl.blog.domain.user.model.vo.UserRegisterVo;
@@ -58,5 +60,13 @@ public interface IUserService {
      * @return 用户信息
      */
     PageData<UserDetailAggregate> getPageUserDetails(PageParams pageParams, UserQueryEntity userQueryEntity);
+
+    /**
+     * 获取用户登录信息
+     * @param pageParams 分页信息
+     * @param userLoginLogQueryEntity 查询信息
+     * @return 用户登录信息
+     */
+    PageData<UserLoginLoginAggregate> getPageUserLogins(PageParams pageParams, UserLoginLogQueryEntity userLoginLogQueryEntity);
 
 }

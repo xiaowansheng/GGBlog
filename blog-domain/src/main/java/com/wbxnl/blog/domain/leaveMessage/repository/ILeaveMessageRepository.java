@@ -5,7 +5,7 @@ import com.wbxnl.blog.common.vo.PageParams;
 import com.wbxnl.blog.domain.leaveMessage.model.entity.LeaveMessageEntity;
 import com.wbxnl.blog.domain.leaveMessage.model.entity.LeaveMessageQueryEntity;
 import com.wbxnl.blog.domain.leaveMessage.model.entity.LeaveMessageSimpleEntity;
-import com.wbxnl.blog.domain.leaveMessage.model.vo.LeaveMessageVo;
+import com.wbxnl.blog.domain.leaveMessage.model.vo.LeaveMessageInsertVo;
 
 /**
  * description: 略
@@ -15,7 +15,7 @@ import com.wbxnl.blog.domain.leaveMessage.model.vo.LeaveMessageVo;
  */
 public interface ILeaveMessageRepository {
 
-    LeaveMessageEntity addLeaveMessage(LeaveMessageVo leaveMessageVo);
+    LeaveMessageEntity addLeaveMessage(LeaveMessageInsertVo leaveMessageInsertVo);
 
     boolean deleteLeaveMessage(Integer id);
 
