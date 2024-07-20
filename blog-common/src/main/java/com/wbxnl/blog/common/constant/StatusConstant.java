@@ -1,6 +1,8 @@
 package com.wbxnl.blog.common.constant;
 
-import javax.swing.plaf.PanelUI;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 
 /**
  * description: 略
@@ -8,36 +10,30 @@ import javax.swing.plaf.PanelUI;
  * @author xiaowansheng
  * @since 2024/7/16 0:29
  */
+@NoArgsConstructor(access = AccessLevel.NONE)
 public class StatusConstant {
 
-    private StatusConstant() {
-    }
 
-
-    public static class Article{
-
-        private Article() {
-        }
-
+    public interface Article{
         /**
          * 开放
          */
-        public static final Integer OPEN= 1;
+        Integer OPEN= 1;
         /**
          * 私密
          */
-        public static final Integer PRIVATE= 2;
+        Integer PRIVATE= 2;
         /**
          * 登陆可见
          */
-        public static final Integer LOGIN_VISIBLE= 3;
+        Integer LOGIN_VISIBLE= 3;
         /**
          * 评论可见
          */
-        public static final Integer COMMENT_VISIBLE= 4;
+        Integer COMMENT_VISIBLE= 4;
         /**
          * 输入密码可见
          */
-        public static final Integer PASSWORD_VISIBLE= 5;
+        Integer PASSWORD_VISIBLE= 5;
     }
 }
