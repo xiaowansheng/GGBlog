@@ -15,9 +15,11 @@ public class ArticleEntity {
 
     private Integer id;
 
+    private String articleKey;
+
     private Integer userAuthId;
 
-    private Integer categoryId;
+    private String categoryKey;
 
     private String title;
 

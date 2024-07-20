@@ -5,6 +5,7 @@ import com.wbxnl.blog.common.vo.PageParams;
 import com.wbxnl.blog.domain.article.model.aggregate.ArticleAggregate;
 import com.wbxnl.blog.domain.article.model.aggregate.ArticleArchiveAggregate;
 import com.wbxnl.blog.domain.article.model.entity.*;
+import com.wbxnl.blog.domain.article.model.vo.ArticleDraftVo;
 import com.wbxnl.blog.domain.article.model.vo.ArticleVo;
 
 import java.util.List;
@@ -23,6 +24,13 @@ public interface IArticleService {
      * @return 添加后的文章信息
      */
     ArticleEntity addArticle(ArticleVo articleVo);
+
+    /**
+     * 保存草稿
+     * @param articleDraftVo 文章内容
+     * @return 文章实体
+     */
+    ArticleEntity saveArticleDraft(ArticleDraftVo articleDraftVo);
 
     /**
      * 删除文章

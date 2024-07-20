@@ -16,6 +16,8 @@ public class ArticleArchiveAggregate {
 
     private Integer id;
 
+    private String articleKey;
+
     private CategoryEntity category;
 
     private List<TagEntity> tags;

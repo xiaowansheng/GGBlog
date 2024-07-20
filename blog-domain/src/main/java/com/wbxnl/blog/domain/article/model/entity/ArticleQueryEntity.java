@@ -16,6 +16,8 @@ public class ArticleQueryEntity {
 
     private Integer id;
 
+    private String articleKey;
+
     private Integer categoryId;
 
     private List<Integer> tagIds;

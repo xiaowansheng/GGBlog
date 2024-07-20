@@ -7,6 +7,7 @@ import com.wbxnl.blog.domain.article.model.entity.CategoryEntity;
 import com.wbxnl.blog.domain.article.model.entity.CategoryQueryEntity;
 import com.wbxnl.blog.domain.article.model.entity.CategorySimpleInfoEntity;
 import com.wbxnl.blog.domain.article.model.entity.CategoryUpdateEntity;
+import com.wbxnl.blog.domain.article.model.vo.CategoryHandleVo;
 import com.wbxnl.blog.domain.article.model.vo.CategoryVo;
 
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.List;
  */
 public interface ICategoryRepository {
 
-    CategoryEntity addCategory(CategoryVo categoryVo);
+    CategoryEntity addCategory(CategoryHandleVo categoryHandleVo);
 
     boolean updateCategory(CategoryUpdateEntity categoryUpdateEntity);
 
@@ -35,7 +36,11 @@ public interface ICategoryRepository {
 
     CategoryEntity getCategory(Integer id);
 
+    CategoryEntity getCategory(String categoryKey);
+
     Long getCategoryQuantityByUser();
 
     PageData<CategoryEntity> getPageCategories(PageParams pageParams, CategoryQueryEntity categoryQueryEntity);
+
+    CategoryEntity getCategoryByName(String name);
 }

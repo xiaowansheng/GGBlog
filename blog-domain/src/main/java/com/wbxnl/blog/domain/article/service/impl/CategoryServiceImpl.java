@@ -1,5 +1,9 @@
 package com.wbxnl.blog.domain.article.service.impl;
 
+import com.wbxnl.blog.common.enums.OperationCodeEnum;
+import com.wbxnl.blog.common.exception.BlogException;
+import com.wbxnl.blog.common.utils.ObjectConvertUtils;
+import com.wbxnl.blog.common.utils.UuidUtils;
 import com.wbxnl.blog.common.vo.PageData;
 import com.wbxnl.blog.common.vo.PageParams;
 import com.wbxnl.blog.domain.article.model.aggregate.CategoryAggregate;
@@ -7,6 +11,7 @@ import com.wbxnl.blog.domain.article.model.entity.CategoryEntity;
 import com.wbxnl.blog.domain.article.model.entity.CategoryQueryEntity;
 import com.wbxnl.blog.domain.article.model.entity.CategorySimpleInfoEntity;
 import com.wbxnl.blog.domain.article.model.entity.CategoryUpdateEntity;
+import com.wbxnl.blog.domain.article.model.vo.CategoryHandleVo;
 import com.wbxnl.blog.domain.article.model.vo.CategoryVo;
 import com.wbxnl.blog.domain.article.repository.ICategoryRepository;
 import com.wbxnl.blog.domain.article.service.ICategoryService;
@@ -28,7 +33,14 @@ public class CategoryServiceImpl implements ICategoryService {
     private ICategoryRepository categoryRepository;
     @Override
     public CategoryEntity addArticleCategory(CategoryVo categoryVo) {
-        return categoryRepository.addCategory(categoryVo);
+        // 检查要插入的分类是否已经存在
+        CategoryEntity categoryByName = getCategoryByName(categoryVo.getName());
+        if(categoryByName!=null){
+            throw new BlogException(OperationCodeEnum.CATEGORY_EXISTS);
+        }
+        CategoryHandleVo categoryHandleVo = ObjectConvertUtils.convert(categoryVo, CategoryHandleVo.class);
+        categoryHandleVo.setCategoryKey(UuidUtils.uuid());
+        return categoryRepository.addCategory(categoryHandleVo);
     }
 
     @Override
@@ -54,6 +66,16 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
     public CategoryEntity getCategory(Integer id) {
         return categoryRepository.getCategory(id);
+    }
+
+    @Override
+    public CategoryEntity getCategory(String categoryKey) {
+        return categoryRepository.getCategory(categoryKey);
+    }
+
+    @Override
+    public CategoryEntity getCategoryByName(String name) {
+        return categoryRepository.getCategoryByName(name);
     }
 
     @Override

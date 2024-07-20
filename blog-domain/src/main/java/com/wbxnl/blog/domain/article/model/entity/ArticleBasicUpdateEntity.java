@@ -15,11 +15,11 @@ public class ArticleBasicUpdateEntity {
 
     private Integer id;
 
-    private String articleKey;
+//    private String articleKey;
 
-    private CategoryVo category;
-
-    private List<TagVo> tags;
+//    private CategoryVo category;
+//
+//    private List<TagVo> tags;
 
     private String title;
 
@@ -39,16 +39,16 @@ public class ArticleBasicUpdateEntity {
 
     private String status;
 
-    @Data
-    static class CategoryVo {
-        private String categoryKey;
-        private String name;
-    }
-
-    @Data
-    static class TagVo {
-        private String tagKey;
-        private String name;
-    }
+//    @Data
+//    static class CategoryVo {
+//        private String categoryKey;
+//        private String name;
+//    }
+//
+//    @Data
+//    static class TagVo {
+//        private String tagKey;
+//        private String name;
+//    }
 
 }

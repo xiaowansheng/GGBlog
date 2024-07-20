@@ -42,13 +42,13 @@ public class ArticleUpdateEntity {
     private String status;
 
     @Data
-    static class CategoryVo {
+    public static class CategoryVo {
         private String categoryKey;
         private String name;
     }
 
     @Data
-    static class TagVo {
+    public static class TagVo {
         private String tagKey;
         private String name;
     }

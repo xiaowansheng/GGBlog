@@ -1,9 +1,14 @@
 package com.wbxnl.blog.domain.article.service.impl;
 
+import com.wbxnl.blog.common.enums.OperationCodeEnum;
+import com.wbxnl.blog.common.exception.BlogException;
+import com.wbxnl.blog.common.utils.ObjectConvertUtils;
+import com.wbxnl.blog.common.utils.UuidUtils;
 import com.wbxnl.blog.common.vo.PageData;
 import com.wbxnl.blog.common.vo.PageParams;
 import com.wbxnl.blog.domain.article.model.aggregate.TagAggregate;
 import com.wbxnl.blog.domain.article.model.entity.*;
+import com.wbxnl.blog.domain.article.model.vo.TagHandleVo;
 import com.wbxnl.blog.domain.article.model.vo.TagVo;
 import com.wbxnl.blog.domain.article.repository.ITagRepository;
 import com.wbxnl.blog.domain.article.service.ITagService;
@@ -26,7 +31,13 @@ public class TagServiceImpl implements ITagService {
 
     @Override
     public TagEntity addArticleTag(TagVo tagVo) {
-        return tagRepository.addTag(tagVo);
+        TagEntity tagByName = getTagByName(tagVo.getName());
+        if(tagByName!=null){
+            throw new BlogException(OperationCodeEnum.TAG_EXISTS);
+        }
+        TagHandleVo tagHandleVo = ObjectConvertUtils.convert(tagVo, TagHandleVo.class);
+        tagHandleVo.setTagKey(UuidUtils.uuid());
+        return tagRepository.addTag(tagHandleVo);
     }
 
     @Override
@@ -47,6 +58,17 @@ public class TagServiceImpl implements ITagService {
     @Override
     public TagEntity getTag(Integer id) {
         return tagRepository.getTag(id);
+    }
+
+    @Override
+    public TagEntity getTag(String tagKey) {
+        return tagRepository.getTag(tagKey);
+    }
+
+
+    @Override
+    public TagEntity getTagByName(String name) {
+        return tagRepository.getTagByName(name);
     }
 
     @Override
@@ -75,13 +97,19 @@ public class TagServiceImpl implements ITagService {
     }
 
     @Override
-    public boolean unlinkArticleAndTag(Integer id) {
-        return tagRepository.unlinkArticleAndTag(id);
+    public boolean deleteArticleAndTagLink(String articleKey) {
+        return tagRepository.unlinkArticleAndTag(articleKey);
     }
 
     @Override
-    public boolean unlinkArticleAndTag(Integer[] ids) {
-        return tagRepository.unlinkArticleAndTag(ids);
+    public boolean deleteArticleAndTagLink(String articleKey, String tagKey) {
+        return tagRepository.unlinkArticleAndTag(articleKey, tagKey);
+    }
+
+
+    @Override
+    public List<TagSimpleInfoEntity> getTagList(String articleKey) {
+        return tagRepository.getTagList(articleKey);
     }
 
     @Override
@@ -93,4 +121,5 @@ public class TagServiceImpl implements ITagService {
     public Long getTagQuantityByUser() {
         return tagRepository.getTagQuantityByUser();
     }
+
 }

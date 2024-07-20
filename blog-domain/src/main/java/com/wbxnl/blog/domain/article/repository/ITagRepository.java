@@ -4,6 +4,7 @@ import com.wbxnl.blog.common.vo.PageData;
 import com.wbxnl.blog.common.vo.PageParams;
 import com.wbxnl.blog.domain.article.model.aggregate.TagAggregate;
 import com.wbxnl.blog.domain.article.model.entity.*;
+import com.wbxnl.blog.domain.article.model.vo.TagHandleVo;
 import com.wbxnl.blog.domain.article.model.vo.TagVo;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
  * @since 2024/7/15 21:28
  */
 public interface ITagRepository {
-    TagEntity addTag(TagVo tagVo);
+    TagEntity addTag(TagHandleVo tagHandleVo);
 
     boolean deleteTag(Integer id);
 
@@ -31,6 +32,8 @@ public interface ITagRepository {
 
     TagEntity getTag(Integer id);
 
+    TagEntity getTag(String tagKey);
+
     Long getTagQuantityByUser();
 
     List<TagSimpleInfoEntity> getTags(Integer[] ids);
@@ -41,7 +44,11 @@ public interface ITagRepository {
 
     boolean linkArticleAndTag(List<ArticleAndTagLinkEntity> articleAndTagLinkEntities);
 
-    boolean unlinkArticleAndTag(Integer id);
+    boolean unlinkArticleAndTag(String articleKey);
 
-    boolean unlinkArticleAndTag(Integer[] ids);
+    boolean unlinkArticleAndTag(String articleKey, String tagKey);
+
+    TagEntity getTagByName(String name);
+
+    List<TagSimpleInfoEntity> getTagList(String articleKey);
 }

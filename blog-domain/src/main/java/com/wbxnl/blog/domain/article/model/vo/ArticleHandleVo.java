@@ -2,9 +2,6 @@ package com.wbxnl.blog.domain.article.model.vo;
 
 import lombok.Data;
 
-
-import java.util.List;
-
 /**
  * description: 略
  *
@@ -12,13 +9,13 @@ import java.util.List;
  * @since 2024/7/14 5:10
  */
 @Data
-public class ArticleVo {
+public class ArticleHandleVo {
+
+    private String articleKey;
 
     private Integer userAuthId;
 
-    private CategoryVo category;
-
-    private List<TagVo> tags;
+    private String categoryKey;
 
     private String title;
 
@@ -39,17 +36,5 @@ public class ArticleVo {
     private Integer top;
 
     private String status;
-
-    @Data
-    public static class CategoryVo {
-        private String categoryKey;
-        private String name;
-    }
-
-    @Data
-    public static class TagVo {
-        private String tagKey;
-        private String name;
-    }
 
 }

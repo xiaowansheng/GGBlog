@@ -68,6 +68,21 @@ public interface ICategoryService {
     CategoryEntity getCategory(Integer id);
 
     /**
+     * 获取文章分类信息
+     *
+     * @param categoryKey 分类key
+     * @return 分类信息
+     */
+    CategoryEntity getCategory(String categoryKey);
+
+    /**
+     * 获取文章分类信息
+     * @param name 分类名称
+     * @return 分类信息
+     */
+    CategoryEntity getCategoryByName(String name);
+
+    /**
      * 获取所有简要的分类信息
      *
      * @return 分类信息
@@ -98,4 +113,5 @@ public interface ICategoryService {
      * @return 分类数量
      */
     Long getCategoryQuantityByUser();
+
 }

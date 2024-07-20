@@ -52,6 +52,13 @@ public interface ITagService {
     TagEntity getTag(Integer id);
 
     /**
+     * 根据标签Key获取文章标签信息
+     * @param tagKey 标签Key
+     * @return 标签信息
+     */
+    TagEntity getTag(String tagKey);
+
+    /**
      * 批量获取文章标签信息
      * @param ids 标签ID集合
      * @return 标签列表
@@ -63,7 +70,6 @@ public interface ITagService {
      * @return 标签列表
      */
     List<TagSimpleInfoEntity> getAllTags();
-
 
     /**
      * 分页获取标签
@@ -90,17 +96,25 @@ public interface ITagService {
 
     /**
      * 删除文章标签和文章的关联
-     * @param id 关联ID
+     * @param articleKey 文章key
      * @return 是否删除成功
      */
-    boolean unlinkArticleAndTag(Integer id);
+    boolean deleteArticleAndTagLink(String articleKey);
 
     /**
      * 批量删除文章标签和文章的关联
-     * @param ids 关联ID
+     * @param articleKey 文章key
+     * @param tagKey 标签key
      * @return 是否删除成功
      */
-    boolean unlinkArticleAndTag(Integer[] ids);
+    boolean deleteArticleAndTagLink(String articleKey,String tagKey);
+
+    /**
+     * 根据文章key获取标签信息
+     * @param articleKey 文章Key
+     * @return 标签列表
+     */
+    List<TagSimpleInfoEntity> getTagList(String articleKey);
 
     /**
      * 用户获取所有简要标签信息
@@ -114,4 +128,11 @@ public interface ITagService {
      * @return 文章数量
      */
     Long getTagQuantityByUser();
+
+    /**
+     * 根据标签名称获取标签信息
+     * @param name 标签名称
+     * @return 标签信息
+     */
+    TagEntity getTagByName(String name);
 }

@@ -18,6 +18,8 @@ public class ArticleAggregate {
 
     private Integer id;
 
+    private String articleKey;
+
     private Integer userAuthId;
 
     private CategoryEntity category;

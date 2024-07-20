@@ -1,4 +1,4 @@
-package com.wbxnl.blog.domain.article.model.entity;
+package com.wbxnl.blog.domain.article.model.vo;
 
 import lombok.Data;
 
@@ -6,12 +6,10 @@ import lombok.Data;
  * description: 略
  *
  * @author xiaowansheng
- * @since 2024/7/14 4:46
+ * @since 2024/7/14 4:04
  */
 @Data
-public class TagSimpleInfoEntity {
-
-    private Integer id;
+public class TagHandleVo {
 
     private String tagKey;
 
