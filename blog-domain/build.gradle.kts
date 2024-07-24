@@ -38,6 +38,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter")// https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api
     compileOnly("jakarta.servlet:jakarta.servlet-api:6.1.0")// https://mvnrepository.com/artifact/org.springframework/spring-tx
     implementation("org.springframework:spring-tx:6.1.11")
+    implementation ("org.springframework.boot:spring-boot-starter-mail")
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+
     // 引入项目依赖
     implementation(project(":blog-common"))
     //

@@ -1,5 +1,6 @@
 package com.wbxnl.blog.common.enums;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
@@ -8,6 +9,8 @@ import lombok.Getter;
  * @author xiaowansheng
  * @since 2024/7/20 16:53
  */
+@Getter
+@AllArgsConstructor
 public enum OperationCodeEnum {
     // 操作成功提示码
     SUCCESS(200),
@@ -33,9 +36,5 @@ public enum OperationCodeEnum {
     // 40800-40899:广告领域错误
     ;
     @Getter
-    private Integer code;
-
-    OperationCodeEnum(Integer code) {
-        this.code=code;
-    }
+    private final Integer code;
 }
