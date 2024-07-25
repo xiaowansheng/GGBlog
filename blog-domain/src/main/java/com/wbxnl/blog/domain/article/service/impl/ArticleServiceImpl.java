@@ -1,6 +1,6 @@
 package com.wbxnl.blog.domain.article.service.impl;
 
-import com.wbxnl.blog.common.constant.TypeConstant;
+import com.wbxnl.blog.common.enums.ArticleTypeEnum;
 import com.wbxnl.blog.common.utils.ObjectConvertUtils;
 import com.wbxnl.blog.common.utils.UuidUtils;
 import com.wbxnl.blog.common.vo.PageData;
@@ -91,7 +91,7 @@ public class ArticleServiceImpl implements IArticleService {
 
     @Override
     public ArticleEntity saveArticleDraft(ArticleDraftVo articleDraftVo) {
-        articleDraftVo.setType(TypeConstant.Article.DRAFT);
+        articleDraftVo.setType(ArticleTypeEnum.DRAFT);
         if(articleDraftVo.getId()!=null){
             return articleRepository.updateArticleDraft(articleDraftVo);
         }else{

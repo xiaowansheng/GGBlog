@@ -1,5 +1,6 @@
 package com.wbxnl.blog.domain.article.model.vo;
 
+import com.wbxnl.blog.common.enums.ArticleTypeEnum;
 import lombok.Data;
 
 /**
@@ -25,7 +26,7 @@ public class ArticleDraftVo {
 
     private String content;
 
-    private String type;
+    private ArticleTypeEnum type;
 //
 //    private String originalAuthor;
 //

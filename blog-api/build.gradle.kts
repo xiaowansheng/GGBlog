@@ -7,10 +7,9 @@ plugins {
 group = "com.wbxnl"
 version = "3.0.0"
 
-
 tasks {
     bootJar {
-        enabled = false
+        enabled = true
     }
 
     jar {
@@ -24,22 +23,12 @@ java {
     }
 }
 
-configurations {
-    compileOnly {
-        extendsFrom(configurations.annotationProcessor.get())
-    }
-}
-
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    // https://mvnrepository.com/artifact/cn.hutool/hutool-all
-    implementation("cn.hutool:hutool-all:5.8.29")
-    compileOnly("jakarta.servlet:jakarta.servlet-api:6.1.0")
-    compileOnly("org.projectlombok:lombok")
-    annotationProcessor("org.projectlombok:lombok")
+    implementation("org.springframework.boot:spring-boot-starter")
 }
 
 tasks.withType<Test> {

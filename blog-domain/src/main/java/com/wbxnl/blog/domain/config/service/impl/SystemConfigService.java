@@ -1,6 +1,6 @@
 package com.wbxnl.blog.domain.config.service.impl;
 
-import com.wbxnl.blog.common.constant.ConfigConstant;
+import com.wbxnl.blog.common.enums.ConfigEnum;
 import com.wbxnl.blog.domain.config.model.entity.SystemConfigEntity;
 import com.wbxnl.blog.domain.config.model.entity.SystemConfigQueryEntity;
 import com.wbxnl.blog.domain.config.model.entity.SystemConfigUpdateEntity;
@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -64,7 +65,11 @@ public class SystemConfigService implements ISystemConfigService {
     @Override
     public List<SystemConfigUseVo> getSystemConfigListByUser() {
         ArrayList<SystemConfigUseVo> list = new ArrayList<>();
-        for (String name : ConfigConstant.USER_CONFIG_LIST) {
+        List<String> configNameList = Arrays
+                .stream(ConfigEnum.getUserConfigList())
+                .map(Enum::name)
+                .toList();
+        for (String name : configNameList) {
             SystemConfigEntity systemConfig = getSystemConfig(name);
             SystemConfigUseVo useVo = new SystemConfigUseVo()
                     .setLabel(systemConfig.getLabel())
@@ -73,6 +78,5 @@ public class SystemConfigService implements ISystemConfigService {
             list.add(useVo);
         }
         return list;
-
     }
 }
