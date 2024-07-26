@@ -35,7 +35,9 @@ repositories {
 dependencies {
     // 引入必要依赖
     implementation("com.baomidou:mybatis-plus-boot-starter:3.5.7")
-    compileOnly("jakarta.servlet:jakarta.servlet-api:6.1.0")
+//    compileOnly("jakarta.servlet:jakarta.servlet-api:6.1.0")
+    // 缓存
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
 
 
     compileOnly("org.projectlombok:lombok")
