@@ -44,6 +44,8 @@ dependencies {
     // 引入项目依赖
     implementation("org.springframework.boot:spring-boot-starter")
 
+    // 缓存
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
 
     // 引入项目依赖
     implementation(project(":blog-trigger"))
