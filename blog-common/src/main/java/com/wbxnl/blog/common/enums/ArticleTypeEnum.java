@@ -12,9 +12,21 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ArticleTypeEnum {
+    /**
+     * 草稿
+     */
     DRAFT("draft"),
+    /**
+     * 原创
+     */
     ORIGINAL("original"),
+    /**
+     * 转载
+     */
     REPRINT("reprint"),
+    /**
+     * 翻译
+     */
     TRANSLATION("translation"),
     ;
     /**
