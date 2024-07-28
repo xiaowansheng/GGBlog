@@ -2,10 +2,7 @@ package com.wbxnl.blog.domain.user.service.impl;
 
 import com.wbxnl.blog.common.enums.OperationCodeEnum;
 import com.wbxnl.blog.common.exception.BlogException;
-import com.wbxnl.blog.common.utils.HttpUtils;
-import com.wbxnl.blog.common.utils.JwtUtil;
-import com.wbxnl.blog.common.utils.ObjectConvertUtils;
-import com.wbxnl.blog.common.utils.StringUtils;
+import com.wbxnl.blog.common.utils.*;
 import com.wbxnl.blog.common.vo.PageData;
 import com.wbxnl.blog.common.vo.PageParams;
 import com.wbxnl.blog.domain.user.model.aggregate.UserBaseInfoAggregate;
@@ -41,16 +38,36 @@ public class UserServiceImpl implements IUserService {
 
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean register(UserRegisterVo userRegisterVo) {
         // 获取验证码
-        String verificationCode =userRepository.getVerificationCode(userRegisterVo.getUsername());
+        String verificationCode =userRepository.getVerificationCode(userRegisterVo.getEmail());
         if(verificationCode == null){
             throw new BlogException(OperationCodeEnum.VERIFICATION_CODE_ERROR);
         }
         if(!verificationCode.equalsIgnoreCase(userRegisterVo.getVerificationCode())){
             throw new BlogException(OperationCodeEnum.VERIFICATION_CODE_ERROR);
         }
-        return userRepository.register(userRegisterVo);
+        // 加密密码
+        String encryptPassword = StringUtils.encrypt(userRegisterVo.getPassword());
+        userRegisterVo.setPassword(encryptPassword);
+        // 用户账户
+        UserRegisterDataEntity userRegisterDataEntity = new UserRegisterDataEntity();
+        userRegisterDataEntity.setUsername(userRegisterVo.getEmail());
+        userRegisterDataEntity.setPassword(userRegisterVo.getPassword());
+        userRegisterDataEntity.setEmail(userRegisterVo.getEmail());
+        // 用户信息
+        UserRegisterInfoEntity userRegisterInfoEntity = new UserRegisterInfoEntity();
+        userRegisterInfoEntity.setEmail(userRegisterVo.getEmail());
+        userRegisterInfoEntity.setNickname(userRegisterVo.getEmail());
+        userRegisterInfoEntity.setUserInfoKey(UuidUtils.shortUuid());
+        // 绑定账户和资料的关系
+        userRegisterDataEntity.setUserInfoKey(userRegisterInfoEntity.getUserInfoKey());
+        // 添加用户账户
+        userRepository.addUserAuth(userRegisterDataEntity);
+        // 添加用户资料
+        userRepository.addUserInfo(userRegisterInfoEntity);
+        return true;
     }
 
     @Override
@@ -65,7 +82,7 @@ public class UserServiceImpl implements IUserService {
             throw new BlogException(OperationCodeEnum.PASSWORD_ERROR);
         }
         // 获取用户信息
-        UserBaseInfoAggregate baseInfoAggregate = userRepository.getUser(emailLoginEntity);
+        UserBaseInfoAggregate baseInfoAggregate = userRepository.getUser(emailLoginEntity.getUsername());
         // 添加登陆日志
         String ipAddress = HttpUtils.getIpAddress(request);
         LoginLogVo loginLogVo = LoginLogVo.builder()
@@ -93,9 +110,11 @@ public class UserServiceImpl implements IUserService {
         Map<String, Object> inforMap = JwtUtil.getInforMap(oldToken);
         // 生成一个新token
         String token = JwtUtil.getToken(username, inforMap);
+        String newRefreshToken = JwtUtil.getRefreshToken(username, inforMap);
         TokenEntity tokenEntity = TokenEntity.builder()
                 .token(token)
                 .expireTime(JwtUtil.getExpireTime(token))
+                .refreshToken(newRefreshToken)
                 .build();
         return tokenEntity;
     }

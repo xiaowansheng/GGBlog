@@ -4,16 +4,14 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
-
 /**
- * @description:
- * @author: xiaowansheng
- * @date: 2024/7/16 17:55
+ * description: 略
+ *
+ * @author xiaowansheng
+ * @since 2024/7/29 0:05
  */
 @Data
-public class UserInfoEntity {
-
-    private Integer id;
+public class UserRegisterInfoEntity {
 
     private String userInfoKey;
 
@@ -30,9 +28,4 @@ public class UserInfoEntity {
     private String website;
 
     private String introduction;
-
-    private LocalDateTime createTime;
-
-    private LocalDateTime updateTime;
-
 }

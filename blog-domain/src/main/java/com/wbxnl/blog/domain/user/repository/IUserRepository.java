@@ -5,10 +5,7 @@ import com.wbxnl.blog.common.vo.PageParams;
 import com.wbxnl.blog.domain.user.model.aggregate.UserBaseInfoAggregate;
 import com.wbxnl.blog.domain.user.model.aggregate.UserDetailAggregate;
 import com.wbxnl.blog.domain.user.model.aggregate.UserLoginLogAggregate;
-import com.wbxnl.blog.domain.user.model.entity.EmailLoginEntity;
-import com.wbxnl.blog.domain.user.model.entity.UserLoginLogQueryEntity;
-import com.wbxnl.blog.domain.user.model.entity.UserQueryEntity;
-import com.wbxnl.blog.domain.user.model.entity.UserUpdateEntity;
+import com.wbxnl.blog.domain.user.model.entity.*;
 import com.wbxnl.blog.domain.user.model.vo.LoginLogVo;
 import com.wbxnl.blog.domain.user.model.vo.UserRegisterVo;
 
@@ -21,9 +18,11 @@ import com.wbxnl.blog.domain.user.model.vo.UserRegisterVo;
  */
 public interface IUserRepository {
 
-    boolean register(UserRegisterVo userRegisterVo);
+    boolean addUserAuth(UserRegisterDataEntity userRegisterDataEntity);
 
-    UserBaseInfoAggregate getUser(EmailLoginEntity emailLoginEntity);
+    boolean addUserInfo(UserRegisterInfoEntity userRegisterInfoEntity);
+
+    UserBaseInfoAggregate getUser(String username);
 
     boolean logout();
 
@@ -42,4 +41,5 @@ public interface IUserRepository {
     String getPassword(String username);
 
     boolean updatePassword(String username, String newPassword);
+
 }

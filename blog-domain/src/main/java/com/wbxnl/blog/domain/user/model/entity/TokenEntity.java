@@ -15,4 +15,6 @@ public class TokenEntity {
     private String token;
 
     private Long expireTime;
+
+    private String refreshToken;
 }

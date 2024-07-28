@@ -12,7 +12,7 @@ public class UserRegisterVo {
     /**
      * 默认为邮箱
      */
-    private String username;
+    private String email;
 
     private String password;
 
