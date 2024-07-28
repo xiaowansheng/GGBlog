@@ -18,7 +18,7 @@ public class VisitorQueryEntity {
 
     private String viewType;
 
-    private Integer viewId;
+    private Integer viewKey;
 
     private String ipAddress;
 

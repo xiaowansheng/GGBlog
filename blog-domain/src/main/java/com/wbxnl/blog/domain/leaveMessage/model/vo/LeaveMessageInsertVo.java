@@ -13,7 +13,7 @@ import lombok.Data;
 @Data
 public class LeaveMessageInsertVo {
 
-    private Integer userAuthId;
+    private String username;
 
     private String content;
 

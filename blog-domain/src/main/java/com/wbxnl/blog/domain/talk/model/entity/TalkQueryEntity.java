@@ -16,6 +16,8 @@ public class TalkQueryEntity {
 
     private Integer id;
 
+    private String talkKey;
+
     private String content;
 
     private String images;

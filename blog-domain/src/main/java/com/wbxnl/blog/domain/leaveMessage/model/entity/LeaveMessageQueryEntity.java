@@ -15,7 +15,7 @@ public class LeaveMessageQueryEntity {
 
     private Integer id;
 
-    private Integer userAuthId;
+    private String username;
 
     private String content;
 

@@ -11,9 +11,7 @@ import java.time.LocalDateTime;
  * @since 2024/7/21 1:12
  */
 @Data
-public class UserLoginLoginAggregate {
-
-    private Integer id;
+public class UserLoginLogAggregate {
 
     private Integer userAuthId;
 

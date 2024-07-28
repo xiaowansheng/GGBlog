@@ -12,8 +12,6 @@ public class UserLoginLogQueryEntity {
 
     private Integer id;
 
-    private Integer userAuthId;
-
     private Integer username;
 
 //    private String email;

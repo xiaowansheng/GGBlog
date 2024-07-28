@@ -15,9 +15,9 @@ public class RoleQueryEntity {
 
     private Integer id;
 
-    private String name;
+    private String roleKey;
 
-    private String label;
+    private String name;
 
     private String description;
 

@@ -15,9 +15,9 @@ public class SystemConfigEntity {
 
     private Integer id;
 
-    private String name;
+    private String configKey;
 
-    private String label;
+    private String name;
 
     private String value;
 

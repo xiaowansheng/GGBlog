@@ -20,13 +20,16 @@ public enum OperationCodeEnum {
     FAILURE(40000),
     // 40100-40199:文章领域错误
     CATEGORY_EXISTS(40101),
-    TAG_EXISTS(40102)
+    TAG_EXISTS(40102),
     // 40200-40299:分类领域错误
 
     // 40300-40399:标签领域错误
 
     // 40400-40499:用户领域错误
 
+    PASSWORD_ERROR(40401),
+    VERIFICATION_CODE_ERROR(40402),
+    TOKEN_ERROR(40403)
     // 40500-40599:评论领域错误
 
     // 40600-40699:友链领域错误

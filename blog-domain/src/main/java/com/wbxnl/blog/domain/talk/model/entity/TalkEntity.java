@@ -15,7 +15,9 @@ import java.time.LocalDateTime;
 public class TalkEntity {
     private Integer id;
 
-    private Integer userAuthId;
+    private String talkKey;
+
+    private String username;
 
     private String content;
 

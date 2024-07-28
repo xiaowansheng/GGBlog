@@ -16,7 +16,7 @@ public class FriendLinkEntity {
 
     private Integer id;
 
-    private Integer userAuthId;
+    private String username;
 
     private String name;
 

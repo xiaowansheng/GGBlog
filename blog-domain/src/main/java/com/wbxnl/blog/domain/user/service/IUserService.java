@@ -2,12 +2,9 @@ package com.wbxnl.blog.domain.user.service;
 
 import com.wbxnl.blog.common.vo.PageData;
 import com.wbxnl.blog.common.vo.PageParams;
-import com.wbxnl.blog.domain.user.model.aggregate.UserBaseInfoAggregate;
-import com.wbxnl.blog.domain.user.model.aggregate.UserLoginLoginAggregate;
-import com.wbxnl.blog.domain.user.model.entity.EmailLoginEntity;
-import com.wbxnl.blog.domain.user.model.entity.UserLoginLogQueryEntity;
-import com.wbxnl.blog.domain.user.model.entity.UserQueryEntity;
-import com.wbxnl.blog.domain.user.model.entity.UserUpdateEntity;
+import com.wbxnl.blog.domain.user.model.aggregate.UserLoginDataAggregate;
+import com.wbxnl.blog.domain.user.model.aggregate.UserLoginLogAggregate;
+import com.wbxnl.blog.domain.user.model.entity.*;
 import com.wbxnl.blog.domain.user.model.vo.UserRegisterVo;
 import com.wbxnl.blog.domain.user.model.aggregate.UserDetailAggregate;
 
@@ -30,13 +27,28 @@ public interface IUserService {
      * @param emailLoginEntity 邮箱登录信息
      * @return 用户基本信息
      */
-    UserBaseInfoAggregate login(EmailLoginEntity emailLoginEntity);
+    UserLoginDataAggregate login(EmailLoginEntity emailLoginEntity);
+
+    /**
+     * 刷新token
+     * @param oldToken 旧token
+     * @param refreshToken 刷新token
+     * @return 新的token
+     */
+    TokenEntity freshToken(String oldToken, String refreshToken);
 
     /**
      * 退出登录
      * @return 退出结果
      */
     boolean logout();
+
+    /**
+     * 修改密码
+     * @param updatePasswordEntity 更新信息
+     * @return
+     */
+    boolean updatePassword(UpdatePasswordEntity updatePasswordEntity);
 
     /**
      * 更新用户信息
@@ -67,6 +79,6 @@ public interface IUserService {
      * @param userLoginLogQueryEntity 查询信息
      * @return 用户登录信息
      */
-    PageData<UserLoginLoginAggregate> getPageUserLogins(PageParams pageParams, UserLoginLogQueryEntity userLoginLogQueryEntity);
+    PageData<UserLoginLogAggregate> getPageUserLogins(PageParams pageParams, UserLoginLogQueryEntity userLoginLogQueryEntity);
 
 }

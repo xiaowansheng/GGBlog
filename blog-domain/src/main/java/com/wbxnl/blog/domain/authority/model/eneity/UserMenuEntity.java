@@ -12,7 +12,9 @@ import lombok.Data;
 @Data
 public class UserMenuEntity {
 
-    private String name;
+    private String menuKey;
+
+//    private String name;
 
     private String title;
 

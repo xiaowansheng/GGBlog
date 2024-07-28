@@ -20,7 +20,7 @@ public class ArticleAggregate {
 
     private String articleKey;
 
-    private Integer userAuthId;
+    private String username;
 
     private CategoryEntity category;
 

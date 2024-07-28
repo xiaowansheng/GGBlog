@@ -15,9 +15,9 @@ public class MenuRoleAggregate {
 
     private Integer id;
 
+    private String menuKey;
+
     private String menuName;
 
-    private String menuLabel;
-
-    private List<String> roleNames;
+    private List<String> roleKeys;
 }

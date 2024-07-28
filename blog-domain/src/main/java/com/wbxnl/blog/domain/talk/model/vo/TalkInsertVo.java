@@ -13,7 +13,9 @@ import lombok.Data;
 @Data
 public class TalkInsertVo {
 
-    private Integer userAuthId;
+    private String talkKey;
+
+    private String username;
 
     private String content;
 

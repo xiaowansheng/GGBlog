@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 public class ArticleVo {
 
-    private Integer userAuthId;
+    private String username;
 
     private CategoryVo category;
 

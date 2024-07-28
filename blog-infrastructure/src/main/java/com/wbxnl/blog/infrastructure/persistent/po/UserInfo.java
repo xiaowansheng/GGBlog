@@ -27,45 +27,39 @@ public class UserInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    // // @ApiModelProperty("")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    // // @ApiModelProperty("用户邮箱")
+    @TableId(value = "user_info_key")
+    private String userInfoKey;
+
     @TableField("email")
     private String email;
 
     @TableField("qq")
     private String qq;
 
-    // // @ApiModelProperty("用户名")
     @TableField("nickname")
     private String nickname;
 
-    // // @ApiModelProperty("个人头像")
     @TableField("avatar")
     private String avatar;
 
-    // // @ApiModelProperty("个人签名")
     @TableField("signature")
     private String signature;
 
-    // // @ApiModelProperty("个人网站")
     @TableField("website")
     private String website;
 
     @TableField("introduction")
     private String introduction;
 
-    ////@ApiModelProperty("创建时间")
     @TableField(value = "create_time", fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
-    ////@ApiModelProperty("修改时间")
     @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
-    ////@ApiModelProperty("是否已删除")
     @TableField("deleted")
     @TableLogic
     private Integer deleted;

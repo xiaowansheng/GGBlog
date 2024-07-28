@@ -15,7 +15,7 @@ public class UserQueryEntity {
 
     private Integer id;
 
-    private Integer userInfoId;
+    private Integer userInfoKey;
 
     private String username;
 

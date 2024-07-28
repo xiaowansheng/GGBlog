@@ -26,22 +26,18 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Accessors(chain = true)
 @TableName("t_user_role")
-//@ApiModel(value = "UserRole对象", description = "用户账号对应角色")
 public class UserRole implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    ////@ApiModelProperty("用户账号角色ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    ////@ApiModelProperty("用户账号ID")
-    @TableField("user_auth_id")
-    private Integer userAuthId;
+    @TableField("username")
+    private String username;
 
-    ////@ApiModelProperty("角色ID")
-    @TableField("role_id")
-    private Integer roleId;
+    @TableField("role_key")
+    private String roleKey;
 
 
 }

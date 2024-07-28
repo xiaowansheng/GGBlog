@@ -8,29 +8,18 @@ import java.time.LocalDateTime;
 /**
  * @description:
  * @author: xiaowansheng
- * @date: 2024/7/16 17:53
+ * @date: 2024/7/16 17:52
  */
 @Data
-public class UserDetailAggregate {
-    private Integer id;
+public class UserLoginDataAggregate {
 
-    private Integer userInfoKey;
+    private Integer userAuthId;
 
     private String username;
 
     private String password;
 
-//    private String loginType;
-//
-//    private String thirdPartyId;
-//
-//    private String thirdPartyProfile;
-
-    private Integer disable;
-
-    private String ipAddressSignup;
-
-    private String ipSourceSignup;
+    private String loginType;
 
     private String email;
 
@@ -48,5 +37,9 @@ public class UserDetailAggregate {
 
     private LocalDateTime createTime;
 
-    private LocalDateTime updateTime;
+    private String token;
+
+    private String refreshToken;
+
+    private Long tokenExpireTime;
 }

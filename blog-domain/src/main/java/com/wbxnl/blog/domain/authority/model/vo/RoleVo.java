@@ -13,9 +13,9 @@ import java.time.LocalDateTime;
 @Data
 public class RoleVo {
 
-    private String name;
+    private String roleKey;
 
-    private String label;
+    private String name;
 
     private String description;
 

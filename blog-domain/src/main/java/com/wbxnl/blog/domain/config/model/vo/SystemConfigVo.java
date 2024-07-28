@@ -11,9 +11,9 @@ import lombok.Data;
 @Data
 public class SystemConfigVo {
 
-    private String name;
+    private String configKey;
 
-    private String label;
+    private String name;
 
     private String value;
 

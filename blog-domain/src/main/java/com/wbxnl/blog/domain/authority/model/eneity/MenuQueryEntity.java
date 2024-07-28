@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 public class MenuQueryEntity {
     private Integer id;
 
+    private String menuKey;
+
     private String name;
 
     private String title;

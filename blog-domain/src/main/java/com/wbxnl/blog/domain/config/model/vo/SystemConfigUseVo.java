@@ -13,9 +13,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class SystemConfigUseVo {
 
-    private String name;
+    private String configKey;
 
-    private String label;
+    private String name;
 
     private String value;
 

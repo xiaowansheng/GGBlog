@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 public class RoleResourceVo {
 
-    private String roleName;
+    private String roleKey;
 
-    private List<String> resourceName;
+    private List<String> resourceKeys;
 }

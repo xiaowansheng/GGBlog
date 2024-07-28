@@ -13,7 +13,9 @@ import java.time.LocalDateTime;
 @Data
 public class UserResourceEntity {
 
-    private String name;
+//    private String name;
+
+    private String resourceKey;
 
     private String requestMethod;
 

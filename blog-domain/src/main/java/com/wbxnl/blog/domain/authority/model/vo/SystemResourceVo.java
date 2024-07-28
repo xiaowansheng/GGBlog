@@ -7,7 +7,8 @@ package com.wbxnl.blog.domain.authority.model.vo;
  * @since 2024/7/19 9:41
  */
 public class SystemResourceVo {
-    private String name;
+
+    private String resourceKey;
 
     private String requestMethod;
 

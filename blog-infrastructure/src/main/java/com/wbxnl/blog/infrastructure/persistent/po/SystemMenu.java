@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 @Data
 @Accessors(chain = true)
 @TableName("system_menu")
-//@ApiModel(value = "SystemMenu对象", description = "菜单目录")
 public class SystemMenu implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -27,59 +26,48 @@ public class SystemMenu implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    // // @ApiModelProperty("菜单名称")
-    @TableField("name")
-    private String name;
+    @TableField("menu_key")
+    private String menuKey;
 
-    // // @ApiModelProperty("菜单标题")
+//    @TableField("name")
+//    private String name;
+
     @TableField("title")
     private String title;
 
-    // // @ApiModelProperty("图标")
     @TableField("icon")
     private String icon;
 
-    // // @ApiModelProperty("路由重定向")
     @TableField("redirect")
     private String redirect;
 
-    // // @ApiModelProperty("路由地址")
     @TableField("path")
     private String path;
 
-    // // @ApiModelProperty("组件路径")
     @TableField("component")
     private String component;
 
-    // // @ApiModelProperty("隐藏菜单（0展示1隐藏）")
     @TableField("hidden")
     private Integer hidden;
 
-    // // @ApiModelProperty("排序")
     @TableField("sort")
     private Byte sort;
 
-    // // @ApiModelProperty("父类ID")
     @TableField("parent_id")
     private Integer parentId;
 
-    // // @ApiModelProperty("权限标识")
     @TableField("perms")
     private String perms;
 
-    // // @ApiModelProperty("描述信息")
     @TableField("description")
     private String description;
 
-    ////@ApiModelProperty("创建时间")
     @TableField(value = "create_time", fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
-    ////@ApiModelProperty("修改时间")
     @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
-    ////@ApiModelProperty("是否已删除")
     @TableField("deleted")
     @TableLogic
     private Integer deleted;

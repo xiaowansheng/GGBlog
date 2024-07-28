@@ -15,9 +15,7 @@ public class OperationExceptionLogDetailVo {
 
     private Integer id;
 
-    private Integer userAuthId;
-
-    private String userName;
+    private String username;
 
     private String version;
 

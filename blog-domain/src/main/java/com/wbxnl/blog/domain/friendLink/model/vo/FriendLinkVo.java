@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Data
 public class FriendLinkVo {
 
-    private Integer userAuthId;
+    private String username;
 
     private String name;
 

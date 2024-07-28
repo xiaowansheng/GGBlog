@@ -12,6 +12,8 @@ public class ResourceQueryEntity {
 
     private Integer id;
 
+    private String resourceKey;
+
     private String name;
 
     private String requestMethod;

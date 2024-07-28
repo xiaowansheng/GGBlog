@@ -19,23 +19,19 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-//@ApiModel(value = "RoleMenu对象", description = "角色菜单")
 @TableName("t_role_menu")
 public class RoleMenu implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    ////@ApiModelProperty("角色菜单ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    ////@ApiModelProperty("角色ID")
-    @TableField("role_id")
-    private Integer roleId;
+    @TableField("role_key")
+    private String roleKey;
 
-    ////@ApiModelProperty("系统菜单")
-    @TableField("menu_id")
-    private Integer menuId;
+    @TableField("menu_key")
+    private String menuKey;
 
 
 }

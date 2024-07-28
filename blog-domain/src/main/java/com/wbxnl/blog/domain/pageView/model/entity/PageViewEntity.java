@@ -19,7 +19,7 @@ public class PageViewEntity {
 
     private String viewType;
 
-    private Integer viewId;
+    private Integer viewKey;
 
     private LocalDateTime createTime;
 

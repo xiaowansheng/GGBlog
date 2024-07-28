@@ -26,22 +26,18 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Accessors(chain = true)
 @TableName("t_article_tag")
-//@ApiModel(value = "ArticleTag对象", description = "文章对应标签")
 public class ArticleTag implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    ////@ApiModelProperty("文章和标签关联ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    ////@ApiModelProperty("文章ID")
-    @TableField("article_id")
-    private Integer articleId;
+    @TableField("article_key")
+    private String articleKey;
 
-    ////@ApiModelProperty("标签ID")
-    @TableField("tag_id")
-    private Integer tagId;
+    @TableField("tag_key")
+    private Integer tagKey;
 
 
 }

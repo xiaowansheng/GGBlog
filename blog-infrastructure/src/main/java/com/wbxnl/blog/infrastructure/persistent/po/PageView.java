@@ -27,32 +27,24 @@ public class PageView implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    // // @ApiModelProperty("访问量ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    // // @ApiModelProperty("访问量")
     @TableField("count")
     private Long count;
 
-    // // @ApiModelProperty("访问量类型（1网站访问量2博客文章访问量3说说访问量4写作文章访问量5相册访问量6友链访问量....）")
     @TableField("view_type")
     private String viewType;
 
-    // // @ApiModelProperty("不同访问类型的对应表ID")
-    @TableField("view_id")
-    private Integer viewId;
+    @TableField("view_key")
+    private Integer viewKey;
 
-
-    ////@ApiModelProperty("创建时间")
     @TableField(value = "create_time", fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
-    ////@ApiModelProperty("修改时间")
     @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
-    ////@ApiModelProperty("是否已删除")
     @TableField("deleted")
     @TableLogic
     private Integer deleted;

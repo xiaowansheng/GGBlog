@@ -14,7 +14,7 @@ import lombok.Data;
 public class TalkUpdateEntity {
     private Integer id;
 
-    private Integer userAuthId;
+    private String username;
 
     private String content;
 

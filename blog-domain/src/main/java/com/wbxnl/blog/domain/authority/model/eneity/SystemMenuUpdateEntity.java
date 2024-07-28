@@ -15,7 +15,8 @@ public class SystemMenuUpdateEntity {
 
     private Integer id;
 
-    private String name;
+    private String menuKey;
+//    private String name;
 
     private String title;
 

@@ -10,7 +10,10 @@ import lombok.Data;
  */
 @Data
 public class SystemMenuVo {
-    private String name;
+
+    private String menuKey;
+
+//    private String name;
 
     private String title;
 

@@ -12,7 +12,7 @@ import lombok.Data;
 @Data
 public class TalkVo {
 
-    private Integer userAuthId;
+    private String username;
 
     private String content;
 

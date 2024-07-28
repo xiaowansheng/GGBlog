@@ -28,43 +28,33 @@ public class LoginLog implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    // // @ApiModelProperty("用户账号")
-    @TableField("user_auth_id")
-    private Integer userAuthId;
+    @TableField("username")
+    private String username;
 
-    // // @ApiModelProperty("ip地址")
     @TableField("ip_address")
     private String ipAddress;
 
-    // // @ApiModelProperty("ip来源")
     @TableField("ip_source")
     private String ipSource;
 
-    // // @ApiModelProperty("设备名称")
     @TableField("device")
     private String device;
 
-    // // @ApiModelProperty("浏览器类型")
     @TableField("browser")
     private String browser;
 
-    // // @ApiModelProperty("坐标")
     @TableField("point")
     private byte[] point;
 
-    // // @ApiModelProperty("坐标所在位置")
     @TableField("location")
     private String location;
 
-    // // @ApiModelProperty("登录时间")
     @TableField(value = "create_time", fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
-    // // @ApiModelProperty("更新时间")
     @TableField(value = "update_time",fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
-    // // @ApiModelProperty("是否删除")
     @TableField("deleted")
     @TableLogic
     private Integer deleted;

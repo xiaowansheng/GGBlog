@@ -11,9 +11,8 @@ import lombok.Data;
 @Data
 public class OperationLogBaseInfoVo {
 
-//    private Integer userAuthId;
-//
-//    private String userName;
+
+//    private String username;
 
 //    private String version;
 

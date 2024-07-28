@@ -16,7 +16,7 @@ public class ArticleQueryByVisitorEntity {
 
     private Integer id;
 
-    private Integer categoryId;
+    private String categoryKey;
 
-    private Integer tagId;
+    private String tagKey;
 }

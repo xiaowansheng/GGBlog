@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 public class RoleMenuVo {
 
-    private String roleName;
+    private String roleKey;
 
-    private List<String> menuNames;
+    private List<String> menuKeys;
 }

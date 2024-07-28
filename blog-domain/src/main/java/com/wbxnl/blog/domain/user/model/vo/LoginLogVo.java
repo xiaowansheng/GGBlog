@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Builder
 public class LoginLogVo {
 
-    private Integer userAuthId;
+    private String username;
 
     private String ipAddress;
 

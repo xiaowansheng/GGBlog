@@ -40,6 +40,7 @@ dependencies {
     implementation("org.springframework:spring-tx:6.1.11")
     implementation ("org.springframework.boot:spring-boot-starter-mail")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+    implementation("com.auth0:java-jwt:4.4.0")
 
     // 引入项目依赖
     implementation(project(":blog-common"))

@@ -15,10 +15,10 @@ public class RoleResourceAggregate {
 
     private Integer id;
 
+    private String roleKey;
+
     private String roleName;
 
-    private String roleLabel;
-
-    private List<String> resourceNames;
+    private List<String> resourceKeys;
 
 }

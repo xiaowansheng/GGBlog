@@ -20,22 +20,18 @@ import java.io.Serializable;
 @Data
 @Accessors(chain = true)
 @TableName("t_role_resource")
-//@ApiModel(value = "RoleResource对象", description = "角色资源")
 public class RoleResource implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    ////@ApiModelProperty("角色资源ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    ////@ApiModelProperty("角色ID")
-    @TableField("role_id")
-    private Integer roleId;
+    @TableField("role_key")
+    private String roleKey;
 
-    ////@ApiModelProperty("资源ID")
-    @TableField("resource_id")
-    private Integer resourceId;
+    @TableField("resource_key")
+    private String resourceKey;
 
 
 }

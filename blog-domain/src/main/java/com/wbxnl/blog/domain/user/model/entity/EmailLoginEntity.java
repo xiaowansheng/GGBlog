@@ -9,8 +9,10 @@ import lombok.Data;
  */
 @Data
 public class EmailLoginEntity {
-
-    private String email;
+    /**
+     * 默认为邮箱
+     */
+    private String username;
 
     private String password;
 }
