@@ -35,18 +35,19 @@ public interface IUserService {
      * @param refreshToken 刷新token
      * @return 新的token
      */
-    TokenEntity freshToken(String oldToken, String refreshToken);
+    TokenEntity refreshToken(String oldToken, String refreshToken);
 
     /**
      * 退出登录
+     * @param username 用户名
      * @return 退出结果
      */
-    boolean logout();
+    boolean logout(String username);
 
     /**
      * 修改密码
      * @param updatePasswordEntity 更新信息
-     * @return
+     * @return 更新结果
      */
     boolean updatePassword(UpdatePasswordEntity updatePasswordEntity);
 

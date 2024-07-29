@@ -29,7 +29,8 @@ public enum OperationCodeEnum {
 
     PASSWORD_ERROR(40401),
     VERIFICATION_CODE_ERROR(40402),
-    TOKEN_ERROR(40403)
+    TOKEN_ERROR(40403),
+    USER_DISABLE(40404)
     // 40500-40599:评论领域错误
 
     // 40600-40699:友链领域错误

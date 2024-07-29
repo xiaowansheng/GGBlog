@@ -7,6 +7,7 @@ import com.wbxnl.blog.common.utils.UuidUtils;
 import com.wbxnl.blog.common.vo.PageData;
 import com.wbxnl.blog.common.vo.PageParams;
 import com.wbxnl.blog.domain.article.model.aggregate.CategoryAggregate;
+import com.wbxnl.blog.domain.article.model.aggregate.CategorySimpleAggregate;
 import com.wbxnl.blog.domain.article.model.entity.CategoryEntity;
 import com.wbxnl.blog.domain.article.model.entity.CategoryQueryEntity;
 import com.wbxnl.blog.domain.article.model.entity.CategorySimpleInfoEntity;
@@ -84,12 +85,12 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
-    public PageData<CategoryEntity> getPageCategories(PageParams pageParams, CategoryQueryEntity categoryQueryEntity) {
+    public PageData<CategoryAggregate> getPageCategories(PageParams pageParams, CategoryQueryEntity categoryQueryEntity) {
         return categoryRepository.getPageCategories(pageParams, categoryQueryEntity);
     }
 
     @Override
-    public List<CategoryAggregate> getAllCategoryDetailsByUser() {
+    public List<CategorySimpleAggregate> getAllCategoryDetailsByUser() {
         return categoryRepository.getAllCategoryDetailsByUser();
     }
 

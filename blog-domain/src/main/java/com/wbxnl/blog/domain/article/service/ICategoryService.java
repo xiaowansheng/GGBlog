@@ -3,6 +3,7 @@ package com.wbxnl.blog.domain.article.service;
 import com.wbxnl.blog.common.vo.PageData;
 import com.wbxnl.blog.common.vo.PageParams;
 import com.wbxnl.blog.domain.article.model.aggregate.CategoryAggregate;
+import com.wbxnl.blog.domain.article.model.aggregate.CategorySimpleAggregate;
 import com.wbxnl.blog.domain.article.model.entity.CategoryEntity;
 import com.wbxnl.blog.domain.article.model.entity.CategoryQueryEntity;
 import com.wbxnl.blog.domain.article.model.entity.CategorySimpleInfoEntity;
@@ -96,15 +97,16 @@ public interface ICategoryService {
      * @param categoryQueryEntity 查询参数
      * @return 分类信息
      */
-    PageData<CategoryEntity> getPageCategories(PageParams pageParams, CategoryQueryEntity categoryQueryEntity);
+    PageData<CategoryAggregate> getPageCategories(PageParams pageParams, CategoryQueryEntity categoryQueryEntity);
 
 
     /**
      * 用户查询分类信息
      * 只能获取开放的分类
+     *
      * @return 分类信息集合
      */
-    List<CategoryAggregate> getAllCategoryDetailsByUser();
+    List<CategorySimpleAggregate> getAllCategoryDetailsByUser();
 
 
     /**

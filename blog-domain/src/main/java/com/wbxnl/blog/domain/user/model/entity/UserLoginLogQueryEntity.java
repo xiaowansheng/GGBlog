@@ -1,5 +1,7 @@
 package com.wbxnl.blog.domain.user.model.entity;
 
+import lombok.Data;
+
 import java.time.LocalDateTime;
 
 /**
@@ -8,11 +10,12 @@ import java.time.LocalDateTime;
  * @author xiaowansheng
  * @since 2024/7/21 1:15
  */
+@Data
 public class UserLoginLogQueryEntity {
 
     private Integer id;
 
-    private Integer username;
+    private String username;
 
 //    private String email;
 

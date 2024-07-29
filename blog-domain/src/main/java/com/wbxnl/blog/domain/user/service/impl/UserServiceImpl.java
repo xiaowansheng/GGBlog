@@ -41,11 +41,11 @@ public class UserServiceImpl implements IUserService {
     @Transactional(rollbackFor = Exception.class)
     public boolean register(UserRegisterVo userRegisterVo) {
         // 获取验证码
-        String verificationCode =userRepository.getVerificationCode(userRegisterVo.getEmail());
-        if(verificationCode == null){
+        String verificationCode = userRepository.getVerificationCode(userRegisterVo.getEmail());
+        if (verificationCode == null) {
             throw new BlogException(OperationCodeEnum.VERIFICATION_CODE_ERROR);
         }
-        if(!verificationCode.equalsIgnoreCase(userRegisterVo.getVerificationCode())){
+        if (!verificationCode.equalsIgnoreCase(userRegisterVo.getVerificationCode())) {
             throw new BlogException(OperationCodeEnum.VERIFICATION_CODE_ERROR);
         }
         // 加密密码
@@ -74,12 +74,17 @@ public class UserServiceImpl implements IUserService {
     @Transactional(rollbackFor = Exception.class)
     public UserLoginDataAggregate login(EmailLoginEntity emailLoginEntity) {
         // 查询账户和密码
-        String userPassword=userRepository.getPassword(emailLoginEntity.getUsername());
+        String userPassword = userRepository.getPassword(emailLoginEntity.getUsername());
         // 密码加密
         String encryptPassword = StringUtils.encrypt(emailLoginEntity.getPassword());
         // 验证账号和密码是否匹配
-        if(!encryptPassword.equals(userPassword)){
+        if (!encryptPassword.equals(userPassword)) {
             throw new BlogException(OperationCodeEnum.PASSWORD_ERROR);
+        }
+        // 判断用户是否可用
+        boolean userStatus = userRepository.checkUserAvailableStatus(emailLoginEntity.getUsername());
+        if (!userStatus) {
+            throw new BlogException(OperationCodeEnum.USER_DISABLE);
         }
         // 获取用户信息
         UserBaseInfoAggregate baseInfoAggregate = userRepository.getUser(emailLoginEntity.getUsername());
@@ -96,13 +101,13 @@ public class UserServiceImpl implements IUserService {
         UserLoginDataAggregate loginDataAggregate = ObjectConvertUtils.convert(baseInfoAggregate, UserLoginDataAggregate.class);
         String token = JwtUtil.getToken(baseInfoAggregate.getUsername(), new HashMap<>());
         loginDataAggregate.setToken(token);
-        loginDataAggregate.setRefreshToken(JwtUtil.getRefreshToken(baseInfoAggregate.getUsername(),new HashMap<>()));
+        loginDataAggregate.setRefreshToken(JwtUtil.getRefreshToken(baseInfoAggregate.getUsername(), new HashMap<>()));
         loginDataAggregate.setTokenExpireTime(JwtUtil.getExpireTime(token));
         return loginDataAggregate;
     }
 
     @Override
-    public TokenEntity freshToken(String oldToken, String refreshToken) {
+    public TokenEntity refreshToken(String oldToken, String refreshToken) {
         // 验证刷新token是否合法
         JwtUtil.checkToken(refreshToken);
         // 获取用户数据
@@ -111,29 +116,29 @@ public class UserServiceImpl implements IUserService {
         // 生成一个新token
         String token = JwtUtil.getToken(username, inforMap);
         String newRefreshToken = JwtUtil.getRefreshToken(username, inforMap);
-        TokenEntity tokenEntity = TokenEntity.builder()
+        return TokenEntity.builder()
                 .token(token)
                 .expireTime(JwtUtil.getExpireTime(token))
                 .refreshToken(newRefreshToken)
                 .build();
-        return tokenEntity;
     }
 
     @Override
-    public boolean logout() {
-        return userRepository.logout();
+    public boolean logout(String username) {
+        return userRepository.logout(username);
     }
 
     @Override
     public boolean updatePassword(UpdatePasswordEntity updatePasswordEntity) {
         String verificationCode1 = userRepository.getVerificationCode(updatePasswordEntity.getUsername());
-        if(!verificationCode1.equalsIgnoreCase(updatePasswordEntity.getVerificationCode())){
+        if (!verificationCode1.equalsIgnoreCase(updatePasswordEntity.getVerificationCode())) {
             throw new BlogException(OperationCodeEnum.VERIFICATION_CODE_ERROR);
         }
         // 新密码加密
         String newPassword = StringUtils.encrypt(updatePasswordEntity.getNewPassword());
         // 更新密码
-        return userRepository.updatePassword(updatePasswordEntity.getUsername(),newPassword);}
+        return userRepository.updatePassword(updatePasswordEntity.getUsername(), newPassword);
+    }
 
     @Override
     public boolean updateUserInfo(UserUpdateEntity userUpdateEntity) {
@@ -152,6 +157,6 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public PageData<UserLoginLogAggregate> getPageUserLogins(PageParams pageParams, UserLoginLogQueryEntity userLoginLogQueryEntity) {
-        return userRepository.getPageUserLogins(pageParams, userLoginLogQueryEntity);
+        return userRepository.getPageUserLoginLog(pageParams, userLoginLogQueryEntity);
     }
 }

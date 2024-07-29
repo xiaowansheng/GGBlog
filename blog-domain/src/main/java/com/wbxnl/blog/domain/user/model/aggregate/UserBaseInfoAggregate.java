@@ -19,6 +19,8 @@ public class UserBaseInfoAggregate {
 
     private String loginType;
 
+    private String roleKey;
+
     private String email;
 
     private String qq;

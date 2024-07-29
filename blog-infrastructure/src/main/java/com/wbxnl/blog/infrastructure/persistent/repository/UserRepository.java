@@ -1,6 +1,10 @@
 package com.wbxnl.blog.infrastructure.persistent.repository;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.wbxnl.blog.common.cache.CacheKey;
 import com.wbxnl.blog.common.utils.ObjectConvertUtils;
 import com.wbxnl.blog.common.vo.PageData;
 import com.wbxnl.blog.common.vo.PageParams;
@@ -9,14 +13,17 @@ import com.wbxnl.blog.domain.user.model.aggregate.UserDetailAggregate;
 import com.wbxnl.blog.domain.user.model.aggregate.UserLoginLogAggregate;
 import com.wbxnl.blog.domain.user.model.entity.*;
 import com.wbxnl.blog.domain.user.model.vo.LoginLogVo;
-import com.wbxnl.blog.domain.user.model.vo.UserRegisterVo;
 import com.wbxnl.blog.domain.user.repository.IUserRepository;
-import com.wbxnl.blog.infrastructure.persistent.dao.UserAuthDao;
-import com.wbxnl.blog.infrastructure.persistent.dao.UserInfoDao;
-import com.wbxnl.blog.infrastructure.persistent.po.UserAuth;
-import com.wbxnl.blog.infrastructure.persistent.po.UserInfo;
+import com.wbxnl.blog.infrastructure.persistent.dao.*;
+import com.wbxnl.blog.infrastructure.persistent.po.*;
+import com.wbxnl.blog.infrastructure.persistent.redis.IRedisService;
+import com.wbxnl.blog.infrastructure.persistent.utils.PageUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * description: 略
@@ -31,6 +38,14 @@ public class UserRepository implements IUserRepository {
     private final UserAuthDao userAuthDao;
 
     private final UserInfoDao userInfoDao;
+
+    private final UserRoleDao userRoleDao;
+
+    private final RoleDao roleDao;
+
+    private final LoginLogDao loginLogDao;
+
+    private final IRedisService redisService;
 
 
     @Override
@@ -48,15 +63,36 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
+    public boolean checkUserAvailableStatus(String username) {
+        LambdaQueryWrapper<UserAuth> userAuthQueryWrapper = new LambdaQueryWrapper<UserAuth>()
+                .select(UserAuth::getDisable)
+                .eq(UserAuth::getUsername, username);
+        UserAuth userAuth = userAuthDao.selectOne(userAuthQueryWrapper);
+        boolean flag = Optional.ofNullable(userAuth).map(UserAuth::getDisable).orElse(1) == 0;
+        if (!flag) {
+            return false;
+        }
+        LambdaQueryWrapper<UserRole> userRoleQueryWrapper = new LambdaQueryWrapper<UserRole>()
+                .select(UserRole::getRoleKey)
+                .eq(UserRole::getUsername, username);
+        UserRole userRole = userRoleDao.selectOne(userRoleQueryWrapper);
+        LambdaQueryWrapper<Role> roleQueryWrapper = new LambdaQueryWrapper<Role>()
+                .select(Role::getDisable)
+                .eq(Role::getRoleKey, userRole.getRoleKey());
+        Role role = roleDao.selectOne(roleQueryWrapper);
+        return Optional.ofNullable(role).map(Role::getDisable).orElse(1) == 0;
+    }
+
+    @Override
     public UserBaseInfoAggregate getUser(String username) {
         // 获取用户账户
-        QueryWrapper<UserAuth> authQueryWrapper = new QueryWrapper<>();
-        authQueryWrapper.eq("username", username);
-        UserAuth userAuth = userAuthDao.selectOne(authQueryWrapper);
+        LambdaQueryWrapper<UserAuth> userAuthQueryWrapper = new LambdaQueryWrapper<UserAuth>()
+                .eq(UserAuth::getUsername, username);
+        UserAuth userAuth = userAuthDao.selectOne(userAuthQueryWrapper);
         // 获取用户信息
-        QueryWrapper<UserInfo> infoQueryWrapper = new QueryWrapper<>();
-        infoQueryWrapper.eq("user_info_key", userAuth.getUserInfoKey());
-        UserInfo userInfo = userInfoDao.selectOne(infoQueryWrapper);
+        LambdaQueryWrapper<UserInfo> userInfoQueryWrapper = new LambdaQueryWrapper<UserInfo>()
+                .eq(UserInfo::getUserInfoKey, userAuth.getUserInfoKey());
+        UserInfo userInfo = userInfoDao.selectOne(userInfoQueryWrapper);
         // 封装信息
         UserBaseInfoAggregate userBaseInfoAggregate = new UserBaseInfoAggregate();
         userBaseInfoAggregate.setUsername(userAuth.getUsername());
@@ -75,47 +111,75 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public boolean logout() {
-        return false;
+    public boolean logout(String username) {
+        redisService.del(CacheKey.getLoginInfoKey(username));
+        return true;
     }
 
     @Override
     public boolean updateUserInfo(UserUpdateEntity userUpdateEntity) {
-        return false;
+        UserInfo userInfo = ObjectConvertUtils.convert(userUpdateEntity, UserInfo.class);
+        return userInfoDao.update(userInfo, new LambdaQueryWrapper<UserInfo>()
+                .eq(UserInfo::getUserInfoKey, userUpdateEntity.getUserInfoKey())) > 0;
     }
 
     @Override
     public boolean setUserStatus(Integer id, Integer disable) {
-        return false;
+        LambdaUpdateWrapper<UserAuth> userAuthLambdaUpdateWrapper = new LambdaUpdateWrapper<>();
+        userAuthLambdaUpdateWrapper.set(UserAuth::getDisable, disable)
+                .eq(UserAuth::getId, id);
+        return userAuthDao.update(userAuthLambdaUpdateWrapper) > 0;
     }
 
     @Override
     public PageData<UserDetailAggregate> getPageUserDetails(PageParams pageParams, UserQueryEntity userQueryEntity) {
-        return null;
+        List<UserDetailAggregate> userDetailAggregates = userAuthDao.getPageUserDetails(pageParams, userQueryEntity);
+        Long total = userAuthDao.getPageUserDetailsTotal(userQueryEntity);
+        return PageUtils.convertPageData(pageParams.getNumber(), pageParams.getSize(), total, userDetailAggregates);
     }
 
     @Override
     public boolean addLoginLog(LoginLogVo loginLogVo) {
-        return false;
+        LoginLog loginLog = ObjectConvertUtils.convert(loginLogVo, LoginLog.class);
+        return loginLogDao.insert(loginLog) > 0;
     }
 
     @Override
-    public PageData<UserLoginLogAggregate> getPageUserLogins(PageParams pageParams, UserLoginLogQueryEntity userLoginLogQueryEntity) {
-        return null;
+    public PageData<UserLoginLogAggregate> getPageUserLoginLog(PageParams pageParams, UserLoginLogQueryEntity userLoginLogQueryEntity) {
+        LambdaQueryWrapper<LoginLog> loginLogQueryWrapper = new LambdaQueryWrapper<>();
+        Page<LoginLog> loginLogPage = new Page<>(pageParams.getNumber(), pageParams.getSize());
+        LambdaQueryWrapper<LoginLog> queryWrapper = loginLogQueryWrapper
+                .like(StringUtils.isNotBlank(userLoginLogQueryEntity.getUsername()), LoginLog::getUsername, userLoginLogQueryEntity.getUsername())
+                .like(StringUtils.isNotBlank(userLoginLogQueryEntity.getIpAddress()), LoginLog::getIpAddress, userLoginLogQueryEntity.getIpAddress())
+                .like(StringUtils.isNotBlank(userLoginLogQueryEntity.getIpSource()), LoginLog::getIpSource, userLoginLogQueryEntity.getIpSource())
+                .like(StringUtils.isNotBlank(userLoginLogQueryEntity.getDevice()), LoginLog::getDevice, userLoginLogQueryEntity.getDevice())
+                .like(StringUtils.isNotBlank(userLoginLogQueryEntity.getBrowser()), LoginLog::getBrowser, userLoginLogQueryEntity.getBrowser())
+                .like(StringUtils.isNotBlank(userLoginLogQueryEntity.getLocation()), LoginLog::getLocation, userLoginLogQueryEntity.getLocation())
+                .between(!(ObjectUtils.isEmpty(userLoginLogQueryEntity.getBeginCreateTime()) && ObjectUtils.isEmpty(userLoginLogQueryEntity.getEndCreateTime())), LoginLog::getCreateTime, userLoginLogQueryEntity.getBeginCreateTime(), userLoginLogQueryEntity.getEndCreateTime())
+                .orderByDesc(LoginLog::getCreateTime);
+        Page<LoginLog> selectedPage = loginLogDao.selectPage(loginLogPage, queryWrapper);
+        List<UserLoginLogAggregate> userLoginLogAggregates = ObjectConvertUtils.convertList(selectedPage.getRecords(), UserLoginLogAggregate.class);
+        return PageUtils.convertPageData((int) selectedPage.getCurrent(), (int) selectedPage.getSize(), selectedPage.getTotal(), userLoginLogAggregates);
     }
 
     @Override
     public String getVerificationCode(String email) {
-        return "";
+        return redisService.getString(CacheKey.getVerificationKey(email));
     }
 
     @Override
     public String getPassword(String username) {
-        return "";
+        LambdaQueryWrapper<UserAuth> userAuthQueryWrapper = new LambdaQueryWrapper<>();
+        userAuthQueryWrapper.select(UserAuth::getPassword).eq(UserAuth::getUsername, username);
+        UserAuth userAuth = userAuthDao.selectOne(userAuthQueryWrapper);
+        return Optional.ofNullable(userAuth).map(UserAuth::getPassword).orElse(null);
     }
 
     @Override
     public boolean updatePassword(String username, String newPassword) {
-        return false;
+        LambdaUpdateWrapper<UserAuth> userAuthLambdaUpdateWrapper = new LambdaUpdateWrapper<>();
+        userAuthLambdaUpdateWrapper.set(UserAuth::getPassword, newPassword)
+                .eq(UserAuth::getUsername, username);
+        return userAuthDao.update(userAuthLambdaUpdateWrapper) > 0;
     }
 }

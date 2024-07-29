@@ -13,9 +13,7 @@ import java.time.LocalDateTime;
 @Data
 public class UserLoginLogAggregate {
 
-    private Integer userAuthId;
-
-    private Integer username;
+    private String username;
 
     private String email;
 

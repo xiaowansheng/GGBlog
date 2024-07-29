@@ -43,6 +43,7 @@ dependencies {
 
     // 引入项目依赖
     implementation("org.springframework.boot:spring-boot-starter")
+    implementation("com.baomidou:mybatis-plus-boot-starter:3.5.7")
 
     // 缓存
     implementation("org.springframework.boot:spring-boot-starter-data-redis")

@@ -15,7 +15,7 @@ public class UserQueryEntity {
 
     private Integer id;
 
-    private Integer userInfoKey;
+    private String userInfoKey;
 
     private String username;
 
@@ -36,8 +36,6 @@ public class UserQueryEntity {
     private String qq;
 
     private String nickname;
-
-    private String avatar;
 
     private String signature;
 

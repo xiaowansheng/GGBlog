@@ -1,5 +1,8 @@
 package com.wbxnl.blog.infrastructure.persistent.dao;
 
+import com.wbxnl.blog.common.vo.PageParams;
+import com.wbxnl.blog.domain.user.model.aggregate.UserDetailAggregate;
+import com.wbxnl.blog.domain.user.model.entity.UserQueryEntity;
 import com.wbxnl.blog.infrastructure.persistent.dao.base.BaseDao;
 import com.wbxnl.blog.infrastructure.persistent.po.UserAuth;
 import org.apache.ibatis.annotations.Mapper;
@@ -17,16 +20,8 @@ import java.util.List;
  */
 @Mapper
 public interface UserAuthDao extends BaseDao<UserAuth> {
-//    /**
-//     * 获取用户详细信息
-//     * @return
-//     */
-//    List<UserAuthDto> getUserList(@Param("current")Long current, @Param("size")Long size, @Param("userAuthParams") UserAuthParams userAuthParams);
-//
-//    /**
-//     * 根据条件查询数量
-//     * @param userAuthParams
-//     * @return
-//     */
-//    Long getCount(@Param("userAuthParams")  UserAuthParams userAuthParams);
+
+    List<UserDetailAggregate> getPageUserDetails(@Param("pageParams") PageParams pageParams,@Param("userQueryEntity") UserQueryEntity userQueryEntity);
+
+    Long getPageUserDetailsTotal(@Param("userQueryEntity") UserQueryEntity userQueryEntity);
 }

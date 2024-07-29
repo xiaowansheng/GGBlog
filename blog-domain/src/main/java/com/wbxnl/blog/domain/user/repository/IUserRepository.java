@@ -7,7 +7,6 @@ import com.wbxnl.blog.domain.user.model.aggregate.UserDetailAggregate;
 import com.wbxnl.blog.domain.user.model.aggregate.UserLoginLogAggregate;
 import com.wbxnl.blog.domain.user.model.entity.*;
 import com.wbxnl.blog.domain.user.model.vo.LoginLogVo;
-import com.wbxnl.blog.domain.user.model.vo.UserRegisterVo;
 
 
 /**
@@ -22,9 +21,11 @@ public interface IUserRepository {
 
     boolean addUserInfo(UserRegisterInfoEntity userRegisterInfoEntity);
 
+    boolean checkUserAvailableStatus(String username);
+
     UserBaseInfoAggregate getUser(String username);
 
-    boolean logout();
+    boolean logout(String username);
 
     boolean updateUserInfo(UserUpdateEntity userUpdateEntity);
 
@@ -34,7 +35,7 @@ public interface IUserRepository {
 
     boolean addLoginLog(LoginLogVo loginLogVo);
 
-    PageData<UserLoginLogAggregate> getPageUserLogins(PageParams pageParams, UserLoginLogQueryEntity userLoginLogQueryEntity);
+    PageData<UserLoginLogAggregate> getPageUserLoginLog(PageParams pageParams, UserLoginLogQueryEntity userLoginLogQueryEntity);
 
     String getVerificationCode(String email);
 
