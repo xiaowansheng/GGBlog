@@ -88,5 +88,5 @@ public interface ITalkService {
      * @param pageParams 分页参数
      * @return 说说列表
      */
-    PageData<TalkAggregate> getPageTalkDetailsOfVisitor(PageParams pageParams);
+    PageData<TalkAggregate> getPageTalkDetailsByUser(PageParams pageParams);
 }

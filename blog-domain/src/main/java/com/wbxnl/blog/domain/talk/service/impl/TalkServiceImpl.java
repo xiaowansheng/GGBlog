@@ -82,7 +82,7 @@ public class TalkServiceImpl implements ITalkService {
     }
 
     @Override
-    public PageData<TalkAggregate> getPageTalkDetailsOfVisitor(PageParams pageParams) {
-        return talkRepository.getPageTalkDetailsOfVisitor(pageParams);
+    public PageData<TalkAggregate> getPageTalkDetailsByUser(PageParams pageParams) {
+        return talkRepository.getPageTalkDetailsByUser(pageParams);
     }
 }

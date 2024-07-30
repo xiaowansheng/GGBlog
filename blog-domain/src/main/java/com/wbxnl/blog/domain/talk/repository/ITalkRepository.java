@@ -29,7 +29,7 @@ public interface ITalkRepository {
 
     PageData<TalkAggregate> getPageTalkDetails(PageParams pageParams, TalkQueryEntity talkQueryEntity);
 
-    PageData<TalkAggregate> getPageTalkDetailsOfVisitor(PageParams pageParams);
+    PageData<TalkAggregate> getPageTalkDetailsByUser(PageParams pageParams);
 
     TalkEntity getTalk(Integer id);
 
