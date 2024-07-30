@@ -21,7 +21,7 @@ public interface IPageViewRepository {
 
     VisitorEntity addVisitor(VisitorVo visitorVo);
 
-    PageViewEntity getPageView(String viewType, Integer viewId);
+    PageViewEntity getPageView(String viewType, String viewKey);
 
     PageData<VisitorEntity> getPageVisitors(PageParams pageParams, VisitorQueryEntity visitorQueryEntity);
 }

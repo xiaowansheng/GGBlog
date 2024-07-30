@@ -24,10 +24,10 @@ public interface IPageViewService {
     /**
      * 获取页面浏览量
      * @param viewType 视图类型
-     * @param viewId 视图id
+     * @param viewKey 视图key
      * @return 访问量信息
      */
-    PageViewEntity getPageView(String viewType, Integer viewId);
+    PageViewEntity getPageView(String viewType, String viewKey);
 
     /**
      * 获取页面访问记录

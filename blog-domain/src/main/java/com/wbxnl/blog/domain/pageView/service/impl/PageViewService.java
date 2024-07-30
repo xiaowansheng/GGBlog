@@ -36,7 +36,7 @@ public class PageViewService implements IPageViewService {
         VisitorVo visitorVo = VisitorVo.builder()
                 .uuid("")
                 .viewType(pageViewVo.getViewType())
-                .viewId(pageViewVo.getViewId())
+                .viewKey(pageViewVo.getViewKey())
                 .ipAddress(ipAddress)
                 .ipSource(HttpUtils.getIpSource(ipAddress))
                 .device(HttpUtils.getRequestDevice(request))
@@ -56,8 +56,8 @@ public class PageViewService implements IPageViewService {
     }
 
     @Override
-    public PageViewEntity getPageView(String viewType, Integer viewId) {
-        return pageViewRepository.getPageView(viewType, viewId);
+    public PageViewEntity getPageView(String viewType, String viewKey) {
+        return pageViewRepository.getPageView(viewType, viewKey);
     }
 
     @Override

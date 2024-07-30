@@ -33,8 +33,8 @@ public class Visitor implements Serializable {
     @TableField("view_type")
     private String viewType;
 
-    @TableField("view_id")
-    private Integer viewId;
+    @TableField("view_key")
+    private String viewKey;
 
     @TableField("ip_address")
     private String ipAddress;

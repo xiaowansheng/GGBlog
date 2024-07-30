@@ -19,7 +19,7 @@ public class VisitorEntity {
 
     private String viewType;
 
-    private Integer viewKey;
+    private String viewKey;
 
     private String ipAddress;
 

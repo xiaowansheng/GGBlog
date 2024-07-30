@@ -15,5 +15,5 @@ public class PageViewVo {
 
     private String viewType;
 
-    private Integer viewKey;
+    private String viewKey;
 }

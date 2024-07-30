@@ -2,6 +2,7 @@ package com.wbxnl.blog.infrastructure.persistent.repository;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wbxnl.blog.common.utils.ObjectConvertUtils;
 import com.wbxnl.blog.common.vo.PageData;
@@ -17,7 +18,7 @@ import com.wbxnl.blog.infrastructure.persistent.po.Talk;
 import com.wbxnl.blog.infrastructure.persistent.utils.PageUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
@@ -77,12 +78,12 @@ public class TalkRepository implements ITalkRepository {
         Page<Talk> page = new Page<>();
         LambdaQueryWrapper<Talk> talkLambdaQueryWrapper = new LambdaQueryWrapper<>();
         talkLambdaQueryWrapper
-                .eq(!StringUtils.isEmpty(talkQueryEntity.getId()), Talk::getId, talkQueryEntity.getId())
-                .eq(!StringUtils.isEmpty(talkQueryEntity.getTalkKey()), Talk::getTalkKey, talkQueryEntity.getTalkKey())
-                .like(!StringUtils.isEmpty(talkQueryEntity.getUsername()), Talk::getUsername, talkQueryEntity.getUsername())
-                .eq(!StringUtils.isEmpty(talkQueryEntity.getStatus()), Talk::getStatus, talkQueryEntity.getStatus())
-                .like(!StringUtils.isEmpty(talkQueryEntity.getDevice()), Talk::getDevice, talkQueryEntity.getDevice())
-                .like(!StringUtils.isEmpty(talkQueryEntity.getBrowser()), Talk::getBrowser, talkQueryEntity.getBrowser())
+                .eq(!ObjectUtils.isEmpty(talkQueryEntity.getId()), Talk::getId, talkQueryEntity.getId())
+                .eq(StringUtils.isNotBlank(talkQueryEntity.getTalkKey()), Talk::getTalkKey, talkQueryEntity.getTalkKey())
+                .like(StringUtils.isNotBlank(talkQueryEntity.getUsername()), Talk::getUsername, talkQueryEntity.getUsername())
+                .eq(StringUtils.isNotBlank(talkQueryEntity.getStatus()), Talk::getStatus, talkQueryEntity.getStatus())
+                .like(StringUtils.isNotBlank(talkQueryEntity.getDevice()), Talk::getDevice, talkQueryEntity.getDevice())
+                .like(StringUtils.isNotBlank(talkQueryEntity.getBrowser()), Talk::getBrowser, talkQueryEntity.getBrowser())
                 .between(talkQueryEntity.getBeginCreateTime() != null&&talkQueryEntity.getEndCreateTime() != null, Talk::getCreateTime, talkQueryEntity.getBeginCreateTime(), talkQueryEntity.getEndCreateTime())
                 .orderByDesc(Talk::getCreateTime);
         Page<Talk> talkPage = talkDao.selectPage(page, talkLambdaQueryWrapper);

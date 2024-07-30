@@ -21,7 +21,7 @@ public class VisitorVo {
 
     private String viewType;
 
-    private Integer viewKey;
+    private String viewKey;
 
     private String ipAddress;
 
