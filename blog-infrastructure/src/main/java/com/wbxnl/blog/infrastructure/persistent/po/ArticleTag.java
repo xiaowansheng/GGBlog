@@ -37,7 +37,7 @@ public class ArticleTag implements Serializable {
     private String articleKey;
 
     @TableField("tag_key")
-    private Integer tagKey;
+    private String tagKey;
 
 
 }

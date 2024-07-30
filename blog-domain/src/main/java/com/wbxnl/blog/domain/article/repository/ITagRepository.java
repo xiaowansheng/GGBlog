@@ -3,6 +3,7 @@ package com.wbxnl.blog.domain.article.repository;
 import com.wbxnl.blog.common.vo.PageData;
 import com.wbxnl.blog.common.vo.PageParams;
 import com.wbxnl.blog.domain.article.model.aggregate.TagAggregate;
+import com.wbxnl.blog.domain.article.model.aggregate.TagSimpleAggregate;
 import com.wbxnl.blog.domain.article.model.entity.*;
 import com.wbxnl.blog.domain.article.model.vo.TagHandleVo;
 import com.wbxnl.blog.domain.article.model.vo.TagVo;
@@ -28,7 +29,7 @@ public interface ITagRepository {
 
     List<TagSimpleInfoEntity> getAllTags();
 
-    List<TagAggregate> getAllTagsByUser();
+    List<TagSimpleAggregate> getAllTagsByUser();
 
     TagEntity getTag(Integer id);
 

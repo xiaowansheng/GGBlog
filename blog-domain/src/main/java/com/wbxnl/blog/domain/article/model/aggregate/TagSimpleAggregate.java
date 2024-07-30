@@ -12,23 +12,15 @@ import java.util.List;
  * @since 2024/7/14 4:03
  */
 @Data
-public class CategoryAggregate {
+public class TagSimpleAggregate {
 
     private Integer id;
 
-    private String categoryKey;
+    private String tagKey;
 
     private String name;
-
-    private Integer hidden;
 
     private String description;
 
     private Integer articleCount;
-
-    private List<Integer> articleIds;
-
-    private LocalDateTime createTime;
-
-    private LocalDateTime updateTime;
 }

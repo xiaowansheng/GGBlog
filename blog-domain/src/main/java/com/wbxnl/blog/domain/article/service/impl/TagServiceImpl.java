@@ -7,6 +7,7 @@ import com.wbxnl.blog.common.utils.UuidUtils;
 import com.wbxnl.blog.common.vo.PageData;
 import com.wbxnl.blog.common.vo.PageParams;
 import com.wbxnl.blog.domain.article.model.aggregate.TagAggregate;
+import com.wbxnl.blog.domain.article.model.aggregate.TagSimpleAggregate;
 import com.wbxnl.blog.domain.article.model.entity.*;
 import com.wbxnl.blog.domain.article.model.vo.TagHandleVo;
 import com.wbxnl.blog.domain.article.model.vo.TagVo;
@@ -113,7 +114,7 @@ public class TagServiceImpl implements ITagService {
     }
 
     @Override
-    public List<TagAggregate> getAllTagsByUser() {
+    public List<TagSimpleAggregate> getAllTagsByUser() {
         return tagRepository.getAllTagsByUser();
     }
 

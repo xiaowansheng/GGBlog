@@ -3,6 +3,7 @@ package com.wbxnl.blog.domain.article.service;
 import com.wbxnl.blog.common.vo.PageData;
 import com.wbxnl.blog.common.vo.PageParams;
 import com.wbxnl.blog.domain.article.model.aggregate.TagAggregate;
+import com.wbxnl.blog.domain.article.model.aggregate.TagSimpleAggregate;
 import com.wbxnl.blog.domain.article.model.entity.*;
 import com.wbxnl.blog.domain.article.model.vo.TagVo;
 
@@ -120,7 +121,7 @@ public interface ITagService {
      * 用户获取所有简要标签信息
      * @return 标签列表
      */
-    List<TagAggregate> getAllTagsByUser();
+    List<TagSimpleAggregate> getAllTagsByUser();
 
 
     /**

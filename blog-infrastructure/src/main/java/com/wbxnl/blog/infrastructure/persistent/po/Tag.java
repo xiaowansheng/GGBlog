@@ -35,6 +35,9 @@ public class Tag implements Serializable {
     @TableField("description")
     private String description;
 
+    /**
+     * TODO 不需要这个字段
+     */
     @TableField("hidden")
     private Integer hidden;
 
