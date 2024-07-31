@@ -26,6 +26,6 @@ public interface ISystemConfigRepository {
 
     SystemConfigEntity getSystemConfig(String configName);
 
-    List<SystemConfigEntity> getSystemConfigList(SystemConfigQueryEntity systemConfigQueryEntity);
+    List<SystemConfigEntity> getAllSystemConfig();
 
 }

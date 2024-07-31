@@ -2,7 +2,6 @@ package com.wbxnl.blog.domain.config.service.impl;
 
 import com.wbxnl.blog.common.enums.ConfigEnum;
 import com.wbxnl.blog.domain.config.model.entity.SystemConfigEntity;
-import com.wbxnl.blog.domain.config.model.entity.SystemConfigQueryEntity;
 import com.wbxnl.blog.domain.config.model.entity.SystemConfigUpdateEntity;
 import com.wbxnl.blog.domain.config.model.vo.SystemConfigUseVo;
 import com.wbxnl.blog.domain.config.model.vo.SystemConfigVo;
@@ -58,8 +57,8 @@ public class SystemConfigService implements ISystemConfigService {
     }
 
     @Override
-    public List<SystemConfigEntity> getSystemConfigList(SystemConfigQueryEntity systemConfigQueryEntity) {
-        return systemConfigRepository.getSystemConfigList(systemConfigQueryEntity);
+    public List<SystemConfigEntity> getAllSystemConfig() {
+        return systemConfigRepository.getAllSystemConfig();
     }
 
     @Override
@@ -72,8 +71,8 @@ public class SystemConfigService implements ISystemConfigService {
         for (String name : configNameList) {
             SystemConfigEntity systemConfig = getSystemConfig(name);
             SystemConfigUseVo useVo = new SystemConfigUseVo()
-                    .setLabel(systemConfig.getLabel())
                     .setName(systemConfig.getName())
+                    .setConfigKey(systemConfig.getConfigKey())
                     .setValue(systemConfig.getValue());
             list.add(useVo);
         }
