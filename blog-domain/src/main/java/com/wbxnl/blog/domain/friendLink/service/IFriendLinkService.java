@@ -4,6 +4,7 @@ import com.wbxnl.blog.common.vo.PageData;
 import com.wbxnl.blog.common.vo.PageParams;
 import com.wbxnl.blog.domain.friendLink.model.entity.FriendLinkEntity;
 import com.wbxnl.blog.domain.friendLink.model.entity.FriendLinkQueryEntity;
+import com.wbxnl.blog.domain.friendLink.model.entity.FriendLinkSimpleEntity;
 import com.wbxnl.blog.domain.friendLink.model.entity.FriendLinkUpdateEntity;
 import com.wbxnl.blog.domain.friendLink.model.vo.FriendLinkVo;
 
@@ -80,4 +81,12 @@ public interface IFriendLinkService {
      * @return 友链
      */
     PageData<FriendLinkEntity> getPageFriendLinks(PageParams pageParams, FriendLinkQueryEntity friendLinkQueryEntity);
+
+    /**
+     * 用户分页获取友链信息
+     * @param pageParams 分页参数
+     * @return 友链
+     */
+    PageData<FriendLinkSimpleEntity> getPageFriendLinksByUser(PageParams pageParams);
+
 }

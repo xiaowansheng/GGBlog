@@ -4,6 +4,7 @@ import com.wbxnl.blog.common.vo.PageData;
 import com.wbxnl.blog.common.vo.PageParams;
 import com.wbxnl.blog.domain.friendLink.model.entity.FriendLinkEntity;
 import com.wbxnl.blog.domain.friendLink.model.entity.FriendLinkQueryEntity;
+import com.wbxnl.blog.domain.friendLink.model.entity.FriendLinkSimpleEntity;
 import com.wbxnl.blog.domain.friendLink.model.entity.FriendLinkUpdateEntity;
 import com.wbxnl.blog.domain.friendLink.model.vo.FriendLinkVo;
 
@@ -32,4 +33,6 @@ public interface IFriendLinkRepository {
     PageData<FriendLinkEntity> getPageFriendLinks(PageParams pageParams, FriendLinkQueryEntity friendLinkQueryEntity);
 
     PageData<FriendLinkEntity> getPageOfNoAuditFriendLinks(PageParams pageParams, FriendLinkQueryEntity friendLinkQueryEntity);
+
+    PageData<FriendLinkSimpleEntity> getPageFriendLinksByUser(PageParams pageParams);
 }

@@ -4,6 +4,7 @@ import com.wbxnl.blog.common.vo.PageData;
 import com.wbxnl.blog.common.vo.PageParams;
 import com.wbxnl.blog.domain.friendLink.model.entity.FriendLinkEntity;
 import com.wbxnl.blog.domain.friendLink.model.entity.FriendLinkQueryEntity;
+import com.wbxnl.blog.domain.friendLink.model.entity.FriendLinkSimpleEntity;
 import com.wbxnl.blog.domain.friendLink.model.entity.FriendLinkUpdateEntity;
 import com.wbxnl.blog.domain.friendLink.model.vo.FriendLinkVo;
 import com.wbxnl.blog.domain.friendLink.repository.IFriendLinkRepository;
@@ -66,5 +67,10 @@ public class FriendLinkService implements IFriendLinkService {
     @Override
     public PageData<FriendLinkEntity> getPageFriendLinks(PageParams pageParams, FriendLinkQueryEntity friendLinkQueryEntity) {
         return friendLinkRepository.getPageFriendLinks(pageParams, friendLinkQueryEntity);
+    }
+
+    @Override
+    public PageData<FriendLinkSimpleEntity> getPageFriendLinksByUser(PageParams pageParams) {
+        return friendLinkRepository.getPageFriendLinksByUser(pageParams);
     }
 }

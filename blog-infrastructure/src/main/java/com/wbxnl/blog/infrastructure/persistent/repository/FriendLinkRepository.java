@@ -10,6 +10,7 @@ import com.wbxnl.blog.common.vo.PageData;
 import com.wbxnl.blog.common.vo.PageParams;
 import com.wbxnl.blog.domain.friendLink.model.entity.FriendLinkEntity;
 import com.wbxnl.blog.domain.friendLink.model.entity.FriendLinkQueryEntity;
+import com.wbxnl.blog.domain.friendLink.model.entity.FriendLinkSimpleEntity;
 import com.wbxnl.blog.domain.friendLink.model.entity.FriendLinkUpdateEntity;
 import com.wbxnl.blog.domain.friendLink.model.vo.FriendLinkVo;
 import com.wbxnl.blog.domain.friendLink.repository.IFriendLinkRepository;
@@ -120,4 +121,17 @@ public class FriendLinkRepository implements IFriendLinkRepository {
         page= friendDao.selectPage(page, friendLambdaQueryWrapper);
         List<FriendLinkEntity> friendLinkEntities = ObjectConvertUtils.convertList(page.getRecords(), FriendLinkEntity.class);
         return PageUtils.convertPageData(pageParams.getNumber(), pageParams.getSize(), page.getTotal(), friendLinkEntities);    }
+
+    @Override
+    public PageData<FriendLinkSimpleEntity> getPageFriendLinksByUser(PageParams pageParams) {
+        Page<Friend> page = new Page<>(pageParams.getNumber(), pageParams.getSize());
+        LambdaQueryWrapper<Friend> friendLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        friendLambdaQueryWrapper
+                .eq(Friend::getReview, 1)
+                .eq(Friend::getHidden, 0)
+                .orderByDesc(Friend::getCreateTime);
+        page= friendDao.selectPage(page, friendLambdaQueryWrapper);
+        List<FriendLinkSimpleEntity> friendLinkEntities = ObjectConvertUtils.convertList(page.getRecords(), FriendLinkSimpleEntity.class);
+        return PageUtils.convertPageData(pageParams.getNumber(), pageParams.getSize(), page.getTotal(), friendLinkEntities);
+    }
 }
