@@ -45,11 +45,5 @@ public class LeaveMessageSimpleEntity {
 
     private String qq;
 
-    private Integer hidden;
-
-    private Integer review;
-
     private LocalDateTime createTime;
-
-    private LocalDateTime updateTime;
 }
