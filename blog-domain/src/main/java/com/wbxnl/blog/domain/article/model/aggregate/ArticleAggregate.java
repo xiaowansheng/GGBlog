@@ -1,7 +1,9 @@
 package com.wbxnl.blog.domain.article.model.aggregate;
 
 import com.wbxnl.blog.domain.article.model.entity.CategoryEntity;
+import com.wbxnl.blog.domain.article.model.entity.CategorySimpleInfoEntity;
 import com.wbxnl.blog.domain.article.model.entity.TagEntity;
+import com.wbxnl.blog.domain.article.model.entity.TagSimpleInfoEntity;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -22,9 +24,9 @@ public class ArticleAggregate {
 
     private String username;
 
-    private CategoryEntity category;
+    private CategorySimpleInfoEntity category;
 
-    private List<TagEntity> tags;
+    private List<TagSimpleInfoEntity> tags;
 
     private String title;
 

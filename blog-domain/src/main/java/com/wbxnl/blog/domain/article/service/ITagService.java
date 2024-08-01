@@ -82,42 +82,6 @@ public interface ITagService {
 
 
     /**
-     * 添加文章标签和文章的关联
-     * @param articleAndTagLinkEntity 文章标签关联
-     * @return 是否添加成功
-     */
-    boolean linkArticleAndTag(ArticleAndTagLinkEntity articleAndTagLinkEntity);
-
-    /**
-     * 批量添加文章标签和文章的关联
-     * @param articleAndTagLinkEntities 文章标签关联
-     * @return 是否添加成功
-     */
-    boolean linkArticleAndTag(List<ArticleAndTagLinkEntity> articleAndTagLinkEntities);
-
-    /**
-     * 删除文章标签和文章的关联
-     * @param articleKey 文章key
-     * @return 是否删除成功
-     */
-    boolean deleteArticleAndTagLink(String articleKey);
-
-    /**
-     * 批量删除文章标签和文章的关联
-     * @param articleKey 文章key
-     * @param tagKey 标签key
-     * @return 是否删除成功
-     */
-    boolean deleteArticleAndTagLink(String articleKey,String tagKey);
-
-    /**
-     * 根据文章key获取标签信息
-     * @param articleKey 文章Key
-     * @return 标签列表
-     */
-    List<TagSimpleInfoEntity> getTagList(String articleKey);
-
-    /**
      * 用户获取所有简要标签信息
      * @return 标签列表
      */
@@ -136,4 +100,11 @@ public interface ITagService {
      * @return 标签信息
      */
     TagEntity getTagByName(String name);
+
+    /**
+     * 根据文章key获取标签Key列表
+     * @param articleKey 文章key
+     * @return 标签Key
+     */
+    List<String> getTagKeyList(String articleKey);
 }

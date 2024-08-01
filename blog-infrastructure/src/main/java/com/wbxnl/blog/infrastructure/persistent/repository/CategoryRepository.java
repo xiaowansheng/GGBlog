@@ -112,9 +112,9 @@ public class CategoryRepository implements ICategoryRepository {
     }
 
     @Override
-    public CategoryEntity getCategory(String categoryKey) {
+    public CategorySimpleInfoEntity getCategory(String categoryKey) {
         LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<Category>().eq(Category::getCategoryKey, categoryKey);
-        return ObjectConvertUtils.convert(categoryDao.selectOne(queryWrapper), CategoryEntity.class);
+        return ObjectConvertUtils.convert(categoryDao.selectOne(queryWrapper), CategorySimpleInfoEntity.class);
     }
 
     @Override
@@ -153,5 +153,14 @@ public class CategoryRepository implements ICategoryRepository {
     public CategoryEntity getCategoryByName(String name) {
         LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<Category>().eq(Category::getName, name);
         return ObjectConvertUtils.convert(categoryDao.selectOne(queryWrapper), CategoryEntity.class);
+    }
+
+    @Override
+    public CategorySimpleInfoEntity getCategoryByUser(String categoryKey) {
+        LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper
+                .eq(Category::getCategoryKey, categoryKey)
+                .eq(Category::getHidden,0);
+        return ObjectConvertUtils.convert(categoryDao.selectOne(queryWrapper), CategorySimpleInfoEntity.class);
     }
 }

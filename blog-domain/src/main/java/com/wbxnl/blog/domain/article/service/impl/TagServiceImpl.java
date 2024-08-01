@@ -73,6 +73,11 @@ public class TagServiceImpl implements ITagService {
     }
 
     @Override
+    public List<String> getTagKeyList(String articleKey) {
+        return tagRepository.getTagKeyList(articleKey);
+    }
+
+    @Override
     public List<TagSimpleInfoEntity> getTags(Integer[] ids) {
         return tagRepository.getTags(ids);
     }
@@ -85,32 +90,6 @@ public class TagServiceImpl implements ITagService {
     @Override
     public PageData<TagAggregate> getPageTags(PageParams pageParams, TagQueryEntity tagQueryEntity) {
         return tagRepository.getPageTags(pageParams, tagQueryEntity);
-    }
-
-    @Override
-    public boolean linkArticleAndTag(ArticleAndTagLinkEntity articleAndTagLinkEntity) {
-        return tagRepository.linkArticleAndTag(articleAndTagLinkEntity);
-    }
-
-    @Override
-    public boolean linkArticleAndTag(List<ArticleAndTagLinkEntity> articleAndTagLinkEntities) {
-        return tagRepository.linkArticleAndTag(articleAndTagLinkEntities);
-    }
-
-    @Override
-    public boolean deleteArticleAndTagLink(String articleKey) {
-        return tagRepository.unlinkArticleAndTag(articleKey);
-    }
-
-    @Override
-    public boolean deleteArticleAndTagLink(String articleKey, String tagKey) {
-        return tagRepository.unlinkArticleAndTag(articleKey, tagKey);
-    }
-
-
-    @Override
-    public List<TagSimpleInfoEntity> getTagList(String articleKey) {
-        return tagRepository.getTagList(articleKey);
     }
 
     @Override

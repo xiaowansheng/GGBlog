@@ -36,11 +36,13 @@ public interface ICategoryRepository {
 
     CategoryEntity getCategory(Integer id);
 
-    CategoryEntity getCategory(String categoryKey);
+    CategorySimpleInfoEntity getCategory(String categoryKey);
 
     Long getCategoryQuantityByUser();
 
     PageData<CategoryAggregate> getPageCategories(PageParams pageParams, CategoryQueryEntity categoryQueryEntity);
 
     CategoryEntity getCategoryByName(String name);
+
+    CategorySimpleInfoEntity getCategoryByUser(String categoryKey);
 }

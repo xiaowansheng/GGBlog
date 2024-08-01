@@ -13,7 +13,7 @@ public class CategorySimpleInfoEntity {
 
     private Integer id;
 
-    private Integer categoryKey;
+    private String categoryKey;
 
     private String name;
 

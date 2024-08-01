@@ -237,17 +237,12 @@ public class TagRepository implements ITagRepository {
     }
 
     @Override
-    public List<TagSimpleInfoEntity> getTagList(String articleKey) {
+    public List<String> getTagKeyList(String articleKey) {
         LambdaQueryWrapper<ArticleTag> articleTagLambdaQueryWrapper = new LambdaQueryWrapper<>();
         articleTagLambdaQueryWrapper
+                .select(ArticleTag::getTagKey)
                 .eq(ArticleTag::getArticleKey, articleKey);
         List<ArticleTag> articleTags = articleTagDao.selectList(articleTagLambdaQueryWrapper);
-        List<String> tagKeys = articleTags.stream().map(ArticleTag::getTagKey).collect(Collectors.toList());
-        LambdaQueryWrapper<Tag> tagLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        tagLambdaQueryWrapper
-                .select(Tag::getId,Tag::getTagKey, Tag::getName, Tag::getDescription)
-                .in(Tag::getTagKey, tagKeys);
-        List<Tag> tags = tagDao.selectList(tagLambdaQueryWrapper);
-        return ObjectConvertUtils.convertList(tags, TagSimpleInfoEntity.class);
+        return articleTags.stream().map(ArticleTag::getTagKey).collect(Collectors.toList());
     }
 }

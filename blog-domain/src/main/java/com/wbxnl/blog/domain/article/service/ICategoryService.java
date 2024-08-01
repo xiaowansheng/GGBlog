@@ -74,14 +74,14 @@ public interface ICategoryService {
      * @param categoryKey 分类key
      * @return 分类信息
      */
-    CategoryEntity getCategory(String categoryKey);
+    CategorySimpleInfoEntity getCategory(String categoryKey);
 
     /**
-     * 获取文章分类信息
-     * @param name 分类名称
+     * 用户查询分类信息
+     * @param categoryKey 分类key
      * @return 分类信息
      */
-    CategoryEntity getCategoryByName(String name);
+    CategorySimpleInfoEntity getCategoryByUser(String categoryKey);
 
     /**
      * 获取所有简要的分类信息

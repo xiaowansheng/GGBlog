@@ -51,5 +51,5 @@ public interface ITagRepository {
 
     TagEntity getTagByName(String name);
 
-    List<TagSimpleInfoEntity> getTagList(String articleKey);
+    List<String> getTagKeyList(String articleKey);
 }

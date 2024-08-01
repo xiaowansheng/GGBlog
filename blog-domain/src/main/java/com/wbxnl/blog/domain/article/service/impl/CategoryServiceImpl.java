@@ -35,7 +35,7 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
     public CategoryEntity addArticleCategory(CategoryVo categoryVo) {
         // 检查要插入的分类是否已经存在
-        CategoryEntity categoryByName = getCategoryByName(categoryVo.getName());
+        CategoryEntity categoryByName = categoryRepository.getCategoryByName(categoryVo.getName());
         if(categoryByName!=null){
             throw new BlogException(OperationCodeEnum.CATEGORY_EXISTS);
         }
@@ -70,13 +70,13 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
-    public CategoryEntity getCategory(String categoryKey) {
+    public CategorySimpleInfoEntity getCategory(String categoryKey) {
         return categoryRepository.getCategory(categoryKey);
     }
 
     @Override
-    public CategoryEntity getCategoryByName(String name) {
-        return categoryRepository.getCategoryByName(name);
+    public CategorySimpleInfoEntity getCategoryByUser(String categoryKey) {
+        return categoryRepository.getCategoryByUser(categoryKey);
     }
 
     @Override

@@ -35,7 +35,9 @@ public interface IArticleRepository {
 
     ArticleEntity getArticle(Integer id);
 
-    ArticleAggregate getArticleDetail(Integer id, boolean isVisitor);
+    ArticleAggregate getArticleDetail(Integer id);
+
+    ArticleAggregate getArticleDetailByUser(Integer id);
 
     Long getArticleQuantityByUser();
 
@@ -43,6 +45,6 @@ public interface IArticleRepository {
 
     PageData<ArticleArchiveAggregate> getPageArticleDetailsOfArchive(PageParams pageParams, boolean isReverseOrder, boolean isVisitor);
 
-    PageData<ArticleAggregate> getPageArticleDetailsOfVisitor(PageParams pageParams, ArticleQueryByVisitorEntity articleQueryByVisitorEntity);
+    PageData<ArticleAggregate> getPageArticleDetailsByUser(PageParams pageParams, ArticleQueryByVisitorEntity articleQueryByVisitorEntity);
 
 }

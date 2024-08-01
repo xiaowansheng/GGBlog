@@ -10,6 +10,8 @@ import com.wbxnl.blog.domain.article.model.aggregate.ArticleArchiveAggregate;
 import com.wbxnl.blog.domain.article.model.entity.*;
 import com.wbxnl.blog.domain.article.model.vo.*;
 import com.wbxnl.blog.domain.article.repository.IArticleRepository;
+import com.wbxnl.blog.domain.article.repository.ICategoryRepository;
+import com.wbxnl.blog.domain.article.repository.ITagRepository;
 import com.wbxnl.blog.domain.article.service.IArticleService;
 import com.wbxnl.blog.domain.article.service.ICategoryService;
 import com.wbxnl.blog.domain.article.service.ITagService;
@@ -37,6 +39,11 @@ public class ArticleServiceImpl implements IArticleService {
 
     private final ITagService tagService;
 
+    private final ICategoryRepository categoryRepository;
+
+    private final ITagRepository tagRepository;
+
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ArticleEntity addArticle(ArticleVo articleVo) {
@@ -47,13 +54,13 @@ public class ArticleServiceImpl implements IArticleService {
         // 检查是否存在这个分类，存在则直接设置分类，不存在则插入后设置分类
         if (StringUtils.hasText(articleVoCategory.getCategoryKey())) {
             // 检查是否存在
-            CategoryEntity category = categoryService.getCategory(articleVoCategory.getCategoryKey());
-            if (category != null) {
+            CategorySimpleInfoEntity categorySimpleInfoEntity = categoryRepository.getCategory(articleVoCategory.getCategoryKey());
+            if (categorySimpleInfoEntity != null) {
                 articleHandleVo.setCategoryKey(articleVoCategory.getCategoryKey());
             }
         } else {
             // 检查要插入的分类是否已经存在
-            CategoryEntity categoryEntity = categoryService.getCategoryByName(articleVoCategory.getName());
+            CategoryEntity categoryEntity = categoryRepository.getCategoryByName(articleVoCategory.getName());
             if (categoryEntity != null) {
                 articleHandleVo.setCategoryKey(categoryEntity.getCategoryKey());
             } else {
@@ -71,7 +78,7 @@ public class ArticleServiceImpl implements IArticleService {
             TagEntity tagEntity = null;
             // 检查是否存在标签
             if (StringUtils.hasText(tagKey)) {
-                tagEntity = tagService.getTag(tagKey);
+                tagEntity = tagRepository.getTag(tagKey);
             } else {
                 TagVo tagVo = new TagVo();
                 tagVo.setName(articleVoTag.getName());
@@ -82,7 +89,7 @@ public class ArticleServiceImpl implements IArticleService {
                 ArticleAndTagLinkEntity articleAndTagLinkEntity = new ArticleAndTagLinkEntity();
                 articleAndTagLinkEntity.setArticleKey(articleHandleVo.getArticleKey());
                 articleAndTagLinkEntity.setTagKey(tagEntity.getTagKey());
-                tagService.linkArticleAndTag(articleAndTagLinkEntity);
+                tagRepository.linkArticleAndTag(articleAndTagLinkEntity);
             }
         });
         // 3、插入文章信息
@@ -118,13 +125,13 @@ public class ArticleServiceImpl implements IArticleService {
         // 检查是否存在这个分类，存在则直接设置分类，不存在则插入后设置分类
         if (StringUtils.hasText(articleVoCategory.getCategoryKey())) {
             // 检查是否存在
-            CategoryEntity category = categoryService.getCategory(articleVoCategory.getCategoryKey());
-            if (category != null) {
+            CategorySimpleInfoEntity categorySimpleInfoEntity = categoryRepository.getCategory(articleVoCategory.getCategoryKey());
+            if (categorySimpleInfoEntity != null) {
                 articleHandleVo.setCategoryKey(articleVoCategory.getCategoryKey());
             }
         } else {
             // 检查要插入的分类是否已经存在
-            CategoryEntity categoryEntity = categoryService.getCategoryByName(articleVoCategory.getName());
+            CategoryEntity categoryEntity = categoryRepository.getCategoryByName(articleVoCategory.getName());
             if (categoryEntity != null) {
                 articleHandleVo.setCategoryKey(categoryEntity.getCategoryKey());
             } else {
@@ -136,7 +143,7 @@ public class ArticleServiceImpl implements IArticleService {
         }
         // 处理标签
         // 获取旧的标签信息
-        List<TagSimpleInfoEntity> oldTagList = tagService.getTagList(articleUpdateEntity.getArticleKey());
+        List<String> oldTagList = tagRepository.getTagKeyList(articleUpdateEntity.getArticleKey());
         // 记录当前新的标签
         ArrayList<TagEntity> newTagList = new ArrayList<>();
         List<ArticleUpdateEntity.TagVo> updateEntityTags = articleUpdateEntity.getTags();
@@ -145,9 +152,9 @@ public class ArticleServiceImpl implements IArticleService {
             TagEntity tagEntity = null;
             // 检查是否存在标签
             if (StringUtils.hasText(tagKey)) {
-                tagEntity = tagService.getTag(tagKey);
+                tagEntity = tagRepository.getTag(tagKey);
             } else {
-                tagEntity = tagService.getTagByName(articleVoTag.getName());
+                tagEntity = tagRepository.getTagByName(articleVoTag.getName());
                 if (tagEntity == null) {
                     TagVo tagVo = new TagVo();
                     tagVo.setName(articleVoTag.getName());
@@ -165,20 +172,20 @@ public class ArticleServiceImpl implements IArticleService {
         // 找出需要新增的标签关联
         ArrayList<String> waitLinkList = new ArrayList<>();
         for (TagEntity tagEntity : newTagList) {
-            for (TagSimpleInfoEntity tagSimpleInfoEntity : oldTagList) {
-                if (tagEntity.getTagKey().equals(tagSimpleInfoEntity.getTagKey())) {
+            for (String tagKey : oldTagList) {
+                if (tagEntity.getTagKey().equals(tagKey)) {
                     break;
                 }
                 waitLinkList.add(tagEntity.getTagKey());
             }
         }
         // 找出旧的标签里有的，新的标签里没有的，删除标签关联
-        for (TagSimpleInfoEntity tagSimpleInfoEntity : oldTagList) {
+        for (String tagKey : oldTagList) {
             for (TagEntity tagEntity : newTagList) {
-                if (tagEntity.getTagKey().equals(tagSimpleInfoEntity.getTagKey())) {
+                if (tagEntity.getTagKey().equals(tagKey)) {
                     break;
                 }
-                tagService.deleteArticleAndTagLink(articleHandleVo.getArticleKey(), tagSimpleInfoEntity.getTagKey());
+                tagRepository.unlinkArticleAndTag(articleHandleVo.getArticleKey(), tagKey);
             }
 
         }
@@ -187,7 +194,7 @@ public class ArticleServiceImpl implements IArticleService {
             ArticleAndTagLinkEntity articleAndTagLinkEntity = new ArticleAndTagLinkEntity();
             articleAndTagLinkEntity.setArticleKey(articleHandleVo.getArticleKey());
             articleAndTagLinkEntity.setTagKey(tagKey);
-            tagService.linkArticleAndTag(articleAndTagLinkEntity);
+            tagRepository.linkArticleAndTag(articleAndTagLinkEntity);
         });
         // 更新文章信息
         return articleRepository.updateArticle(articleHandleVo);
@@ -209,13 +216,13 @@ public class ArticleServiceImpl implements IArticleService {
     }
 
     @Override
-    public ArticleEntity getArticle(Integer id) {
-        return articleRepository.getArticle(id);
+    public ArticleAggregate getArticleDetail(Integer id) {
+        return articleRepository.getArticleDetail(id);
     }
 
     @Override
-    public ArticleAggregate getArticleDetail(Integer id, boolean isVisitor) {
-        return articleRepository.getArticleDetail(id, isVisitor);
+    public ArticleAggregate getArticleDetailByUser(Integer id) {
+        return articleRepository.getArticleDetailByUser(id);
     }
 
     @Override
@@ -229,8 +236,8 @@ public class ArticleServiceImpl implements IArticleService {
     }
 
     @Override
-    public PageData<ArticleAggregate> getPageArticleDetailsOfVisitor(PageParams pageParams, ArticleQueryByVisitorEntity articleQueryByVisitorEntity) {
-        return articleRepository.getPageArticleDetailsOfVisitor(pageParams, articleQueryByVisitorEntity);
+    public PageData<ArticleAggregate> getPageArticleDetailsByUser(PageParams pageParams, ArticleQueryByVisitorEntity articleQueryByVisitorEntity) {
+        return articleRepository.getPageArticleDetailsByUser(pageParams, articleQueryByVisitorEntity);
     }
 
     @Override

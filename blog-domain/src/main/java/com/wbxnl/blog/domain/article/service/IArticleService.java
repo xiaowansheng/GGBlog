@@ -8,8 +8,6 @@ import com.wbxnl.blog.domain.article.model.entity.*;
 import com.wbxnl.blog.domain.article.model.vo.ArticleDraftVo;
 import com.wbxnl.blog.domain.article.model.vo.ArticleVo;
 
-import java.util.List;
-
 /**
  * description: 描述该文件的功能或目的.
  *
@@ -84,10 +82,11 @@ public interface IArticleService {
 
     /**
      * 获取文章信息
+     *
      * @param id 文章id
      * @return 文章信息
      */
-    ArticleEntity getArticle(Integer id);
+    ArticleAggregate getArticleDetail(Integer id);
 
     /**
      * 获取文章信息
@@ -95,7 +94,7 @@ public interface IArticleService {
      * @param id 文章id
      * @return 文章信息
      */
-    ArticleAggregate getArticleDetail(Integer id,boolean isVisitor);
+    ArticleAggregate getArticleDetailByUser(Integer id);
 
     /**
      * 获取文章列表
@@ -126,7 +125,7 @@ public interface IArticleService {
      * @param articleQueryByVisitorEntity 用户查询参数
      * @return 文章列表
      */
-    PageData<ArticleAggregate> getPageArticleDetailsOfVisitor(PageParams pageParams, ArticleQueryByVisitorEntity articleQueryByVisitorEntity);
+    PageData<ArticleAggregate> getPageArticleDetailsByUser(PageParams pageParams, ArticleQueryByVisitorEntity articleQueryByVisitorEntity);
 
     /**
      * 用户查询文章数量

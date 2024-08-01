@@ -21,6 +21,8 @@ public enum OperationCodeEnum {
     // 40100-40199:文章领域错误
     CATEGORY_EXISTS(40101),
     TAG_EXISTS(40102),
+    ARTICLE_DENY_ACCESS(40103),
+
     // 40200-40299:分类领域错误
 
     // 40300-40399:标签领域错误
@@ -30,7 +32,7 @@ public enum OperationCodeEnum {
     PASSWORD_ERROR(40401),
     VERIFICATION_CODE_ERROR(40402),
     TOKEN_ERROR(40403),
-    USER_DISABLE(40404)
+    USER_DISABLE(40404),
     // 40500-40599:评论领域错误
 
     // 40600-40699:友链领域错误
