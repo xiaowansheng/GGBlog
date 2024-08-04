@@ -32,30 +32,27 @@ public interface IArticleService {
      * 更新文章置顶状态
      * @param id 文章id
      * @param top 文章置顶状态
-     * @return 是否成功
      */
-    Void updateArticleTop(Integer id, Integer top);
+    void updateArticleTop(Integer id, Integer top);
 
     /**
      * 更新文章基本信息，除开内容
      * @param articleBasicDataReq 文章数据
-     * @return 是否成功
      */
-    Void updateArticleBasicInfo(ArticleBasicDataReq articleBasicDataReq);
+    void updateArticleBasicInfo(ArticleBasicDataReq articleBasicDataReq);
 
     /**
      * 删除文章
      * @param id 文章id
      * @return 是否成功
      */
-    Void deleteArticle(Integer id);
+    void deleteArticle(Integer id);
 
     /**
      * 批量删除文章
      * @param ids 文章id
-     * @return 是否成功
      */
-    Void deleteArticle(Integer[] ids);
+    void deleteArticle(Integer[] ids);
 
     /**
      * 获取文章列表
@@ -96,31 +93,27 @@ public interface IArticleService {
     /**
      * 更新文章分类
      * @param categoryDataReq 分类数据
-     * @return 是否成功
      */
-    Void updateCategory(CategoryDataReq categoryDataReq);
+    void updateCategory(CategoryDataReq categoryDataReq);
 
     /**
      * 更新文章分类状态
      * @param id 分类id
      * @param status 分类状态
-     * @return 是否成功
      */
-    Void updateCategoryStatus(Integer id, String status);
+    void updateCategoryStatus(Integer id, String status);
 
     /**
      * 删除分类
      * @param id 分类id
-     * @return 是否成功
      */
-    Void deleteCategory(Integer id);
+    void deleteCategory(Integer id);
 
     /**
      * 批量删除分类
      * @param ids 分类id
-     * @return 是否成功
      */
-    Void deleteCategory(Integer[] ids);
+    void deleteCategory(Integer[] ids);
 
     /**
      * 获取分类列表
@@ -140,23 +133,20 @@ public interface IArticleService {
     /**
      * 更新标签
      * @param tagDataReq 标签数据
-     * @return 是否成功
      */
-    Void updateTag(TagDataReq tagDataReq);
+    void updateTag(TagDataReq tagDataReq);
 
     /**
      * 删除标签
      * @param id 标签id
-     * @return 是否成功
      */
-    Void deleteTag(Integer id);
+    void deleteTag(Integer id);
 
     /**
      * 批量删除标签
      * @param ids 标签id
-     * @return 是否成功
      */
-    Void deleteTag(Integer[] ids);
+    void deleteTag(Integer[] ids);
 
     /**
      * 获取标签列表

@@ -25,23 +25,20 @@ public interface IConfigService {
     /**
      * 修改配置
      * @param configDataReq 配置信息
-     * @return 修改结果
      */
-    Void updateConfig(ConfigDataReq configDataReq);
+    void updateConfig(ConfigDataReq configDataReq);
 
     /**
      * 删除配置
      * @param id 配置id
-     * @return 删除结果
      */
-    Void deleteConfig(Integer id);
+    void deleteConfig(Integer id);
 
     /**
      * 删除配置
      * @param ids 配置id
-     * @return 删除结果
      */
-    Void deleteConfig(Integer[] ids);
+    void deleteConfig(Integer[] ids);
 
     /**
      * 获取配置

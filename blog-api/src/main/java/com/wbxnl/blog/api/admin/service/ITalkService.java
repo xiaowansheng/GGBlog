@@ -25,39 +25,34 @@ public interface ITalkService {
     /**
      * 修改说说
      * @param talkDataReq 说说数据
-     * @return void
      */
-    Void updateTalk(TalkDataReq talkDataReq);
+    void updateTalk(TalkDataReq talkDataReq);
 
     /**
      * 修改说说置顶
      * @param id 说说id
      * @param top 置顶
-     * @return void
      */
-    Void updateTalkTop(Integer id, Integer top);
+    void updateTalkTop(Integer id, Integer top);
 
     /**
      * 修改说说状态
      * @param id 说说id
      * @param status 状态
-     * @return void
      */
-    Void updateTalkStatus(Integer id, String status);
+    void updateTalkStatus(Integer id, String status);
 
     /**
      * 删除说说
      * @param id 说说id
-     * @return void
      */
-    Void deleteTalk(Integer id);
+    void deleteTalk(Integer id);
 
     /**
      * 删除说说
      * @param ids 说说id
-     * @return void
      */
-    Void deleteTalk(Integer[] ids);
+    void deleteTalk(Integer[] ids);
 
     /**
      * 获取说说列表
