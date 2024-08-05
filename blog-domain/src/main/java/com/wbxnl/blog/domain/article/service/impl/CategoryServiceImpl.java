@@ -31,7 +31,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements ICategoryService {
 
-    private ICategoryRepository categoryRepository;
+    private final ICategoryRepository categoryRepository;
     @Override
     public CategoryEntity addArticleCategory(CategoryVo categoryVo) {
         // 检查要插入的分类是否已经存在

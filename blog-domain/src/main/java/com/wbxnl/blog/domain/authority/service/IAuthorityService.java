@@ -28,8 +28,8 @@ public interface IAuthorityService {
 
     /**
      * 添加系统
-     * @param systemResourceVo
-     * @return
+     * @param systemResourceVo 系统资源
+     * @return 系统资源
      */
     SystemResourceEntity addSystemResource(SystemResourceVo systemResourceVo);
 
