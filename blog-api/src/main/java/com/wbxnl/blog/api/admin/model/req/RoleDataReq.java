@@ -10,4 +10,12 @@ import lombok.Data;
  */
 @Data
 public class RoleDataReq {
+
+    private String roleKey;
+
+    private String name;
+
+    private String description;
+
+    private Integer disable;
 }

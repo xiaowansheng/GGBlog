@@ -10,4 +10,8 @@ import lombok.Data;
  */
 @Data
 public class TagDataReq {
+
+    private String name;
+
+    private String description;
 }

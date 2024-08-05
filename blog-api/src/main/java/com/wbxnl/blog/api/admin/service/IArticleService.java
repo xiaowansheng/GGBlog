@@ -5,7 +5,8 @@ import com.wbxnl.blog.api.admin.model.res.*;
 import com.wbxnl.blog.common.vo.KeyData;
 import com.wbxnl.blog.common.vo.PageData;
 import com.wbxnl.blog.common.vo.PageParams;
-import com.wbxnl.blog.common.vo.Result;
+
+import java.util.List;
 
 /**
  * description: 略
@@ -60,7 +61,7 @@ public interface IArticleService {
      * @param articleQueryReq 查询条件
      * @return 文章列表
      */
-    PageData<ArticleBasicInfoRes> getPageArticles(PageParams pageParams, ArticleQueryReq articleQueryReq);
+    PageData<ArticleInfoRes> getPageOfArticles(PageParams pageParams, ArticleQueryReq articleQueryReq);
 
     /**
      * 获取文章归档
@@ -68,7 +69,7 @@ public interface IArticleService {
      * @param articleQueryReq 查询条件
      * @return 文章归档
      */
-    PageData<ArticleBasicInfoRes> getArchive(PageParams pageParams, ArticleQueryReq articleQueryReq);
+    PageData<ArticleInfoRes> getArchive(PageParams pageParams, ArticleQueryReq articleQueryReq);
 
     /**
      * 获取文章详情
@@ -81,7 +82,7 @@ public interface IArticleService {
      * 获取最近一个月文章统计信息
      * @return 文章统计信息
      */
-    ArticleStatisticsRes getArticleStatisticsOfLastMonth();
+    List<KeyAndValueRes> getArticleStatisticsOfLastMonth();
 
     /**
      * 添加文章分类

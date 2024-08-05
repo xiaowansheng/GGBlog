@@ -10,4 +10,20 @@ import lombok.Data;
  */
 @Data
 public class UserUpdateDataReq {
+
+    private String userInfoKey;
+
+    private String email;
+
+    private String qq;
+
+    private String nickname;
+
+    private String avatar;
+
+    private String signature;
+
+    private String website;
+
+    private String introduction;
 }

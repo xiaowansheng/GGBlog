@@ -39,9 +39,10 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok")
     // 引入相关依赖
     implementation("org.springframework.boot:spring-boot-starter")
-    // 引入项目依赖
-    implementation(project(":blog-common"))
+    // 引入项目依赖r
+    implementation(project(":blog-api"))
     implementation(project(":blog-domain"))
+    implementation(project(":blog-common"))
 }
 
 tasks.withType<Test> {

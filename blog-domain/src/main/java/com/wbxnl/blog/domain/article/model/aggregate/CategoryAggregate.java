@@ -26,7 +26,7 @@ public class CategoryAggregate {
 
     private Integer articleCount;
 
-    private List<Integer> articleIds;
+    private List<String> articleKeys;
 
     private LocalDateTime createTime;
 

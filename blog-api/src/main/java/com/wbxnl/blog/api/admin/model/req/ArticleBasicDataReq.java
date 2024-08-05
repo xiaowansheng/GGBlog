@@ -10,4 +10,25 @@ import lombok.Data;
  */
 @Data
 public class ArticleBasicDataReq {
+
+    private Integer id;
+
+    private String title;
+
+    private String cover;
+
+    private String type;
+
+    private String originalAuthor;
+
+    private String originalTitle;
+
+    private String originalUrl;
+
+    private String note;
+
+    private Integer top;
+
+    private String status;
+
 }

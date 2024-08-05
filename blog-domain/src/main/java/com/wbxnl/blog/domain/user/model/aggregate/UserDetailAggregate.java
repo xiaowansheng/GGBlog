@@ -12,13 +12,14 @@ import java.time.LocalDateTime;
  */
 @Data
 public class UserDetailAggregate {
+
     private Integer id;
 
     private Integer userInfoKey;
 
     private String username;
 
-    private String password;
+//    private String password;
 
 //    private String loginType;
 //

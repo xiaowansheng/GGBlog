@@ -6,8 +6,12 @@ import lombok.Data;
  * description: 略
  *
  * @author xiaowansheng
- * @since 2024/8/2 10:16
+ * @since 2024/8/2 11:11
  */
 @Data
-public class ArticleEntityRes {
+public class KeyAndValueRes {
+
+    private String key;
+
+    private String value;
 }

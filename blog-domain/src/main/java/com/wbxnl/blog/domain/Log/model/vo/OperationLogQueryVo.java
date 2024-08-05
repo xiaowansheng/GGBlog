@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
  */
 @Data
 public class OperationLogQueryVo {
+
     private Integer id;
 
     private String username;

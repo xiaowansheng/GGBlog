@@ -12,7 +12,7 @@ import lombok.Data;
 @Data
 public class UserUpdateEntity {
 
-    private Integer userInfoKey;
+    private String userInfoKey;
 
     private String email;
 

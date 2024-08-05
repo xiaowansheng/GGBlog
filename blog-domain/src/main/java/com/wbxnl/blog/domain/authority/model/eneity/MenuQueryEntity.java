@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
  */
 @Data
 public class MenuQueryEntity {
+
     private Integer id;
 
     private String menuKey;

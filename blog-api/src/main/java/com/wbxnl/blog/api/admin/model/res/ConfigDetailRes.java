@@ -2,6 +2,8 @@ package com.wbxnl.blog.api.admin.model.res;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 /**
  * description: 略
  *
@@ -10,4 +12,18 @@ import lombok.Data;
  */
 @Data
 public class ConfigDetailRes {
+
+    private Integer id;
+
+    private String configKey;
+
+    private String name;
+
+    private String value;
+
+    private String description;
+
+    private LocalDateTime createTime;
+
+    private LocalDateTime updateTime;
 }

@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
  */
 @Data
 public class TalkAggregate {
+
     private Integer id;
 
     private String talkKey;

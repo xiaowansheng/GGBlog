@@ -10,4 +10,10 @@ import lombok.Data;
  */
 @Data
 public class TokenDataRes {
+
+    private String token;
+
+    private Long expireTime;
+
+    private String refreshToken;
 }

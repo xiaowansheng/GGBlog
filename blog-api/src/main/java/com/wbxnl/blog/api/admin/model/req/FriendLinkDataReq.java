@@ -10,4 +10,20 @@ import lombok.Data;
  */
 @Data
 public class FriendLinkDataReq {
+
+    private String username;
+
+    private String name;
+
+    private String icon;
+
+    private String url;
+
+    private String author;
+
+    private String introduction;
+
+    private Integer review;
+
+    private Integer hidden;
 }

@@ -24,7 +24,7 @@ public class TagAggregate {
 
     private Integer articleCount;
 
-    private List<Integer> articleIds;
+    private List<String> articleKeys;
 
     private LocalDateTime createTime;
 

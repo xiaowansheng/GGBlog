@@ -9,10 +9,10 @@ import java.util.List;
  * description: 略
  *
  * @author xiaowansheng
- * @since 2024/8/2 10:54
+ * @since 2024/8/2 11:02
  */
 @Data
-public class ArticleDetailRes {
+public class ArticleInfoRes {
 
     private Integer id;
 
@@ -28,7 +28,7 @@ public class ArticleDetailRes {
 
     private String cover;
 
-    private String content;
+//    private String content;
 
     private String type;
 

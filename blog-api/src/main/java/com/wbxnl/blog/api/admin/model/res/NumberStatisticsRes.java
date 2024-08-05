@@ -10,4 +10,10 @@ import lombok.Data;
  */
 @Data
 public class NumberStatisticsRes {
+
+    private Integer articleCount;
+
+    private Integer categoryCount;
+
+    private Integer tagCount;
 }

@@ -1,8 +1,8 @@
 package com.wbxnl.blog.api.admin.service;
 
 import com.wbxnl.blog.api.admin.model.res.SystemMenuInfoRes;
-import com.wbxnl.blog.api.admin.model.res.SystemctlResourceInfoRes;
-import com.wbxnl.blog.common.vo.PageData;
+
+import java.util.List;
 
 /**
  * description: 略
@@ -30,11 +30,5 @@ public interface IUserAuthorityService {
      * 获取当前用户菜单
      * @return 菜单列表
      */
-    PageData<SystemMenuInfoRes> getSystemMenus();
-
-    /**
-     * 获取当前用户资源
-     * @return 资源列表
-     */
-    PageData<SystemctlResourceInfoRes> getSystemResources();
+    List<SystemMenuInfoRes> getSystemMenus();
 }

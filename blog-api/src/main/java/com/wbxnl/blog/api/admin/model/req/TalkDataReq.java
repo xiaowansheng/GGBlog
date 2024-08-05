@@ -10,4 +10,18 @@ import lombok.Data;
  */
 @Data
 public class TalkDataReq {
+
+    private String username;
+
+    private String content;
+
+    private String images;
+
+    private String status;
+
+    private Integer top;
+
+    private byte[] point;
+
+//    private String location;
 }

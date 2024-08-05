@@ -10,4 +10,8 @@ import lombok.Data;
  */
 @Data
 public class CategoryDataReq {
+
+    private String name;
+
+    private String description;
 }

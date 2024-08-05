@@ -10,4 +10,10 @@ import lombok.Data;
  */
 @Data
 public class UserRegisterReq {
+
+    private String email;
+
+    private String password;
+
+    private String verificationCode;
 }

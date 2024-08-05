@@ -10,4 +10,10 @@ import lombok.Data;
  */
 @Data
 public class UserResetPasswordReq {
+
+    private String email;
+
+    private String verificationCode;
+
+    private String newPassword;
 }

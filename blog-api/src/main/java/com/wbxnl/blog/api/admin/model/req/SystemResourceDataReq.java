@@ -10,4 +10,18 @@ import lombok.Data;
  */
 @Data
 public class SystemResourceDataReq {
+
+    private String resourceKey;
+
+    private String requestMethod;
+
+    private String path;
+
+    private Integer open;
+
+    private Integer parentId;
+
+    private String perms;
+
+    private String description;
 }

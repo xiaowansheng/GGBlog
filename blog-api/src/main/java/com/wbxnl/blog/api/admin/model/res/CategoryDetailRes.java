@@ -2,6 +2,9 @@ package com.wbxnl.blog.api.admin.model.res;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 /**
  * description: 略
  *
@@ -10,4 +13,22 @@ import lombok.Data;
  */
 @Data
 public class CategoryDetailRes {
+
+    private Integer id;
+
+    private String categoryKey;
+
+    private String name;
+
+    private Integer hidden;
+
+    private String description;
+
+    private Integer articleCount;
+
+    private List<String> articleKeys;
+
+    private LocalDateTime createTime;
+
+    private LocalDateTime updateTime;
 }

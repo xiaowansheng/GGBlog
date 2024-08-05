@@ -10,4 +10,14 @@ import lombok.Data;
  */
 @Data
 public class ConfigDataReq {
+
+    private Integer id;
+
+    private String configKey;
+
+    private String name;
+
+    private String value;
+
+    private String description;
 }

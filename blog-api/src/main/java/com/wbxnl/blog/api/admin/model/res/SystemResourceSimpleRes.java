@@ -1,4 +1,4 @@
-package com.wbxnl.blog.domain.authority.model.eneity;
+package com.wbxnl.blog.api.admin.model.res;
 
 import lombok.Data;
 
@@ -8,10 +8,10 @@ import java.time.LocalDateTime;
  * description: 略
  *
  * @author xiaowansheng
- * @since 2024/7/18 16:58
+ * @since 2024/8/5 16:55
  */
 @Data
-public class SystemResourceEntity {
+public class SystemResourceSimpleRes {
 
     private Integer id;
 
@@ -27,11 +27,5 @@ public class SystemResourceEntity {
 
     private Integer parentId;
 
-    private String perms;
-
     private String description;
-
-    private LocalDateTime createTime;
-
-    private LocalDateTime updateTime;
 }
