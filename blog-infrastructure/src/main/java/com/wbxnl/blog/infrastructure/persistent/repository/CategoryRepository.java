@@ -45,7 +45,10 @@ public class CategoryRepository implements ICategoryRepository {
     @Override
     public CategoryEntity addCategory(CategoryHandleVo categoryHandleVo) {
         Category category = ObjectConvertUtils.convert(categoryHandleVo, Category.class);
-        categoryDao.insert(category);
+        int insert = categoryDao.insert(category);
+        if (insert <= 0) {
+            return null;
+        }
         return ObjectConvertUtils.convert(category, CategoryEntity.class);
     }
 
@@ -133,18 +136,18 @@ public class CategoryRepository implements ICategoryRepository {
         // 查询文章分类数量统计
         QueryWrapper<Article> articleQueryWrapper = new QueryWrapper<>();
         articleQueryWrapper
-                .select("category_key as categoryKey,id as ids")
-                .groupBy("category_key","id");
+                .select("category_key as categoryKey,article_key as keys")
+                .groupBy("category_key","keys");
         // 转换文章分类数量，分类对应数量的map
-        HashMap<String, List<Integer>> articleCountMap = new HashMap<>();
+        HashMap<String, List<String>> articleCountMap = new HashMap<>();
         articleDao.selectMaps(articleQueryWrapper).forEach((value) -> {
-            articleCountMap.put((String) value.get("categoryKey"), (List) value.get("ids"));
+            articleCountMap.put((String) value.get("categoryKey"), (List) value.get("keys"));
         });
         // 设置文章分类数量
         categoryAggregates.forEach(categoryAggregate -> {
-            List<Integer> ids = articleCountMap.get(categoryAggregate.getCategoryKey());
-            categoryAggregate.setArticleCount(ids.size());
-            categoryAggregate.setArticleIds(ids);
+            List<String> keys = articleCountMap.get(categoryAggregate.getCategoryKey());
+            categoryAggregate.setArticleCount(keys.size());
+            categoryAggregate.setArticleKeys(keys);
         });
         return PageUtils.convertPageData(pageParams.getNumber(), pageParams.getSize(), selectedPage.getTotal(), categoryAggregates);
     }
@@ -162,5 +165,10 @@ public class CategoryRepository implements ICategoryRepository {
                 .eq(Category::getCategoryKey, categoryKey)
                 .eq(Category::getHidden,0);
         return ObjectConvertUtils.convert(categoryDao.selectOne(queryWrapper), CategorySimpleInfoEntity.class);
+    }
+
+    @Override
+    public Long getCategoryQuantity() {
+        return categoryDao.selectCount(null);
     }
 }

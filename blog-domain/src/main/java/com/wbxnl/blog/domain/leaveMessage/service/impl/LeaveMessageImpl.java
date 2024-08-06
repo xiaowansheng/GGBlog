@@ -1,5 +1,7 @@
 package com.wbxnl.blog.domain.leaveMessage.service.impl;
 
+import com.wbxnl.blog.common.enums.OperationCodeEnum;
+import com.wbxnl.blog.common.exception.BlogException;
 import com.wbxnl.blog.common.utils.HttpUtils;
 import com.wbxnl.blog.common.utils.ObjectConvertUtils;
 import com.wbxnl.blog.common.vo.PageData;
@@ -41,23 +43,35 @@ public class LeaveMessageImpl implements ILeaveMessage {
     }
 
     @Override
-    public boolean deleteLeaveMessage(Integer id) {
-        return leaveMessageRepository.deleteLeaveMessage(id);
+    public void deleteLeaveMessage(Integer id) {
+        boolean updated = leaveMessageRepository.deleteLeaveMessage(id);
+        if (!updated) {
+            throw new BlogException(OperationCodeEnum.DELETE_FAILURE);
+        }
     }
 
     @Override
-    public boolean deleteLeaveMessage(Integer[] ids) {
-        return leaveMessageRepository.deleteLeaveMessage(ids);
+    public void deleteLeaveMessage(Integer[] ids) {
+        boolean updated = leaveMessageRepository.deleteLeaveMessage(ids);
+        if (!updated) {
+            throw new BlogException(OperationCodeEnum.DELETE_FAILURE);
+        }
     }
 
     @Override
-    public boolean auditLeaveMessage(Integer id, Integer review) {
-        return leaveMessageRepository.auditLeaveMessage(id, review);
+    public void auditLeaveMessage(Integer id, Integer review) {
+        boolean updated = leaveMessageRepository.auditLeaveMessage(id, review);
+        if (!updated) {
+            throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
+        }
     }
 
     @Override
-    public boolean updateLeaveMessageHidden(Integer id, Integer hidden) {
-        return leaveMessageRepository.updateLeaveMessageHidden(id, hidden);
+    public void updateLeaveMessageHidden(Integer id, Integer hidden) {
+        boolean updated = leaveMessageRepository.updateLeaveMessageHidden(id, hidden);
+        if (!updated) {
+            throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
+        }
     }
 
     @Override

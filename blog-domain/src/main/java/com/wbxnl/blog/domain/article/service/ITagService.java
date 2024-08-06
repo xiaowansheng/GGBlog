@@ -22,28 +22,25 @@ public interface ITagService {
      * @return 添加后的标签结果，失败返回null
      */
 
-    TagEntity addArticleTag(TagVo tagVo);
+    TagEntity addTag(TagVo tagVo);
 
     /**
      * 删除文章标签
      * @param id 标签ID
-     * @return 是否删除成功
      */
-    boolean deleteArticleTag(Integer id);
+    void deleteTag(Integer id);
 
     /**
      * 批量删除文章标签
      * @param ids 标签ID
-     * @return 是否删除成功
      */
-    boolean deleteArticleTag(Integer[] ids);
+    void deleteTag(Integer[] ids);
 
     /**
      * 更新文章标签
      * @param tagUpdateEntity 文章标签信息
-     * @return 是否更新成功
      */
-    boolean updateArticleTag(TagUpdateEntity tagUpdateEntity);
+    void updateTag(TagUpdateEntity tagUpdateEntity);
 
     /**
      * 获取文章标签信息
@@ -78,7 +75,7 @@ public interface ITagService {
      * @param tagQueryEntity 查询参数
      * @return 标签列表
      */
-    PageData<TagAggregate> getPageTags(PageParams pageParams, TagQueryEntity tagQueryEntity);
+    PageData<TagAggregate> getPageOfTags(PageParams pageParams, TagQueryEntity tagQueryEntity);
 
 
     /**
@@ -107,4 +104,10 @@ public interface ITagService {
      * @return 标签Key
      */
     List<String> getTagKeyList(String articleKey);
+
+    /**
+     * 获取标签数量
+     * @return 标签数量
+     */
+    Long getTagQuantity();
 }

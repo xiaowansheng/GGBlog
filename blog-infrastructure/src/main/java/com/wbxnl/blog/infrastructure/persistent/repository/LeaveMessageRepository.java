@@ -36,7 +36,10 @@ public class LeaveMessageRepository implements ILeaveMessageRepository {
     @Override
     public LeaveMessageEntity addLeaveMessage(LeaveMessageInsertVo leaveMessageInsertVo) {
         Guestbook guestbook = ObjectConvertUtils.convert(leaveMessageInsertVo, Guestbook.class);
-        guestbookDao.insert(guestbook);
+        int insert = guestbookDao.insert(guestbook);
+        if (insert <= 0) {
+            return null;
+        }
         return ObjectConvertUtils.convert(guestbook, LeaveMessageEntity.class);
     }
 

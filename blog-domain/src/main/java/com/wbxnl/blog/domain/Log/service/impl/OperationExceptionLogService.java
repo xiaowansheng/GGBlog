@@ -1,5 +1,7 @@
 package com.wbxnl.blog.domain.Log.service.impl;
 
+import com.wbxnl.blog.common.enums.OperationCodeEnum;
+import com.wbxnl.blog.common.exception.BlogException;
 import com.wbxnl.blog.common.utils.ObjectConvertUtils;
 import com.wbxnl.blog.common.vo.PageData;
 import com.wbxnl.blog.common.vo.PageParams;
@@ -25,8 +27,6 @@ public class OperationExceptionLogService implements IOperationExceptionLogServi
 
     private final IOperationExceptionLogRepository operationExceptionLogRepository;
 
-    private final HttpServletRequest httpServletRequest;
-
     @Override
     public OperationExceptionLogEntity addOperationExceptionLog(OperationExceptionLogBaseInfoVo operationExceptionLogBaseInfoVo) {
         OperationExceptionLogDetailVo operationExceptionLogDetailVo = ObjectConvertUtils.convert(operationExceptionLogBaseInfoVo, OperationExceptionLogDetailVo.class);
@@ -35,13 +35,19 @@ public class OperationExceptionLogService implements IOperationExceptionLogServi
     }
 
     @Override
-    public boolean deleteOperationExceptionLog(Integer id) {
-        return operationExceptionLogRepository.deleteOperationExceptionLog(id);
+    public void deleteOperationExceptionLog(Integer id) {
+        boolean updated = operationExceptionLogRepository.deleteOperationExceptionLog(id);
+        if (!updated) {
+            throw new BlogException(OperationCodeEnum.DELETE_FAILURE);
+        }
     }
 
     @Override
-    public boolean deleteOperationExceptionLog(Integer[] ids) {
-        return operationExceptionLogRepository.deleteOperationExceptionLog(ids);
+    public void deleteOperationExceptionLog(Integer[] ids) {
+        boolean updated = operationExceptionLogRepository.deleteOperationExceptionLog(ids);
+        if (!updated) {
+            throw new BlogException(OperationCodeEnum.DELETE_FAILURE);
+        }
     }
 
     @Override

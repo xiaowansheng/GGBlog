@@ -17,6 +17,7 @@ import java.util.List;
  * @since 2024/7/15 21:28
  */
 public interface ITagRepository {
+
     TagEntity addTag(TagHandleVo tagHandleVo);
 
     boolean deleteTag(Integer id);
@@ -52,4 +53,6 @@ public interface ITagRepository {
     TagEntity getTagByName(String name);
 
     List<String> getTagKeyList(String articleKey);
+
+    Long getTagQuantity();
 }

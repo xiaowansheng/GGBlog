@@ -1,5 +1,7 @@
 package com.wbxnl.blog.domain.friendLink.service.impl;
 
+import com.wbxnl.blog.common.enums.OperationCodeEnum;
+import com.wbxnl.blog.common.exception.BlogException;
 import com.wbxnl.blog.common.vo.PageData;
 import com.wbxnl.blog.common.vo.PageParams;
 import com.wbxnl.blog.domain.friendLink.model.entity.FriendLinkEntity;
@@ -30,28 +32,43 @@ public class FriendLinkService implements IFriendLinkService {
     }
 
     @Override
-    public boolean auditFriendLink(Integer id, Integer review) {
-        return friendLinkRepository.auditFriendLink(id, review);
+    public void auditFriendLink(Integer id, Integer review) {
+        boolean updated = friendLinkRepository.auditFriendLink(id, review);
+        if (!updated) {
+            throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
+        }
     }
 
     @Override
-    public boolean updateFriendLink(FriendLinkUpdateEntity friendLinkUpdateEntity) {
-        return friendLinkRepository.updateFriendLink(friendLinkUpdateEntity);
+    public void updateFriendLink(FriendLinkUpdateEntity friendLinkUpdateEntity) {
+        boolean updated = friendLinkRepository.updateFriendLink(friendLinkUpdateEntity);
+        if (!updated) {
+            throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
+        }
     }
 
     @Override
-    public boolean updateFriendLinkHidden(Integer id, Integer hidden) {
-        return friendLinkRepository.updateFriendLinkHidden(id, hidden);
+    public void updateFriendLinkHidden(Integer id, Integer hidden) {
+        boolean updated = friendLinkRepository.updateFriendLinkHidden(id, hidden);
+        if (!updated) {
+            throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
+        }
     }
 
     @Override
-    public boolean deleteFriendLink(Integer id) {
-        return friendLinkRepository.deleteFriendLink(id);
+    public void deleteFriendLink(Integer id) {
+        boolean updated = friendLinkRepository.deleteFriendLink(id);
+        if (!updated) {
+            throw new BlogException(OperationCodeEnum.DELETE_FAILURE);
+        }
     }
 
     @Override
-    public boolean deleteFriendLink(Integer[] ids) {
-        return friendLinkRepository.deleteFriendLink(ids);
+    public void deleteFriendLink(Integer[] ids) {
+        boolean updated = friendLinkRepository.deleteFriendLink(ids);
+        if (!updated) {
+            throw new BlogException(OperationCodeEnum.DELETE_FAILURE);
+        }
     }
 
     @Override

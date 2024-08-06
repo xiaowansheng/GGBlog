@@ -40,14 +40,20 @@ public class PageViewRepository implements IPageViewRepository {
     @Override
     public PageViewEntity addPageView(PageViewVo pageViewVo) {
         PageView pageView = ObjectConvertUtils.convert(pageViewVo, PageView.class);
-        pageViewDao.insert(pageView);
+        int insert = pageViewDao.insert(pageView);
+        if (insert <= 0) {
+            return null;
+        }
         return ObjectConvertUtils.convert(pageView, PageViewEntity.class);
     }
 
     @Override
     public VisitorEntity addVisitor(VisitorVo visitorVo) {
         Visitor visitor = ObjectConvertUtils.convert(visitorVo, Visitor.class);
-        visitorDao.insert(visitor);
+        int insert = visitorDao.insert(visitor);
+        if (insert <= 0) {
+            return null;
+        }
         return ObjectConvertUtils.convert(visitor, VisitorEntity.class);
     }
 

@@ -23,16 +23,14 @@ public interface IOperationExceptionLogService {
     /**
      * 删除异常日志
      * @param id 异常日志id
-     * @return 异常日志
      */
-    boolean deleteOperationExceptionLog(Integer id);
+    void deleteOperationExceptionLog(Integer id);
 
     /**
      * 批量删除异常日志
      * @param ids 异常日志id
-     * @return 异常日志
      */
-    boolean deleteOperationExceptionLog(Integer[] ids);
+    void deleteOperationExceptionLog(Integer[] ids);
 
     /**
      * 获取异常日志

@@ -25,32 +25,28 @@ public interface ILeaveMessage {
     /**
      * 删除留言
      * @param id 留言id
-     * @return 删除结果
      */
-    boolean deleteLeaveMessage(Integer id);
+    void deleteLeaveMessage(Integer id);
 
     /**
      * 批量删除留言
      * @param ids 留言
-     * @return 删除结果
      */
-    boolean deleteLeaveMessage(Integer[] ids);
+    void deleteLeaveMessage(Integer[] ids);
 
     /**
      * 审核留言
      * @param id 留言
      * @param review 是否通过
-     * @return 是否通过
      */
-    boolean auditLeaveMessage(Integer id, Integer review);
+    void auditLeaveMessage(Integer id, Integer review);
 
     /**
      * 修改留言隐藏状态
      * @param id 留言id
      * @param hidden 是否隐藏
-     * @return 是否隐藏
      */
-    boolean updateLeaveMessageHidden(Integer id, Integer hidden);
+    void updateLeaveMessageHidden(Integer id, Integer hidden);
 
     /**
      * 分页查询留言

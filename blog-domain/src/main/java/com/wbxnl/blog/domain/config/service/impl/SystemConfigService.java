@@ -1,6 +1,8 @@
 package com.wbxnl.blog.domain.config.service.impl;
 
 import com.wbxnl.blog.common.enums.ConfigEnum;
+import com.wbxnl.blog.common.enums.OperationCodeEnum;
+import com.wbxnl.blog.common.exception.BlogException;
 import com.wbxnl.blog.domain.config.model.entity.SystemConfigEntity;
 import com.wbxnl.blog.domain.config.model.entity.SystemConfigUpdateEntity;
 import com.wbxnl.blog.domain.config.model.vo.SystemConfigUseVo;
@@ -32,18 +34,27 @@ public class SystemConfigService implements ISystemConfigService {
     }
 
     @Override
-    public boolean updateSystemConfig(SystemConfigUpdateEntity systemConfigUpdateEntity) {
-        return systemConfigRepository.updateSystemConfig(systemConfigUpdateEntity);
+    public void updateSystemConfig(SystemConfigUpdateEntity systemConfigUpdateEntity) {
+        boolean updated = systemConfigRepository.updateSystemConfig(systemConfigUpdateEntity);
+        if(!updated){
+            throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
+        }
     }
 
     @Override
-    public boolean deleteSystemConfig(Integer id) {
-        return systemConfigRepository.deleteSystemConfig(id);
+    public void deleteSystemConfig(Integer id) {
+        boolean updated = systemConfigRepository.deleteSystemConfig(id);
+        if(!updated){
+            throw new BlogException(OperationCodeEnum.DELETE_FAILURE);
+        }
     }
 
     @Override
-    public boolean deleteSystemConfig(Integer[] ids) {
-        return systemConfigRepository.deleteSystemConfig(ids);
+    public void deleteSystemConfig(Integer[] ids) {
+        boolean updated = systemConfigRepository.deleteSystemConfig(ids);
+        if(!updated){
+            throw new BlogException(OperationCodeEnum.DELETE_FAILURE);
+        }
     }
 
     @Override

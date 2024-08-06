@@ -18,6 +18,11 @@ public enum OperationCodeEnum {
     // 操作失败提示码
     // 40000~49999
     FAILURE(40000),
+    ADD_FAILURE(40001),
+    DELETE_FAILURE(40002),
+    UPDATE_FAILURE(40003),
+    QUERY_FAILURE(40004),
+    SEND_FAILURE(40005),
     // 40100-40199:文章领域错误
     CATEGORY_EXISTS(40101),
     TAG_EXISTS(40102),
@@ -33,6 +38,7 @@ public enum OperationCodeEnum {
     VERIFICATION_CODE_ERROR(40402),
     TOKEN_ERROR(40403),
     USER_DISABLE(40404),
+    REGISTER_FAILURE(40405),
     // 40500-40599:评论领域错误
 
     // 40600-40699:友链领域错误

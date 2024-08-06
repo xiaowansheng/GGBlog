@@ -1,5 +1,6 @@
 package com.wbxnl.blog.api.admin.model.res;
 
+import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -9,11 +10,12 @@ import lombok.Data;
  * @since 2024/8/2 10:52
  */
 @Data
+@Builder
 public class NumberStatisticsRes {
 
-    private Integer articleCount;
+    private Long articleCount;
 
-    private Integer categoryCount;
+    private Long categoryCount;
 
-    private Integer tagCount;
+    private Long tagCount;
 }

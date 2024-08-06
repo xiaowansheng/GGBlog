@@ -1,5 +1,7 @@
 package com.wbxnl.blog.domain.authority.service.impl;
 
+import com.wbxnl.blog.common.enums.OperationCodeEnum;
+import com.wbxnl.blog.common.exception.BlogException;
 import com.wbxnl.blog.domain.authority.model.aggregate.RoleMenuAggregate;
 import com.wbxnl.blog.domain.authority.model.aggregate.RoleResourceAggregate;
 import com.wbxnl.blog.domain.authority.repository.IUserAuthorityRepository;
@@ -20,8 +22,11 @@ public class UserAuthorityService implements IUserAuthorityService {
     private final IUserAuthorityRepository userAuthorityRepository;
 
     @Override
-    public boolean updateUserRole(Integer username, Integer roleName) {
-        return userAuthorityRepository.updateUserRole(username, roleName);
+    public void updateUserRole(Integer username, Integer roleName) {
+        boolean updated = userAuthorityRepository.updateUserRole(username, roleName);
+        if(!updated){
+            throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
+        }
     }
 
     @Override

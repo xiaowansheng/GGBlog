@@ -1,5 +1,7 @@
 package com.wbxnl.blog.domain.message.service.impl;
 
+import com.wbxnl.blog.common.enums.OperationCodeEnum;
+import com.wbxnl.blog.common.exception.BlogException;
 import com.wbxnl.blog.domain.message.model.entity.EmailEntity;
 import com.wbxnl.blog.domain.message.service.IEmailService;
 import jakarta.mail.internet.MimeMessage;
@@ -33,7 +35,7 @@ public class EmailService implements IEmailService {
     public String mailSender;
 
     @Override
-    public boolean sentTextMail(EmailEntity emailEntity) {
+    public void sentTextMail(EmailEntity emailEntity) {
         try {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             //发送者
@@ -48,16 +50,15 @@ public class EmailService implements IEmailService {
             mailMessage.setSentDate(new Date());
             //发送
             javaMailSender.send(mailMessage);
-            return true;
         } catch (Exception e) {
             log.error("邮件发送失败!", e);
-            return false;
+            throw new BlogException(OperationCodeEnum.SEND_FAILURE);
         }
     }
 
 
     @Override
-    public boolean sentHtmlMail(EmailEntity emailEntity) {
+    public void sentHtmlMail(EmailEntity emailEntity) {
         try {
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
@@ -73,10 +74,9 @@ public class EmailService implements IEmailService {
             messageHelper.setSentDate(new Date());
             //发送
             javaMailSender.send(mimeMessage);
-            return true;
         } catch (Exception e) {
             log.error("邮件发送失败!", e);
-            return false;
+            throw new BlogException(OperationCodeEnum.SEND_FAILURE);
         }
     }
 }

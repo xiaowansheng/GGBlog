@@ -1,5 +1,7 @@
 package com.wbxnl.blog.domain.Log.service.impl;
 
+import com.wbxnl.blog.common.enums.OperationCodeEnum;
+import com.wbxnl.blog.common.exception.BlogException;
 import com.wbxnl.blog.common.utils.ObjectConvertUtils;
 import com.wbxnl.blog.common.vo.PageData;
 import com.wbxnl.blog.common.vo.PageParams;
@@ -35,13 +37,19 @@ public class OperationLogService implements IOperationLogService {
     }
 
     @Override
-    public boolean deleteOperationLog(Integer id) {
-        return operationLogRepository.deleteOperationLog(id);
+    public void deleteOperationLog(Integer id) {
+        boolean updated = operationLogRepository.deleteOperationLog(id);
+        if (!updated) {
+            throw new BlogException(OperationCodeEnum.DELETE_FAILURE);
+        }
     }
 
     @Override
-    public boolean deleteOperationLog(Integer[] ids) {
-        return operationLogRepository.deleteOperationLog(ids);
+    public void deleteOperationLog(Integer[] ids) {
+        boolean updated = operationLogRepository.deleteOperationLog(ids);
+        if (!updated) {
+            throw new BlogException(OperationCodeEnum.DELETE_FAILURE);
+        }
     }
 
     @Override

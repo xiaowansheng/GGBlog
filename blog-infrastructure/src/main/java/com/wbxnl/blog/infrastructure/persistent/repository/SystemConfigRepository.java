@@ -29,7 +29,10 @@ public class SystemConfigRepository implements ISystemConfigRepository {
     @Override
     public SystemConfigEntity addSystemConfig(SystemConfigVo systemConfigVo) {
         SystemConfig systemConfig = ObjectConvertUtils.convert(systemConfigVo, SystemConfig.class);
-        systemConfigDao.insert(systemConfig);
+        int insert = systemConfigDao.insert(systemConfig);
+        if (insert <= 0) {
+            return null;
+        }
         return ObjectConvertUtils.convert(systemConfig, SystemConfigEntity.class);
     }
 

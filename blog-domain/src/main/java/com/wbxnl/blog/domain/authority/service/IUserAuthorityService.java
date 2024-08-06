@@ -15,9 +15,8 @@ public interface IUserAuthorityService {
      * 更新用户角色
      * @param username 用户名
      * @param roleName 角色名
-     * @return 返回是否修改成功
      */
-    boolean updateUserRole(Integer username, Integer roleName);
+    void updateUserRole(Integer username, Integer roleName);
 
     /**
      * 获取用户角色菜单

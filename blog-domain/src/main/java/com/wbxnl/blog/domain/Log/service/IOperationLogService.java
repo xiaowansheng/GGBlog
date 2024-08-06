@@ -23,16 +23,14 @@ public interface IOperationLogService {
     /**
      * 删除操作日志
      * @param id 操作日志id
-     * @return 操作日志
      */
-    boolean deleteOperationLog(Integer id);
+    void deleteOperationLog(Integer id);
 
     /**
      * 批量删除操作日志
      * @param ids 操作日志id
-     * @return 操作日志
      */
-    boolean deleteOperationLog(Integer[] ids);
+    void deleteOperationLog(Integer[] ids);
 
     /**
      * 获取操作日志

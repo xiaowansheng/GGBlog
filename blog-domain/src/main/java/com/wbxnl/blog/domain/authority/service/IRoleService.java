@@ -28,35 +28,30 @@ public interface IRoleService {
 
     /**
      * 删除角色信息
-     *
-     * @return 是否删除成功
      */
-    boolean deleteRole(Integer id);
+    void deleteRole(Integer id);
 
     /**
      * 批量删除角色信息
      *
      * @param ids 角色id
-     * @return 是否删除成功
      */
-    boolean deleteRole(Integer[] ids);
+    void deleteRole(Integer[] ids);
 
     /**
      * 更新角色信息
      *
      * @param roleVo 角色信息
-     * @return 是否更新成功
      */
-    boolean updateRole(RoleVo roleVo);
+    void updateRole(RoleVo roleVo);
 
     /**
      * 更新角色状态
      *
      * @param id      角色id
      * @param disable 是否禁用
-     * @return 是否更新成功
      */
-    boolean updateRoleStatus(Integer id, Integer disable);
+    void updateRoleStatus(Integer id, Integer disable);
 
     /**
      * 获取角色信息
@@ -70,17 +65,15 @@ public interface IRoleService {
      * 更新角色菜单
      *
      * @param roleMenuVo 角色菜单信息
-     * @return 是否更新成功
      */
-    boolean updateRoleMenu(RoleMenuVo roleMenuVo);
+    void updateRoleMenu(RoleMenuVo roleMenuVo);
 
     /**
      * 更新角色资源
      *
      * @param roleResourceVo 角色资源信息
-     * @return 是否更新成功
      */
-    boolean updateRoleResource(RoleResourceVo roleResourceVo);
+    void updateRoleResource(RoleResourceVo roleResourceVo);
 
     /**
      * 获取所有菜单

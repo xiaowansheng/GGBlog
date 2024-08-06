@@ -26,38 +26,34 @@ public interface IFriendLinkService {
      * 审核友链
      * @param id 友链id
      * @param review 审核状态
-     * @return 审核结果
      */
-    boolean auditFriendLink(Integer id, Integer review);
+    void auditFriendLink(Integer id, Integer review);
 
     /**
      * 更新友链
      * @param friendLinkUpdateEntity 更新信息
-     * @return 更新结果
      */
-    boolean updateFriendLink(FriendLinkUpdateEntity friendLinkUpdateEntity);
+    void updateFriendLink(FriendLinkUpdateEntity friendLinkUpdateEntity);
 
     /**
      * 更新友链隐藏状态
      * @param id 友链id
      * @param hidden 隐藏状态
-     * @return 更新结果
      */
-    boolean updateFriendLinkHidden(Integer id, Integer hidden);
+    void updateFriendLinkHidden(Integer id, Integer hidden);
 
     /**
      * 删除友链
+     *
      * @param id 友链id
-     * @return 删除结果
      */
-    boolean deleteFriendLink(Integer id);
+    void deleteFriendLink(Integer id);
 
     /**
      * 批量删除友链
      * @param ids 友链id
-     * @return 删除结果
      */
-    boolean deleteFriendLink(Integer[] ids);
+    void deleteFriendLink(Integer[] ids);
 
     /**
      * 获取友链

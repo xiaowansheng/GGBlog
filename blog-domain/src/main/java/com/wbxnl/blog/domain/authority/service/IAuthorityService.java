@@ -36,44 +36,38 @@ public interface IAuthorityService {
     /**
      * 更新系统菜单信息
      * @param systemResourceUpdateEntity 系统菜单信息
-     * @return 是否更新成功
      */
-    boolean updateSystemMenu(SystemMenuUpdateEntity systemResourceUpdateEntity);
+    void updateSystemMenu(SystemMenuUpdateEntity systemResourceUpdateEntity);
 
     /**
      * 更新系统资源信息
      * @param systemResourceUpdateEntity 系统资源
-     * @return 是否更新成功
      */
-    boolean updateSystemResource(SystemResourceUpdateEntity systemResourceUpdateEntity);
+    void updateSystemResource(SystemResourceUpdateEntity systemResourceUpdateEntity);
 
     /**
      * 删除系统菜单
      * @param id 菜单id
-     * @return 是否删除成功
      */
-    boolean deleteSystemMenu(Integer id);
+    void deleteSystemMenu(Integer id);
 
     /**
      * 删除系统菜单
      * @param ids 菜单id
-     * @return 是否删除成功
      */
-    boolean deleteSystemMenu(Integer[] ids);
+    void deleteSystemMenu(Integer[] ids);
 
     /**
      * 删除系统资源
      * @param id 资源id
-     * @return 是否删除成功
      */
-    boolean deleteSystemResource(Integer id);
+    void deleteSystemResource(Integer id);
 
     /**
      * 删除系统资源
      * @param ids 资源id
-     * @return 是否删除成功
      */
-    boolean deleteSystemResource(Integer[] ids);
+    void deleteSystemResource(Integer[] ids);
 
     /**
      * 获取所有菜单的角色列表信息

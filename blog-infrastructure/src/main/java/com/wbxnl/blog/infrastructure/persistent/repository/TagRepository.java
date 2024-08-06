@@ -55,7 +55,10 @@ public class TagRepository implements ITagRepository {
     @Override
     public TagEntity addTag(TagHandleVo tagHandleVo) {
         Tag tag = ObjectConvertUtils.convert(tagHandleVo, Tag.class);
-        tagDao.insert(tag);
+        int insert = tagDao.insert(tag);
+        if (insert <= 0) {
+            return null;
+        }
         return ObjectConvertUtils.convert(tag, TagEntity.class);
     }
 
@@ -244,5 +247,10 @@ public class TagRepository implements ITagRepository {
                 .eq(ArticleTag::getArticleKey, articleKey);
         List<ArticleTag> articleTags = articleTagDao.selectList(articleTagLambdaQueryWrapper);
         return articleTags.stream().map(ArticleTag::getTagKey).collect(Collectors.toList());
+    }
+
+    @Override
+    public Long getTagQuantity() {
+        return tagDao.selectCount(null);
     }
 }

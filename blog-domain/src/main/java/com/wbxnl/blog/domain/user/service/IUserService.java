@@ -18,9 +18,8 @@ public interface IUserService {
     /**
      * 用户注册
      * @param userRegisterVo 注册信息
-     * @return 注册结果
      */
-    boolean register(UserRegisterVo userRegisterVo);
+    void register(UserRegisterVo userRegisterVo);
 
     /**
      * 邮箱登录
@@ -40,31 +39,27 @@ public interface IUserService {
     /**
      * 退出登录
      * @param username 用户名
-     * @return 退出结果
      */
-    boolean logout(String username);
+    void logout(String username);
 
     /**
      * 修改密码
      * @param updatePasswordEntity 更新信息
-     * @return 更新结果
      */
-    boolean updatePassword(UpdatePasswordEntity updatePasswordEntity);
+    void updatePassword(UpdatePasswordEntity updatePasswordEntity);
 
     /**
      * 更新用户信息
      * @param userUpdateEntity 更新信息
-     * @return 更新结果
      */
-    boolean updateUserInfo(UserUpdateEntity userUpdateEntity);
+    void updateUserInfo(UserUpdateEntity userUpdateEntity);
 
     /**
      * 禁用用户
      * @param id 用户id
      * @param disable 禁用状态
-     * @return 结果
      */
-    boolean setUserStatus(Integer id, Integer disable);
+    void setUserStatus(Integer id, Integer disable);
 
     /**
      * 获取用户信息

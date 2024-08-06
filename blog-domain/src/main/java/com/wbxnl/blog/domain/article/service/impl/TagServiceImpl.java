@@ -31,29 +31,42 @@ public class TagServiceImpl implements ITagService {
     private final ITagRepository tagRepository;
 
     @Override
-    public TagEntity addArticleTag(TagVo tagVo) {
+    public TagEntity addTag(TagVo tagVo) {
         TagEntity tagByName = getTagByName(tagVo.getName());
         if(tagByName!=null){
             throw new BlogException(OperationCodeEnum.TAG_EXISTS);
         }
         TagHandleVo tagHandleVo = ObjectConvertUtils.convert(tagVo, TagHandleVo.class);
         tagHandleVo.setTagKey(UuidUtils.uuid());
-        return tagRepository.addTag(tagHandleVo);
+        TagEntity tagEntity = tagRepository.addTag(tagHandleVo);
+        if(tagEntity==null){
+            throw new BlogException(OperationCodeEnum.ADD_FAILURE);
+        }
+        return tagEntity;
     }
 
     @Override
-    public boolean deleteArticleTag(Integer id) {
-        return tagRepository.deleteTag(id);
+    public void deleteTag(Integer id) {
+        boolean updated = tagRepository.deleteTag(id);
+        if(!updated){
+            throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
+        }
     }
 
     @Override
-    public boolean deleteArticleTag(Integer[] ids) {
-        return tagRepository.deleteTag(ids);
+    public void deleteTag(Integer[] ids) {
+        boolean updated = tagRepository.deleteTag(ids);
+        if(!updated){
+            throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
+        }
     }
 
     @Override
-    public boolean updateArticleTag(TagUpdateEntity tagUpdateEntity) {
-        return tagRepository.updateTag(tagUpdateEntity);
+    public void updateTag(TagUpdateEntity tagUpdateEntity) {
+        boolean updated = tagRepository.updateTag(tagUpdateEntity);
+        if(!updated){
+            throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
+        }
     }
 
     @Override
@@ -78,6 +91,11 @@ public class TagServiceImpl implements ITagService {
     }
 
     @Override
+    public Long getTagQuantity() {
+        return tagRepository.getTagQuantity();
+    }
+
+    @Override
     public List<TagSimpleInfoEntity> getTags(Integer[] ids) {
         return tagRepository.getTags(ids);
     }
@@ -88,7 +106,7 @@ public class TagServiceImpl implements ITagService {
     }
 
     @Override
-    public PageData<TagAggregate> getPageTags(PageParams pageParams, TagQueryEntity tagQueryEntity) {
+    public PageData<TagAggregate> getPageOfTags(PageParams pageParams, TagQueryEntity tagQueryEntity) {
         return tagRepository.getPageTags(pageParams, tagQueryEntity);
     }
 

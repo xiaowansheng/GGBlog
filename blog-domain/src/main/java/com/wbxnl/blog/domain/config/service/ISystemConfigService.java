@@ -24,23 +24,20 @@ public interface ISystemConfigService {
     /**
      * 修改系统配置
      * @param systemConfigUpdateEntity 系统配置
-     * @return 系统配置结果
      */
-    boolean updateSystemConfig(SystemConfigUpdateEntity systemConfigUpdateEntity);
+    void updateSystemConfig(SystemConfigUpdateEntity systemConfigUpdateEntity);
 
     /**
      * 删除系统配置
      * @param id 系统配置id
-     * @return 系统配置结果
      */
-    boolean deleteSystemConfig(Integer id);
+    void deleteSystemConfig(Integer id);
 
     /**
      * 批量删除系统配置
      * @param ids 系统配置id
-     * @return 系统配置结果
      */
-    boolean deleteSystemConfig(Integer[] ids);
+    void deleteSystemConfig(Integer[] ids);
 
     /**
      * 获取系统配置

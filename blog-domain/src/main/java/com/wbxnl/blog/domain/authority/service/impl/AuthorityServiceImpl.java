@@ -1,5 +1,7 @@
 package com.wbxnl.blog.domain.authority.service.impl;
 
+import com.wbxnl.blog.common.enums.OperationCodeEnum;
+import com.wbxnl.blog.common.exception.BlogException;
 import com.wbxnl.blog.domain.authority.model.aggregate.MenuRoleAggregate;
 import com.wbxnl.blog.domain.authority.model.aggregate.ResourceRoleAggregate;
 import com.wbxnl.blog.domain.authority.model.eneity.SystemMenuEntity;
@@ -30,42 +32,68 @@ public class AuthorityServiceImpl implements IAuthorityService {
 
     @Override
     public SystemMenuEntity addSystemMenu(SystemMenuVo systemMenuVo) {
-        return authorityRepository.addSystemMenu(systemMenuVo);
+        SystemMenuEntity systemMenuEntity = authorityRepository.addSystemMenu(systemMenuVo);
+        if(systemMenuEntity==null){
+            throw new BlogException(OperationCodeEnum.ADD_FAILURE);
+        }
+        return systemMenuEntity;
     }
 
     @Override
     public SystemResourceEntity addSystemResource(SystemResourceVo systemResourceVo) {
-        return authorityRepository.addSystemResource(systemResourceVo);
+        SystemResourceEntity systemResourceEntity = authorityRepository.addSystemResource(systemResourceVo);
+        if(systemResourceEntity==null){
+            throw new BlogException(OperationCodeEnum.ADD_FAILURE);
+        }
+        return systemResourceEntity;
     }
 
     @Override
-    public boolean updateSystemMenu(SystemMenuUpdateEntity systemResourceUpdateEntity) {
-        return authorityRepository.updateSystemMenu(systemResourceUpdateEntity);
+    public void updateSystemMenu(SystemMenuUpdateEntity systemResourceUpdateEntity) {
+        boolean updated = authorityRepository.updateSystemMenu(systemResourceUpdateEntity);
+        if(!updated){
+            throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
+        }
     }
 
     @Override
-    public boolean updateSystemResource(SystemResourceUpdateEntity systemResourceUpdateEntity) {
-        return authorityRepository.updateSystemResource(systemResourceUpdateEntity);
+    public void updateSystemResource(SystemResourceUpdateEntity systemResourceUpdateEntity) {
+        boolean updated = authorityRepository.updateSystemResource(systemResourceUpdateEntity);
+        if(!updated){
+            throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
+        }
     }
 
     @Override
-    public boolean deleteSystemMenu(Integer id) {
-        return authorityRepository.deleteSystemMenu(id);
+    public void deleteSystemMenu(Integer id) {
+        boolean updated = authorityRepository.deleteSystemMenu(id);
+        if(!updated){
+            throw new BlogException(OperationCodeEnum.DELETE_FAILURE);
+        }
     }
 
     @Override
-    public boolean deleteSystemMenu(Integer[] ids) {
-        return authorityRepository.deleteSystemMenu(ids);
+    public void deleteSystemMenu(Integer[] ids) {
+        boolean updated = authorityRepository.deleteSystemMenu(ids);
+        if(!updated){
+            throw new BlogException(OperationCodeEnum.DELETE_FAILURE);
+        }
     }
 
     @Override
-    public boolean deleteSystemResource(Integer id) {
-        return authorityRepository.deleteSystemResource(id);
+    public void deleteSystemResource(Integer id) {
+        boolean updated = authorityRepository.deleteSystemResource(id);
+        if(!updated){
+            throw new BlogException(OperationCodeEnum.DELETE_FAILURE);
+        }
     }
 
     @Override
-    public boolean deleteSystemResource(Integer[] ids) {
-        return authorityRepository.deleteSystemResource(ids);
+    public void deleteSystemResource(Integer[] ids) {
+        boolean updated = authorityRepository.deleteSystemResource(ids);
+        if(!updated){
+            throw new BlogException(OperationCodeEnum.DELETE_FAILURE);
+        }
     }
 
     @Override

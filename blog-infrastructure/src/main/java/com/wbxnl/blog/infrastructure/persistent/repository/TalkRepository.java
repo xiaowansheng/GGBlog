@@ -37,7 +37,10 @@ public class TalkRepository implements ITalkRepository {
     @Override
     public TalkEntity addTalk(TalkInsertVo talkInsertVo) {
         Talk talk = ObjectConvertUtils.convert(talkInsertVo, Talk.class);
-        talkDao.insert(talk);
+        int insert = talkDao.insert(talk);
+        if (insert <= 0) {
+            return null;
+        }
         return ObjectConvertUtils.convert(talk, TalkEntity.class);
     }
 

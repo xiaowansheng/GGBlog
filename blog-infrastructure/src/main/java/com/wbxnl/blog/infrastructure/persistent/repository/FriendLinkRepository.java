@@ -37,7 +37,10 @@ public class FriendLinkRepository implements IFriendLinkRepository {
     @Override
     public FriendLinkEntity addFriendLink(FriendLinkVo friendLinkVo) {
         Friend friend = ObjectConvertUtils.convert(friendLinkVo, Friend.class);
-        friendDao.insert(friend);
+        int insert = friendDao.insert(friend);
+        if (insert <= 0) {
+            return null;
+        }
         return ObjectConvertUtils.convert(friend, FriendLinkEntity.class);
     }
 

@@ -33,7 +33,7 @@ public class CategoryServiceImpl implements ICategoryService {
 
     private final ICategoryRepository categoryRepository;
     @Override
-    public CategoryEntity addArticleCategory(CategoryVo categoryVo) {
+    public CategoryEntity addCategory(CategoryVo categoryVo) {
         // 检查要插入的分类是否已经存在
         CategoryEntity categoryByName = categoryRepository.getCategoryByName(categoryVo.getName());
         if(categoryByName!=null){
@@ -41,27 +41,43 @@ public class CategoryServiceImpl implements ICategoryService {
         }
         CategoryHandleVo categoryHandleVo = ObjectConvertUtils.convert(categoryVo, CategoryHandleVo.class);
         categoryHandleVo.setCategoryKey(UuidUtils.uuid());
-        return categoryRepository.addCategory(categoryHandleVo);
+        CategoryEntity categoryEntity = categoryRepository.addCategory(categoryHandleVo);
+        if(categoryEntity==null){
+            throw new BlogException(OperationCodeEnum.ADD_FAILURE);
+        }
+        return categoryEntity;
     }
 
     @Override
-    public boolean updateArticleCategory(CategoryUpdateEntity categoryUpdateEntity) {
-        return categoryRepository.updateCategory(categoryUpdateEntity);
+    public void updateCategory(CategoryUpdateEntity categoryUpdateEntity) {
+        boolean updated = categoryRepository.updateCategory(categoryUpdateEntity);
+        if(!updated){
+            throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
+        }
     }
 
     @Override
-    public boolean updateArticleCategoryStatus(Integer id, String status) {
-        return categoryRepository.updateCategoryStatus(id, status);
+    public void updateCategoryStatus(Integer id, String status) {
+        boolean updated = categoryRepository.updateCategoryStatus(id, status);
+        if(!updated){
+            throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
+        }
     }
 
     @Override
-    public boolean deleteArticleCategory(Integer id) {
-        return categoryRepository.deleteCategory(id);
+    public void deleteCategory(Integer id) {
+        boolean updated = categoryRepository.deleteCategory(id);
+        if(!updated){
+            throw new BlogException(OperationCodeEnum.DELETE_FAILURE);
+        }
     }
 
     @Override
-    public boolean deleteArticleCategory(Integer[] ids) {
-        return categoryRepository.deleteCategory(ids);
+    public void deleteCategory(Integer[] ids) {
+        boolean updated = categoryRepository.deleteCategory(ids);
+        if(!updated){
+            throw new BlogException(OperationCodeEnum.DELETE_FAILURE);
+        }
     }
 
     @Override
@@ -85,8 +101,13 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
-    public PageData<CategoryAggregate> getPageCategories(PageParams pageParams, CategoryQueryEntity categoryQueryEntity) {
+    public PageData<CategoryAggregate> getPageOfCategories(PageParams pageParams, CategoryQueryEntity categoryQueryEntity) {
         return categoryRepository.getPageCategories(pageParams, categoryQueryEntity);
+    }
+
+    @Override
+    public Long getCategoryQuantity() {
+        return categoryRepository.getCategoryQuantity();
     }
 
     @Override

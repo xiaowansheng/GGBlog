@@ -1,5 +1,7 @@
 package com.wbxnl.blog.domain.authority.service.impl;
 
+import com.wbxnl.blog.common.enums.OperationCodeEnum;
+import com.wbxnl.blog.common.exception.BlogException;
 import com.wbxnl.blog.common.vo.PageData;
 import com.wbxnl.blog.common.vo.PageParams;
 import com.wbxnl.blog.domain.authority.model.eneity.*;
@@ -31,23 +33,35 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public boolean deleteRole(Integer id) {
-        return roleRepository.deleteRole(id);
+    public void deleteRole(Integer id) {
+        boolean updated = roleRepository.deleteRole(id);
+        if(!updated){
+            throw new BlogException(OperationCodeEnum.DELETE_FAILURE);
+        }
     }
 
     @Override
-    public boolean deleteRole(Integer[] ids) {
-        return roleRepository.deleteRole(ids);
+    public void deleteRole(Integer[] ids) {
+        boolean updated = roleRepository.deleteRole(ids);
+        if(!updated){
+            throw new BlogException(OperationCodeEnum.DELETE_FAILURE);
+        }
     }
 
     @Override
-    public boolean updateRole(RoleVo roleVo) {
-        return roleRepository.updateRole(roleVo);
+    public void updateRole(RoleVo roleVo) {
+        boolean updated = roleRepository.updateRole(roleVo);
+        if(!updated){
+            throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
+        }
     }
 
     @Override
-    public boolean updateRoleStatus(Integer id, Integer disable) {
-        return roleRepository.updateRoleStatus(id, disable);
+    public void updateRoleStatus(Integer id, Integer disable) {
+        boolean updated = roleRepository.updateRoleStatus(id, disable);
+        if(!updated){
+            throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
+        }
     }
 
     @Override
@@ -56,13 +70,19 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public boolean updateRoleMenu(RoleMenuVo roleMenuVo) {
-        return roleRepository.updateRoleMenu(roleMenuVo);
+    public void updateRoleMenu(RoleMenuVo roleMenuVo) {
+        boolean updated = roleRepository.updateRoleMenu(roleMenuVo);
+        if(!updated){
+            throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
+        }
     }
 
     @Override
-    public boolean updateRoleResource(RoleResourceVo roleResourceVo) {
-        return roleRepository.updateRoleResource(roleResourceVo);
+    public void updateRoleResource(RoleResourceVo roleResourceVo) {
+        boolean updated = roleRepository.updateRoleResource(roleResourceVo);
+        if(!updated){
+            throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
+        }
     }
 
     @Override

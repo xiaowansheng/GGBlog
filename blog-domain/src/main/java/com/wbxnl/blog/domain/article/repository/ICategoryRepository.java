@@ -45,4 +45,6 @@ public interface ICategoryRepository {
     CategoryEntity getCategoryByName(String name);
 
     CategorySimpleInfoEntity getCategoryByUser(String categoryKey);
+
+    Long getCategoryQuantity();
 }

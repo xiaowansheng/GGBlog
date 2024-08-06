@@ -1,5 +1,7 @@
 package com.wbxnl.blog.domain.talk.service.impl;
 
+import com.wbxnl.blog.common.enums.OperationCodeEnum;
+import com.wbxnl.blog.common.exception.BlogException;
 import com.wbxnl.blog.common.utils.HttpUtils;
 import com.wbxnl.blog.common.utils.ObjectConvertUtils;
 import com.wbxnl.blog.common.vo.PageData;
@@ -42,28 +44,43 @@ public class TalkServiceImpl implements ITalkService {
     }
 
     @Override
-    public boolean deleteTalk(Integer id) {
-        return talkRepository.deleteTalk(id);
+    public void deleteTalk(Integer id) {
+        boolean updated = talkRepository.deleteTalk(id);
+        if(!updated){
+            throw new BlogException(OperationCodeEnum.DELETE_FAILURE);
+        }
     }
 
     @Override
-    public boolean deleteTalk(Integer[] ids) {
-        return talkRepository.deleteTalk(ids);
+    public void deleteTalk(Integer[] ids) {
+        boolean updated = talkRepository.deleteTalk(ids);
+        if(!updated){
+            throw new BlogException(OperationCodeEnum.DELETE_FAILURE);
+        }
     }
 
     @Override
-    public boolean updateTalk(TalkUpdateEntity talkUpdateEntity) {
-        return talkRepository.updateTalk(talkUpdateEntity);
+    public void updateTalk(TalkUpdateEntity talkUpdateEntity) {
+        boolean updated = talkRepository.updateTalk(talkUpdateEntity);
+        if(!updated){
+            throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
+        }
     }
 
     @Override
-    public boolean updateTalkStatus(Integer id, String status) {
-        return talkRepository.updateTalkStatus(id, status);
+    public void updateTalkStatus(Integer id, String status) {
+        boolean updated = talkRepository.updateTalkStatus(id, status);
+        if(!updated){
+            throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
+        }
     }
 
     @Override
-    public boolean updateTalkTop(Integer id, Integer top) {
-        return talkRepository.updateTalkTop(id, top);
+    public void updateTalkTop(Integer id, Integer top) {
+        boolean updated = talkRepository.updateTalkTop(id, top);
+        if(!updated){
+            throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
+        }
     }
 
     @Override

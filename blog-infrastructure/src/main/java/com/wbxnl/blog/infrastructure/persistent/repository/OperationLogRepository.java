@@ -33,7 +33,10 @@ public class OperationLogRepository implements IOperationLogRepository {
     @Override
     public OperationLogEntity addOperationLog(OperationLogDetailVo operationLogDetailVo) {
         LogOperation logOperation = ObjectConvertUtils.convert(operationLogDetailVo, LogOperation.class);
-        logOperationDao.insert(logOperation);
+        int insert = logOperationDao.insert(logOperation);
+        if (insert <= 0) {
+            return null;
+        }
         return ObjectConvertUtils.convert(logOperation, OperationLogEntity.class);
     }
 

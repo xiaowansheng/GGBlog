@@ -49,7 +49,10 @@ public class ArticleRepository implements IArticleRepository {
     @Override
     public ArticleEntity addArticle(ArticleHandleVo articleHandleVo) {
         Article article = ObjectConvertUtils.convert(articleHandleVo, Article.class);
-        articleDao.insert(article);
+        int insert = articleDao.insert(article);
+        if(insert <= 0){
+            return null;
+        }
         return ObjectConvertUtils.convert(article, ArticleEntity.class);
     }
 
@@ -206,7 +209,7 @@ public class ArticleRepository implements IArticleRepository {
     }
 
     @Override
-    public PageData<ArticleArchiveAggregate> getPageArticleDetailsOfArchive(PageParams pageParams, boolean isReverseOrder, boolean isVisitor) {
+    public PageData<ArticleArchiveAggregate> getPageArticleDetailsOfArchive(PageParams pageParams, boolean isReverseOrder) {
         // TODO 待实现SQL复杂查询
         return null;
     }
@@ -215,5 +218,10 @@ public class ArticleRepository implements IArticleRepository {
     public PageData<ArticleAggregate> getPageArticleDetailsByUser(PageParams pageParams, ArticleQueryByVisitorEntity articleQueryByVisitorEntity) {
         // TODO 待实现SQL复杂查询
         return null;
+    }
+
+    @Override
+    public Long getArticleQuantity() {
+        return articleDao.selectCount(null);
     }
 }

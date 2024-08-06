@@ -39,7 +39,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean register(UserRegisterVo userRegisterVo) {
+    public void register(UserRegisterVo userRegisterVo) {
         // 获取验证码
         String verificationCode = userRepository.getVerificationCode(userRegisterVo.getEmail());
         if (verificationCode == null) {
@@ -64,10 +64,12 @@ public class UserServiceImpl implements IUserService {
         // 绑定账户和资料的关系
         userRegisterDataEntity.setUserInfoKey(userRegisterInfoEntity.getUserInfoKey());
         // 添加用户账户
-        userRepository.addUserAuth(userRegisterDataEntity);
+        boolean addUserAuth = userRepository.addUserAuth(userRegisterDataEntity);
         // 添加用户资料
-        userRepository.addUserInfo(userRegisterInfoEntity);
-        return true;
+        boolean addUserInfo = userRepository.addUserInfo(userRegisterInfoEntity);
+        if (!addUserAuth || !addUserInfo) {
+            throw new BlogException(OperationCodeEnum.REGISTER_FAILURE);
+        }
     }
 
     @Override
@@ -124,12 +126,15 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public boolean logout(String username) {
-        return userRepository.logout(username);
+    public void logout(String username) {
+        boolean logout = userRepository.logout(username);
+        if (!logout) {
+            throw new BlogException(OperationCodeEnum.FAILURE);
+        }
     }
 
     @Override
-    public boolean updatePassword(UpdatePasswordEntity updatePasswordEntity) {
+    public void updatePassword(UpdatePasswordEntity updatePasswordEntity) {
         String verificationCode1 = userRepository.getVerificationCode(updatePasswordEntity.getUsername());
         if (!verificationCode1.equalsIgnoreCase(updatePasswordEntity.getVerificationCode())) {
             throw new BlogException(OperationCodeEnum.VERIFICATION_CODE_ERROR);
@@ -137,17 +142,26 @@ public class UserServiceImpl implements IUserService {
         // 新密码加密
         String newPassword = StringUtils.encrypt(updatePasswordEntity.getNewPassword());
         // 更新密码
-        return userRepository.updatePassword(updatePasswordEntity.getUsername(), newPassword);
+        boolean updated = userRepository.updatePassword(updatePasswordEntity.getUsername(), newPassword);
+        if (!updated) {
+            throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
+        }
     }
 
     @Override
-    public boolean updateUserInfo(UserUpdateEntity userUpdateEntity) {
-        return userRepository.updateUserInfo(userUpdateEntity);
+    public void updateUserInfo(UserUpdateEntity userUpdateEntity) {
+        boolean updated = userRepository.updateUserInfo(userUpdateEntity);
+        if (!updated) {
+            throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
+        }
     }
 
     @Override
-    public boolean setUserStatus(Integer id, Integer disable) {
-        return userRepository.setUserStatus(id, disable);
+    public void setUserStatus(Integer id, Integer disable) {
+        boolean userStatus = userRepository.setUserStatus(id, disable);
+        if (!userStatus) {
+            throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
+        }
     }
 
     @Override

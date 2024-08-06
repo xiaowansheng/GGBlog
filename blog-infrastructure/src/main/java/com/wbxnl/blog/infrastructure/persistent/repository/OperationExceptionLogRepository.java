@@ -34,7 +34,10 @@ public class OperationExceptionLogRepository implements IOperationExceptionLogRe
     @Override
     public OperationExceptionLogEntity addOperationExceptionLog(OperationExceptionLogDetailVo operationExceptionLogDetailVo) {
         LogError logError = ObjectConvertUtils.convert(operationExceptionLogDetailVo, LogError.class);
-        logErrorDao.insert(logError);
+        int insert = logErrorDao.insert(logError);
+        if (insert <= 0) {
+            return null;
+        }
         return ObjectConvertUtils.convert(logError, OperationExceptionLogEntity.class);
     }
 

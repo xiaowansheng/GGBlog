@@ -25,40 +25,36 @@ public interface ICategoryService {
      * @param categoryVo 分类信息
      * @return 返回具体的分类信息，失败返回null
      */
-    CategoryEntity addArticleCategory(CategoryVo categoryVo);
+    CategoryEntity addCategory(CategoryVo categoryVo);
 
 
     /**
      * 修改文章分类信息
      *
      * @param categoryUpdateEntity 分类更新信息
-     * @return 是否修改成功
      */
-    boolean updateArticleCategory(CategoryUpdateEntity categoryUpdateEntity);
+    void updateCategory(CategoryUpdateEntity categoryUpdateEntity);
 
     /**
      * 修改文章分类状态
      * @param id 分类ID
      * @param status 分类状态
-     * @return 是否修改成功
      */
-    boolean updateArticleCategoryStatus(Integer id, String status);
+    void updateCategoryStatus(Integer id, String status);
 
     /**
      * 删除文章分类信息
      *
      * @param id 分类ID
-     * @return 是否删除成功
      */
-    boolean deleteArticleCategory(Integer id);
+    void deleteCategory(Integer id);
 
     /**
      * 批量删除文章分类信息
      *
      * @param ids 分类ID集合
-     * @return 是否删除成功
      */
-    boolean deleteArticleCategory(Integer[] ids);
+    void deleteCategory(Integer[] ids);
 
     /**
      * 获取文章分类信息
@@ -97,8 +93,14 @@ public interface ICategoryService {
      * @param categoryQueryEntity 查询参数
      * @return 分类信息
      */
-    PageData<CategoryAggregate> getPageCategories(PageParams pageParams, CategoryQueryEntity categoryQueryEntity);
+    PageData<CategoryAggregate> getPageOfCategories(PageParams pageParams, CategoryQueryEntity categoryQueryEntity);
 
+    /**
+     * 用户查询分类数量
+     *
+     * @return 分类数量
+     */
+    Long getCategoryQuantity();
 
     /**
      * 用户查询分类信息

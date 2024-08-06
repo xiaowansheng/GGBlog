@@ -1,6 +1,8 @@
 package com.wbxnl.blog.domain.article.service.impl;
 
 import com.wbxnl.blog.common.enums.ArticleTypeEnum;
+import com.wbxnl.blog.common.enums.OperationCodeEnum;
+import com.wbxnl.blog.common.exception.BlogException;
 import com.wbxnl.blog.common.utils.ObjectConvertUtils;
 import com.wbxnl.blog.common.utils.UuidUtils;
 import com.wbxnl.blog.common.vo.PageData;
@@ -67,7 +69,7 @@ public class ArticleServiceImpl implements IArticleService {
 
                 CategoryVo categoryVo = new CategoryVo();
                 categoryVo.setName(articleVoCategory.getName());
-                categoryEntity = categoryService.addArticleCategory(categoryVo);
+                categoryEntity = categoryService.addCategory(categoryVo);
                 articleHandleVo.setCategoryKey(categoryEntity.getCategoryKey());
             }
         }
@@ -82,7 +84,7 @@ public class ArticleServiceImpl implements IArticleService {
             } else {
                 TagVo tagVo = new TagVo();
                 tagVo.setName(articleVoTag.getName());
-                tagEntity = tagService.addArticleTag(tagVo);
+                tagEntity = tagService.addTag(tagVo);
             }
             // 给文章添加标签信息
             if (tagEntity != null) {
@@ -93,32 +95,42 @@ public class ArticleServiceImpl implements IArticleService {
             }
         });
         // 3、插入文章信息
-        return articleRepository.addArticle(articleHandleVo);
+        ArticleEntity articleEntity = articleRepository.addArticle(articleHandleVo);
+        if (articleEntity == null) {
+            throw new BlogException(OperationCodeEnum.ADD_FAILURE);
+        }
+        return articleEntity;
     }
 
     @Override
     public ArticleEntity saveArticleDraft(ArticleDraftVo articleDraftVo) {
         articleDraftVo.setType(ArticleTypeEnum.DRAFT);
-        if(articleDraftVo.getId()!=null){
+        if (articleDraftVo.getId() != null) {
             return articleRepository.updateArticleDraft(articleDraftVo);
-        }else{
+        } else {
             return articleRepository.addArticleDraft(articleDraftVo);
         }
     }
 
     @Override
-    public boolean deleteArticle(Integer id) {
-        return articleRepository.deleteArticle(id);
+    public void deleteArticle(Integer id) {
+        boolean updated = articleRepository.deleteArticle(id);
+        if (!updated) {
+            throw new BlogException(OperationCodeEnum.DELETE_FAILURE);
+        }
     }
 
     @Override
-    public boolean deleteArticle(Integer[] ids) {
-        return articleRepository.deleteArticle(ids);
+    public void deleteArticle(Integer[] ids) {
+        boolean updated = articleRepository.deleteArticle(ids);
+        if (!updated) {
+            throw new BlogException(OperationCodeEnum.DELETE_FAILURE);
+        }
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean updateArticle(ArticleUpdateEntity articleUpdateEntity) {
+    public void updateArticle(ArticleUpdateEntity articleUpdateEntity) {
         ArticleHandleVo articleHandleVo = ObjectConvertUtils.convert(articleUpdateEntity, ArticleHandleVo.class);
         ArticleUpdateEntity.CategoryVo articleVoCategory = articleUpdateEntity.getCategory();
         // 处理分类
@@ -137,7 +149,7 @@ public class ArticleServiceImpl implements IArticleService {
             } else {
                 CategoryVo categoryVo = new CategoryVo();
                 categoryVo.setName(articleVoCategory.getName());
-                categoryEntity = categoryService.addArticleCategory(categoryVo);
+                categoryEntity = categoryService.addCategory(categoryVo);
                 articleHandleVo.setCategoryKey(categoryEntity.getCategoryKey());
             }
         }
@@ -158,7 +170,7 @@ public class ArticleServiceImpl implements IArticleService {
                 if (tagEntity == null) {
                     TagVo tagVo = new TagVo();
                     tagVo.setName(articleVoTag.getName());
-                    tagEntity = tagService.addArticleTag(tagVo);
+                    tagEntity = tagService.addTag(tagVo);
                 }
             }
             // 给文章添加标签信息
@@ -197,22 +209,34 @@ public class ArticleServiceImpl implements IArticleService {
             tagRepository.linkArticleAndTag(articleAndTagLinkEntity);
         });
         // 更新文章信息
-        return articleRepository.updateArticle(articleHandleVo);
+        boolean updated = articleRepository.updateArticle(articleHandleVo);
+        if (!updated) {
+            throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
+        }
     }
 
     @Override
-    public boolean updateArticleBasicInfo(ArticleBasicUpdateEntity articleBasicUpdateEntity) {
-        return articleRepository.updateArticleBasicInfo(articleBasicUpdateEntity);
+    public void updateArticleBasicInfo(ArticleBasicUpdateEntity articleBasicUpdateEntity) {
+        boolean updated = articleRepository.updateArticleBasicInfo(articleBasicUpdateEntity);
+        if (!updated) {
+            throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
+        }
     }
 
     @Override
-    public boolean updateArticleStatus(Integer id, String status) {
-        return articleRepository.updateArticleStatus(id, status);
+    public void updateArticleStatus(Integer id, String status) {
+        boolean updated = articleRepository.updateArticleStatus(id, status);
+        if (!updated) {
+            throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
+        }
     }
 
     @Override
-    public boolean updateArticleTop(Integer id, Integer top) {
-        return articleRepository.updateArticleTop(id, top);
+    public void updateArticleTop(Integer id, Integer top) {
+        boolean updated = articleRepository.updateArticleTop(id, top);
+        if (!updated) {
+            throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
+        }
     }
 
     @Override
@@ -226,13 +250,18 @@ public class ArticleServiceImpl implements IArticleService {
     }
 
     @Override
-    public PageData<ArticleAggregate> getPageArticleDetails(PageParams pageParams, ArticleQueryEntity articleQueryEntity) {
+    public PageData<ArticleAggregate> getPageOfArticleDetails(PageParams pageParams, ArticleQueryEntity articleQueryEntity) {
         return articleRepository.getPageArticleDetails(pageParams, articleQueryEntity);
     }
 
     @Override
-    public PageData<ArticleArchiveAggregate> getPageArticleDetailsOfArchive(PageParams pageParams, boolean isReverseOrder, boolean isVisitor) {
-        return articleRepository.getPageArticleDetailsOfArchive(pageParams, isReverseOrder, isVisitor);
+    public Long getArticleQuantity() {
+        return articleRepository.getArticleQuantity();
+    }
+
+    @Override
+    public PageData<ArticleArchiveAggregate> getPageArticleDetailsOfArchiveByUser(PageParams pageParams, boolean isReverseOrder) {
+        return articleRepository.getPageArticleDetailsOfArchive(pageParams, isReverseOrder);
     }
 
     @Override

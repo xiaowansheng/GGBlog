@@ -34,51 +34,45 @@ public interface IArticleService {
      * 删除文章
      *
      * @param id 文章id
-     * @return 是否删除成功
      */
-    boolean deleteArticle(Integer id);
+    void deleteArticle(Integer id);
 
     /**
      * 批量删除文章
      *
      * @param ids 文章id
-     * @return 是否删除成功
      */
-    boolean deleteArticle(Integer[] ids);
+    void deleteArticle(Integer[] ids);
 
     /**
      * 更新文章
      *
      * @param articleUpdateEntity 更新的文章信息
-     * @return 是否更新成功
      */
-    boolean updateArticle(ArticleUpdateEntity articleUpdateEntity);
+    void updateArticle(ArticleUpdateEntity articleUpdateEntity);
 
     /**
      * 更新文章基本信息
      *
      * @param articleBasicUpdateEntity 文章基本信息
-     * @return 是否更新成功
      */
-    boolean updateArticleBasicInfo(ArticleBasicUpdateEntity articleBasicUpdateEntity);
+    void updateArticleBasicInfo(ArticleBasicUpdateEntity articleBasicUpdateEntity);
 
     /**
      * 更新文章状态
      *
      * @param id     文章id
      * @param status 文章状态
-     * @return 是否更新成功
      */
-    boolean updateArticleStatus(Integer id, String status);
+    void updateArticleStatus(Integer id, String status);
 
     /**
      * 更新文章置顶
      *
      * @param id  文章id
      * @param top 是否置顶
-     * @return 是否更新成功
      */
-    boolean updateArticleTop(Integer id, Integer top);
+    void updateArticleTop(Integer id, Integer top);
 
     /**
      * 获取文章信息
@@ -103,18 +97,23 @@ public interface IArticleService {
      * @param articleQueryEntity 查询参数
      * @return 文章列表
      */
-    PageData<ArticleAggregate> getPageArticleDetails(PageParams pageParams, ArticleQueryEntity articleQueryEntity);
+    PageData<ArticleAggregate> getPageOfArticleDetails(PageParams pageParams, ArticleQueryEntity articleQueryEntity);
 
+    /**
+     * 查询文章数量
+     *
+     * @return 文章数量
+     */
+    Long getArticleQuantity();
 
     /**
      * 获取文章归档列表
      *
      * @param pageParams     分页参数
      * @param isReverseOrder 是否倒序
-     * @param isVisitor      是否访客访问
      * @return 文章列表
      */
-    PageData<ArticleArchiveAggregate> getPageArticleDetailsOfArchive(PageParams pageParams, boolean isReverseOrder, boolean isVisitor);
+    PageData<ArticleArchiveAggregate> getPageArticleDetailsOfArchiveByUser(PageParams pageParams, boolean isReverseOrder);
 
     /**
      * 访客获取文章列表
