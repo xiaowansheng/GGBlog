@@ -3,6 +3,7 @@ package com.wbxnl.blog.domain.message.service.impl;
 import com.wbxnl.blog.common.enums.TopicTypeEnum;
 import com.wbxnl.blog.domain.message.model.aggregate.*;
 import com.wbxnl.blog.domain.message.model.entity.*;
+import com.wbxnl.blog.domain.message.repository.IMessageRepository;
 import com.wbxnl.blog.domain.message.service.IEmailService;
 import com.wbxnl.blog.domain.message.service.INoticeService;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,8 @@ import static com.wbxnl.blog.common.constant.HtmlTemplateConstant.*;
 public class NoticeService implements INoticeService {
 
     private final IEmailService emailService;
+
+    private final IMessageRepository messageRepository;
 
     private final TemplateEngine templateEngine;
 
@@ -64,15 +67,18 @@ public class NoticeService implements INoticeService {
         return templateEngine.process(templateName, context);
     }
 
-
     @Override
     public void sendCaptchaNotice(CaptchaNoticeAggregate captchaNoticeAggregate) {
         Context context = getDefaultContext();
         context.setVariable("title", "嗨,您的验证码已送达~");
         context.setVariable("code", captchaNoticeAggregate.getCode());
-        // 设置使用期限展示
-        context.setVariable("expire", 15);
+        // 设置使用期限展示，单位：分钟
+        long expire = captchaNoticeAggregate.getExpireTime() / 60 / 1000;
+        context.setVariable("expire", expire);
         String htmlStr = generateHtmlStr(VERIFICATION_TEMPLATE_NAME, context);
+        // 保存到Redis
+        messageRepository.storageCaptcha(captchaNoticeAggregate.getEmail(), captchaNoticeAggregate.getCode(), captchaNoticeAggregate.getExpireTime());
+        // 发送邮件
         EmailEntity mailEntity = new EmailEntity(captchaNoticeAggregate.getEmail(), "系统验证码", htmlStr);
         emailService.sentHtmlMail(mailEntity);
     }
@@ -138,7 +144,7 @@ public class NoticeService implements INoticeService {
         EmailEntity emailEntity = null;
         // TODO 获取话题的链接和名称
         String topicKey = commentNoticeAggregate.getTopicKey();
-        if(StringUtils.hasText(topicKey)){
+        if (StringUtils.hasText(topicKey)) {
             TopicTypeEnum topicType = commentNoticeAggregate.getTopicType();
             String topicName = "UNKNOW";
             context.setVariable("topicType", topicType.getName());
@@ -146,13 +152,13 @@ public class NoticeService implements INoticeService {
         }
         String replyCommentKey = commentNoticeAggregate.getReplyCommentKey();
         // 判断是评论网站内容，还是是回复评论
-        if(StringUtils.hasText(replyCommentKey)){
+        if (StringUtils.hasText(replyCommentKey)) {
             // 回复其他人的评论
             context.setVariable("title", "新的评论信息已送达~");
             // TODO 处理话题类型
             context.setVariable("topicName", "UNKNOW");
             // TODO 处理url
-            context.setVariable("url","UNKNOW");
+            context.setVariable("url", "UNKNOW");
 //            context.setVariable("nickname", commentNoticeEntity.getNickname());
 //            context.setVariable("ipAddress", commentNoticeEntity.getIpAddress());
 //            context.setVariable("ipSource", commentNoticeEntity.getIpAddress());
@@ -164,13 +170,13 @@ public class NoticeService implements INoticeService {
                     commentNoticeAggregate.getEmail(),
                     "您的消息被小伙伴回复了哟~",
                     generateHtmlStr(COMMENT_NOTICE_TEMPLATE_NAME, context));
-        }else{
+        } else {
             // 评论网站内容
             context.setVariable("title", "新的评论信息已送达~");
             // TODO 处理话题类型
             context.setVariable("topicName", "UNKNOW");
             // TODO 处理url
-            context.setVariable("url","UNKNOW");
+            context.setVariable("url", "UNKNOW");
             context.setVariable("nickname", commentNoticeAggregate.getNickname());
             context.setVariable("ipAddress", commentNoticeAggregate.getIpAddress());
             context.setVariable("ipSource", commentNoticeAggregate.getIpAddress());

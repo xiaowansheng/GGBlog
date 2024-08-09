@@ -5,7 +5,6 @@ import com.wbxnl.blog.common.vo.PageParams;
 import com.wbxnl.blog.domain.leaveMessage.model.entity.LeaveMessageEntity;
 import com.wbxnl.blog.domain.leaveMessage.model.entity.LeaveMessageQueryEntity;
 import com.wbxnl.blog.domain.leaveMessage.model.entity.LeaveMessageSimpleEntity;
-import com.wbxnl.blog.domain.leaveMessage.model.vo.LeaveMessageInsertVo;
 import com.wbxnl.blog.domain.leaveMessage.model.vo.LeaveMessageVo;
 
 /**
@@ -14,7 +13,7 @@ import com.wbxnl.blog.domain.leaveMessage.model.vo.LeaveMessageVo;
  * @author xiaowansheng
  * @since 2024/7/17 0:03
  */
-public interface ILeaveMessage {
+public interface ILeaveMessageService {
     /**
      * 添加留言
      * @param leaveMessageVo 留言信息
@@ -46,7 +45,7 @@ public interface ILeaveMessage {
      * @param id 留言id
      * @param hidden 是否隐藏
      */
-    void updateLeaveMessageHidden(Integer id, Integer hidden);
+    void updateLeaveWordShowStatus(Integer id, Integer hidden);
 
     /**
      * 分页查询留言
@@ -54,7 +53,7 @@ public interface ILeaveMessage {
      * @param leaveMessageQueryEntity 查询条件
      * @return 留言
      */
-    PageData<LeaveMessageEntity> getPageLeaveMessages(PageParams pageParams, LeaveMessageQueryEntity leaveMessageQueryEntity);
+    PageData<LeaveMessageEntity> getPageOfLeaveMessages(PageParams pageParams, LeaveMessageQueryEntity leaveMessageQueryEntity);
 
     /**
      * 分页查询未审核的留言

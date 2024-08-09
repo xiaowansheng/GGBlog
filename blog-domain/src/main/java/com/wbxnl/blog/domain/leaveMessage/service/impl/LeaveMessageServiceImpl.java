@@ -12,7 +12,7 @@ import com.wbxnl.blog.domain.leaveMessage.model.entity.LeaveMessageSimpleEntity;
 import com.wbxnl.blog.domain.leaveMessage.model.vo.LeaveMessageInsertVo;
 import com.wbxnl.blog.domain.leaveMessage.model.vo.LeaveMessageVo;
 import com.wbxnl.blog.domain.leaveMessage.repository.ILeaveMessageRepository;
-import com.wbxnl.blog.domain.leaveMessage.service.ILeaveMessage;
+import com.wbxnl.blog.domain.leaveMessage.service.ILeaveMessageService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
-public class LeaveMessageImpl implements ILeaveMessage {
+public class LeaveMessageServiceImpl implements ILeaveMessageService {
 
     private final ILeaveMessageRepository leaveMessageRepository;
 
@@ -67,7 +67,7 @@ public class LeaveMessageImpl implements ILeaveMessage {
     }
 
     @Override
-    public void updateLeaveMessageHidden(Integer id, Integer hidden) {
+    public void updateLeaveWordShowStatus(Integer id, Integer hidden) {
         boolean updated = leaveMessageRepository.updateLeaveMessageHidden(id, hidden);
         if (!updated) {
             throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
@@ -75,7 +75,7 @@ public class LeaveMessageImpl implements ILeaveMessage {
     }
 
     @Override
-    public PageData<LeaveMessageEntity> getPageLeaveMessages(PageParams pageParams, LeaveMessageQueryEntity leaveMessageQueryEntity) {
+    public PageData<LeaveMessageEntity> getPageOfLeaveMessages(PageParams pageParams, LeaveMessageQueryEntity leaveMessageQueryEntity) {
         return leaveMessageRepository.getPageLeaveMessages(pageParams, leaveMessageQueryEntity);
     }
 

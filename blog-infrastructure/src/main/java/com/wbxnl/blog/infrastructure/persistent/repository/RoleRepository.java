@@ -48,7 +48,7 @@ public class RoleRepository implements IRoleRepository {
     }
 
     @Override
-    public boolean updateRole(RoleVo roleVo) {
+    public boolean updateRole(RoleUpdateEntity roleUpdateEntity) {
         return false;
     }
 
@@ -93,12 +93,12 @@ public class RoleRepository implements IRoleRepository {
     }
 
     @Override
-    public List<String> getMenuNameList(String roleName) {
+    public List<String> getMenuNameList(String roleKey) {
         return List.of();
     }
 
     @Override
-    public List<String> getResourceNameList(String roleName) {
+    public List<String> getResourceNameList(String roleKey) {
         return List.of();
     }
 }

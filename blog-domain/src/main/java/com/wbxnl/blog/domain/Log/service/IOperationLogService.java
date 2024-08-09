@@ -45,6 +45,6 @@ public interface IOperationLogService {
      * @param operationLogQuery 查询条件
      * @return 操作日志
      */
-    PageData<OperationLogEntity> getPageOperationLogs(PageParams pageParams, OperationLogQueryVo operationLogQuery);
+    PageData<OperationLogEntity> getPageOfOperationLogs(PageParams pageParams, OperationLogQueryVo operationLogQuery);
 
 }

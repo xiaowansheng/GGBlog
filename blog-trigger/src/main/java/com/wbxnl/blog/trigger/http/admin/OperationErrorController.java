@@ -4,8 +4,11 @@ import com.wbxnl.blog.api.admin.model.req.OperationErrorLogQueryReq;
 import com.wbxnl.blog.api.admin.model.res.OperationErrorDetailRes;
 import com.wbxnl.blog.api.admin.model.res.OperationErrorLogSimpleRes;
 import com.wbxnl.blog.api.admin.service.IOperationErrorService;
+import com.wbxnl.blog.common.utils.ObjectConvertUtils;
 import com.wbxnl.blog.common.vo.PageData;
 import com.wbxnl.blog.common.vo.PageParams;
+import com.wbxnl.blog.domain.Log.model.entity.OperationExceptionLogEntity;
+import com.wbxnl.blog.domain.Log.model.vo.OperationExceptionLogQueryVo;
 import com.wbxnl.blog.domain.Log.service.IOperationExceptionLogService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,21 +31,29 @@ public class OperationErrorController implements IOperationErrorService {
 
     @Override
     public PageData<OperationErrorLogSimpleRes> getPageOfOperationErrorLog(PageParams pageParams, OperationErrorLogQueryReq operationErrorLogQueryReq) {
-        return null;
+        OperationExceptionLogQueryVo exceptionLogQueryVo = ObjectConvertUtils.convert(operationErrorLogQueryReq, OperationExceptionLogQueryVo.class);
+        PageData<OperationExceptionLogEntity> pageOfOperationExceptionLogs = operationExceptionLogService.getPageOfOperationExceptionLogs(pageParams, exceptionLogQueryVo);
+        return PageData.<OperationErrorLogSimpleRes>builder()
+                .data(ObjectConvertUtils.convertList(pageOfOperationExceptionLogs.getData(), OperationErrorLogSimpleRes.class))
+                .total(pageOfOperationExceptionLogs.getTotal())
+                .number(pageOfOperationExceptionLogs.getNumber())
+                .size(pageOfOperationExceptionLogs.getSize())
+                .build();
     }
 
     @Override
     public OperationErrorDetailRes getOperationErrorLogDetail(Integer id) {
-        return null;
+        OperationExceptionLogEntity operationExceptionLog = operationExceptionLogService.getOperationExceptionLog(id);
+        return ObjectConvertUtils.convert(operationExceptionLog, OperationErrorDetailRes.class);
     }
 
     @Override
     public void deleteOperationErrorLog(Integer id) {
-
+        operationExceptionLogService.deleteOperationExceptionLog(id);
     }
 
     @Override
     public void deleteOperationErrorLog(Integer[] ids) {
-
+        operationExceptionLogService.deleteOperationExceptionLog(ids);
     }
 }

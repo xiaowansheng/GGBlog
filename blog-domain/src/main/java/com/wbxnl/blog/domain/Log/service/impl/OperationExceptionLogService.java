@@ -56,7 +56,7 @@ public class OperationExceptionLogService implements IOperationExceptionLogServi
     }
 
     @Override
-    public PageData<OperationExceptionLogEntity> getPageOperationExceptionLogs(PageParams pageParams, OperationExceptionLogQueryVo operationExceptionLogQuery) {
+    public PageData<OperationExceptionLogEntity> getPageOfOperationExceptionLogs(PageParams pageParams, OperationExceptionLogQueryVo operationExceptionLogQuery) {
         return operationExceptionLogRepository.getPageOperationExceptionLogs(pageParams, operationExceptionLogQuery);
     }
 }

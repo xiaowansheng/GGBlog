@@ -12,5 +12,8 @@ import lombok.Data;
 public class CaptchaNoticeAggregate {
     private String email;
     private String code;
+    /**
+     * 过期时间，单位：毫秒
+     */
     private Long expireTime;
 }

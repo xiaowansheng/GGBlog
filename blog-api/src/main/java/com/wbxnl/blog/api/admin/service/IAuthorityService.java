@@ -59,10 +59,10 @@ public interface IAuthorityService {
 
     /**
      * 添加资源
-     * @param systemMenuDataReq 资源数据
+     * @param systemResourceDataReq 资源数据
      * @return 资源数据
      */
-    KeyData addSystemResource(SystemResourceDataReq systemMenuDataReq);
+    KeyData addSystemResource(SystemResourceDataReq systemResourceDataReq);
 
     /**
      * 更新资源

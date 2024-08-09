@@ -45,5 +45,5 @@ public interface IOperationExceptionLogService {
      * @param operationExceptionLogQuery 查询条件
      * @return 异常日志
      */
-    PageData<OperationExceptionLogEntity> getPageOperationExceptionLogs(PageParams pageParams, OperationExceptionLogQueryVo operationExceptionLogQuery );
+    PageData<OperationExceptionLogEntity> getPageOfOperationExceptionLogs(PageParams pageParams, OperationExceptionLogQueryVo operationExceptionLogQuery );
 }

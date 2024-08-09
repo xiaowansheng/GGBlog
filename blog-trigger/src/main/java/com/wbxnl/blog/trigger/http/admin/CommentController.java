@@ -24,31 +24,32 @@ public class CommentController implements ICommentService {
 
     @Override
     public PageData<CommentDetailRes> getPageOfComments(PageParams pageParams, CommentQueryReq commentQueryReq) {
+        // TODO
         return null;
     }
 
     @Override
     public void updateCommentAuditStatus(Integer id, Integer auditStatus) {
-
+        // TODO
     }
 
     @Override
     public void updateCommentTop(Integer id, Integer top) {
-
+        // TODO
     }
 
     @Override
     public void updateCommentShowStatus(Integer id, Integer status) {
-
+        // TODO
     }
 
     @Override
     public void deleteComment(Integer id) {
-
+        // TODO
     }
 
     @Override
     public void deleteComment(Integer[] ids) {
-
+        // TODO
     }
 }

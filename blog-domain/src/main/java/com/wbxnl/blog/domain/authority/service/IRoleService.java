@@ -41,9 +41,9 @@ public interface IRoleService {
     /**
      * 更新角色信息
      *
-     * @param roleVo 角色信息
+     * @param roleUpdateEntity 角色信息
      */
-    void updateRole(RoleVo roleVo);
+    void updateRole(RoleUpdateEntity roleUpdateEntity);
 
     /**
      * 更新角色状态
@@ -101,10 +101,10 @@ public interface IRoleService {
 
     /**
      * 获取角色菜单
-     * @param roleName 角色名称
+     * @param roleKey 角色名称
      * @return 角色菜单集合
      */
-    List<String> getMenuNameList(String roleName);
+    List<String> getMenuNameList(String roleKey);
 
     /**
      * 获取角色资源

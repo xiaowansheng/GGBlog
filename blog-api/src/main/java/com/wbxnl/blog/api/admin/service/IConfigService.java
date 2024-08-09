@@ -58,5 +58,5 @@ public interface IConfigService {
      * 获取配置列表
      * @return 配置列表
      */
-    List<KeyData> getAllConfig();
+    List<ConfigDetailRes> getAllConfig();
 }

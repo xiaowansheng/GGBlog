@@ -48,7 +48,7 @@ public class FriendLinkService implements IFriendLinkService {
     }
 
     @Override
-    public void updateFriendLinkHidden(Integer id, Integer hidden) {
+    public void updateFriendLinkShowStatus(Integer id, Integer hidden) {
         boolean updated = friendLinkRepository.updateFriendLinkHidden(id, hidden);
         if (!updated) {
             throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);

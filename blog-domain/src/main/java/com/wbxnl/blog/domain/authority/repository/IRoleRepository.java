@@ -24,7 +24,7 @@ public interface IRoleRepository {
 
     boolean deleteRole(Integer[] ids);
 
-    boolean updateRole(RoleVo roleVo);
+    boolean updateRole(RoleUpdateEntity roleUpdateEntity);
 
     boolean updateRoleStatus(Integer id, Integer disable);
 
@@ -43,7 +43,7 @@ public interface IRoleRepository {
 
     List<SystemResourceSimpleEntity> getResourceList();
 
-    List<String> getMenuNameList(String roleName);
+    List<String> getMenuNameList(String roleKey);
 
-    List<String> getResourceNameList(String roleName);
+    List<String> getResourceNameList(String roleKey);
 }

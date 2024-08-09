@@ -40,7 +40,7 @@ public interface IFriendLinkService {
      * @param id 友链id
      * @param hidden 隐藏状态
      */
-    void updateFriendLinkHidden(Integer id, Integer hidden);
+    void updateFriendLinkShowStatus(Integer id, Integer hidden);
 
     /**
      * 删除友链

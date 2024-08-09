@@ -49,7 +49,7 @@ public class UserServiceImpl implements IUserService {
             throw new BlogException(OperationCodeEnum.VERIFICATION_CODE_ERROR);
         }
         // 加密密码
-        String encryptPassword = StringUtils.encrypt(userRegisterVo.getPassword());
+        String encryptPassword = MyStringUtils.encrypt(userRegisterVo.getPassword());
         userRegisterVo.setPassword(encryptPassword);
         // 用户账户
         UserRegisterDataEntity userRegisterDataEntity = new UserRegisterDataEntity();
@@ -78,7 +78,7 @@ public class UserServiceImpl implements IUserService {
         // 查询账户和密码
         String userPassword = userRepository.getPassword(emailLoginEntity.getUsername());
         // 密码加密
-        String encryptPassword = StringUtils.encrypt(emailLoginEntity.getPassword());
+        String encryptPassword = MyStringUtils.encrypt(emailLoginEntity.getPassword());
         // 验证账号和密码是否匹配
         if (!encryptPassword.equals(userPassword)) {
             throw new BlogException(OperationCodeEnum.PASSWORD_ERROR);
@@ -140,7 +140,7 @@ public class UserServiceImpl implements IUserService {
             throw new BlogException(OperationCodeEnum.VERIFICATION_CODE_ERROR);
         }
         // 新密码加密
-        String newPassword = StringUtils.encrypt(updatePasswordEntity.getNewPassword());
+        String newPassword = MyStringUtils.encrypt(updatePasswordEntity.getNewPassword());
         // 更新密码
         boolean updated = userRepository.updatePassword(updatePasswordEntity.getUsername(), newPassword);
         if (!updated) {

@@ -49,8 +49,8 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public void updateRole(RoleVo roleVo) {
-        boolean updated = roleRepository.updateRole(roleVo);
+    public void updateRole(RoleUpdateEntity roleUpdateEntity) {
+        boolean updated = roleRepository.updateRole(roleUpdateEntity);
         if(!updated){
             throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
         }
@@ -106,8 +106,8 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public List<String> getMenuNameList(String roleName) {
-        return roleRepository.getMenuNameList(roleName);
+    public List<String> getMenuNameList(String roleKey) {
+        return roleRepository.getMenuNameList(roleKey);
     }
 
     @Override

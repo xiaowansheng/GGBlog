@@ -15,7 +15,10 @@ import com.wbxnl.blog.common.vo.PageData;
 import com.wbxnl.blog.common.vo.PageParams;
 import com.wbxnl.blog.domain.authority.model.eneity.SystemMenuEntity;
 import com.wbxnl.blog.domain.authority.model.eneity.SystemMenuUpdateEntity;
+import com.wbxnl.blog.domain.authority.model.eneity.SystemResourceEntity;
+import com.wbxnl.blog.domain.authority.model.eneity.SystemResourceUpdateEntity;
 import com.wbxnl.blog.domain.authority.model.vo.SystemMenuVo;
+import com.wbxnl.blog.domain.authority.model.vo.SystemResourceVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.Assert;
@@ -58,51 +61,59 @@ public class AuthorityController implements IAuthorityService {
 
     @Override
     public void updateSystemMenuStatus(Integer id, Integer status) {
-
+        // TODO
     }
 
     @Override
     public void deleteSystemMenu(Integer id) {
-
+        authorityService.deleteSystemMenu(id);
     }
 
     @Override
     public void deleteSystemMenu(Integer[] ids) {
-
+        authorityService.deleteSystemMenu(ids);
     }
 
     @Override
     public PageData<SystemMenuDetailRes> getPageOfSystemMenu(PageParams pageParams, SystemMenuQueryReq systemMenuQueryReq) {
+        // TODO
         return null;
     }
 
     @Override
-    public KeyData addSystemResource(SystemResourceDataReq systemMenuDataReq) {
-        return null;
+    public KeyData addSystemResource(SystemResourceDataReq systemResourceDataReq) {
+        SystemResourceVo systemResourceVo = ObjectConvertUtils.convert(systemResourceDataReq, SystemResourceVo.class);
+        SystemResourceEntity systemResourceEntity = authorityService.addSystemResource(systemResourceVo);
+        return KeyData.builder()
+                .id(systemResourceEntity.getId())
+                .key(systemResourceEntity.getResourceKey())
+                .build();
     }
 
     @Override
     public void updateSystemResource(SystemResourceDataReq systemResourceDataReq) {
-
+        SystemResourceUpdateEntity systemResourceUpdateEntity = ObjectConvertUtils.convert(systemResourceDataReq, SystemResourceUpdateEntity.class);
+        authorityService.updateSystemResource(systemResourceUpdateEntity);
     }
 
     @Override
     public void updateSystemResourceStatus(Integer id, Integer status) {
-
+        // TODO
     }
 
     @Override
     public void deleteSystemResource(Integer id) {
-
+        authorityService.deleteSystemResource(id);
     }
 
     @Override
     public void deleteSystemResource(Integer[] ids) {
-
+        authorityService.deleteSystemResource(ids);
     }
 
     @Override
     public PageData<SystemResourceDetailRes> getPageOfSystemResource(PageParams pageParams, SystemResourceQueryReq systemResourceQueryReq) {
+        // TODO
         return null;
     }
 }
