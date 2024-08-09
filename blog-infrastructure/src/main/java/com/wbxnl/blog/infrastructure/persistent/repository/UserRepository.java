@@ -132,8 +132,8 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public PageData<UserDetailAggregate> getPageUserDetails(PageParams pageParams, UserQueryEntity userQueryEntity) {
-        List<UserDetailAggregate> userDetailAggregates = userAuthDao.getPageUserDetails(pageParams, userQueryEntity);
+    public PageData<UserDetailAggregate> getPageOfUserDetails(PageParams pageParams, UserQueryEntity userQueryEntity) {
+        List<UserDetailAggregate> userDetailAggregates = userAuthDao.getPageOfUserDetails(pageParams, userQueryEntity);
         Long total = userAuthDao.getPageUserDetailsTotal(userQueryEntity);
         return PageUtils.convertPageData(pageParams.getNumber(), pageParams.getSize(), total, userDetailAggregates);
     }
@@ -145,7 +145,7 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public PageData<UserLoginLogAggregate> getPageUserLoginLog(PageParams pageParams, UserLoginLogQueryEntity userLoginLogQueryEntity) {
+    public PageData<UserLoginLogAggregate> getPageOfUserLoginLog(PageParams pageParams, UserLoginLogQueryEntity userLoginLogQueryEntity) {
         LambdaQueryWrapper<LoginLog> loginLogQueryWrapper = new LambdaQueryWrapper<>();
         Page<LoginLog> loginLogPage = new Page<>(pageParams.getNumber(), pageParams.getSize());
         LambdaQueryWrapper<LoginLog> queryWrapper = loginLogQueryWrapper
@@ -181,5 +181,17 @@ public class UserRepository implements IUserRepository {
         userAuthLambdaUpdateWrapper.set(UserAuth::getPassword, newPassword)
                 .eq(UserAuth::getUsername, username);
         return userAuthDao.update(userAuthLambdaUpdateWrapper) > 0;
+    }
+
+    @Override
+    public PageData<UserLoginLogAggregate> getPageUserLoginsByUsername(PageParams pageParams, String username) {
+        LambdaQueryWrapper<LoginLog> loginLogQueryWrapper = new LambdaQueryWrapper<>();
+        Page<LoginLog> loginLogPage = new Page<>(pageParams.getNumber(), pageParams.getSize());
+        LambdaQueryWrapper<LoginLog> queryWrapper = loginLogQueryWrapper
+                .eq(LoginLog::getUsername, username)
+                .orderByDesc(LoginLog::getCreateTime);
+        Page<LoginLog> selectedPage = loginLogDao.selectPage(loginLogPage, queryWrapper);
+        List<UserLoginLogAggregate> userLoginLogAggregates = ObjectConvertUtils.convertList(selectedPage.getRecords(), UserLoginLogAggregate.class);
+        return PageUtils.convertPageData((int) selectedPage.getCurrent(), (int) selectedPage.getSize(), selectedPage.getTotal(), userLoginLogAggregates);
     }
 }

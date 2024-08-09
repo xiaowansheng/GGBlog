@@ -1,14 +1,13 @@
 package com.wbxnl.blog.trigger.http.admin;
 
 import com.wbxnl.blog.api.admin.model.req.RoleDataReq;
-import com.wbxnl.blog.api.admin.model.res.SystemMenuSimpleRes;
-import com.wbxnl.blog.api.admin.model.res.SystemResourceSimpleRes;
 import com.wbxnl.blog.api.admin.service.IRoleService;
 import com.wbxnl.blog.common.utils.ObjectConvertUtils;
 import com.wbxnl.blog.common.vo.KeyData;
 import com.wbxnl.blog.domain.authority.model.eneity.RoleEntity;
 import com.wbxnl.blog.domain.authority.model.eneity.RoleUpdateEntity;
 import com.wbxnl.blog.domain.authority.model.vo.RoleMenuVo;
+import com.wbxnl.blog.domain.authority.model.vo.RoleResourceVo;
 import com.wbxnl.blog.domain.authority.model.vo.RoleVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -74,18 +73,20 @@ public class RoleController implements IRoleService {
     }
 
     @Override
-    public List<SystemMenuSimpleRes> getSystemMenus(String roleKey) {
-        List<String> menuNameList = roleService.getMenuNameList(roleKey);
-        return ObjectConvertUtils.convertList(menuNameList, SystemMenuSimpleRes.class);
+    public List<String> getSystemMenus(String roleKey) {
+        return roleService.getMenuKeyList(roleKey);
     }
 
     @Override
     public void addRoleResource(String roleKey, List<String> resourceKeys) {
-
+        RoleResourceVo roleResourceVo = new RoleResourceVo();
+        roleResourceVo.setRoleKey(roleKey);
+        roleResourceVo.setResourceKeys(resourceKeys);
+        roleService.updateRoleResource(roleResourceVo);
     }
 
     @Override
-    public List<SystemResourceSimpleRes> getSystemResources(String roleKey) {
-        return List.of();
+    public List<String> getSystemResources(String roleKey) {
+        return roleService.getResourceKeyList(roleKey);
     }
 }

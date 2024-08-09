@@ -41,8 +41,8 @@ public class SystemResource implements Serializable {
     @TableField("open")
     private Integer open;
 
-    @TableField("parent_id")
-    private Integer parentId;
+    @TableField("parent_key")
+    private String parentKey;
 
     @TableField("perms")
     private String perms;

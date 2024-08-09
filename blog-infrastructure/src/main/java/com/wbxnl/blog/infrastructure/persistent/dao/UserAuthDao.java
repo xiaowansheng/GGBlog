@@ -21,7 +21,7 @@ import java.util.List;
 @Mapper
 public interface UserAuthDao extends BaseDao<UserAuth> {
 
-    List<UserDetailAggregate> getPageUserDetails(@Param("pageParams") PageParams pageParams,@Param("userQueryEntity") UserQueryEntity userQueryEntity);
+    List<UserDetailAggregate> getPageOfUserDetails(@Param("pageParams") PageParams pageParams, @Param("userQueryEntity") UserQueryEntity userQueryEntity);
 
     Long getPageUserDetailsTotal(@Param("userQueryEntity") UserQueryEntity userQueryEntity);
 }

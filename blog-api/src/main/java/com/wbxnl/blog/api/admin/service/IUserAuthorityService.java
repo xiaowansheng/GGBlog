@@ -17,14 +17,8 @@ public interface IUserAuthorityService {
      * @param username 用户名
      * @param roleKey  角色key
      */
-    void addUserRole(String username, String roleKey);
+    void updateUserRole(String username, String roleKey);
 
-    /**
-     * 为用户删除角色
-     * @param username 用户名
-     * @param roleKey  角色key
-     */
-    void deleteUserRole(String username, String roleKey);
 
     /**
      * 获取当前用户菜单

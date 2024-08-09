@@ -157,7 +157,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public void setUserStatus(Integer id, Integer disable) {
+    public void updateUserStatus(Integer id, Integer disable) {
         boolean userStatus = userRepository.setUserStatus(id, disable);
         if (!userStatus) {
             throw new BlogException(OperationCodeEnum.UPDATE_FAILURE);
@@ -165,12 +165,17 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public PageData<UserDetailAggregate> getPageUserDetails(PageParams pageParams, UserQueryEntity userQueryEntity) {
-        return userRepository.getPageUserDetails(pageParams, userQueryEntity);
+    public PageData<UserDetailAggregate> getPageOfUserDetails(PageParams pageParams, UserQueryEntity userQueryEntity) {
+        return userRepository.getPageOfUserDetails(pageParams, userQueryEntity);
     }
 
     @Override
-    public PageData<UserLoginLogAggregate> getPageUserLogins(PageParams pageParams, UserLoginLogQueryEntity userLoginLogQueryEntity) {
-        return userRepository.getPageUserLoginLog(pageParams, userLoginLogQueryEntity);
+    public PageData<UserLoginLogAggregate> getPageOfUserLogins(PageParams pageParams, UserLoginLogQueryEntity userLoginLogQueryEntity) {
+        return userRepository.getPageOfUserLoginLog(pageParams, userLoginLogQueryEntity);
+    }
+
+    @Override
+    public PageData<UserLoginLogAggregate> getPageOfUserLoginsByUsername(PageParams pageParams, String username) {
+        return userRepository.getPageUserLoginsByUsername(pageParams, username);
     }
 }

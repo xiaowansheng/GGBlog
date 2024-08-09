@@ -63,7 +63,7 @@ public class Comment implements Serializable {
     private Integer rootId;
 
     @TableField("parent_id")
-    private Integer parentId;
+    private String parentKey;
 
     @TableField("type")
     private String type;

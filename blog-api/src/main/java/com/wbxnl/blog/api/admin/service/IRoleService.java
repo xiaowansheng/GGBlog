@@ -72,7 +72,7 @@ public interface IRoleService {
      * @param roleKey 角色key
      * @return 菜单列表
      */
-    List<SystemMenuSimpleRes> getSystemMenus(String roleKey);
+    List<String> getSystemMenus(String roleKey);
 
     /**
      * 为角色添加资源
@@ -86,5 +86,5 @@ public interface IRoleService {
      * @param roleKey 角色key
      * @return 资源列表
      */
-    List<SystemResourceSimpleRes> getSystemResources(String roleKey);
+    List<String> getSystemResources(String roleKey);
 }

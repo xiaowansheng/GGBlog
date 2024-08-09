@@ -31,7 +31,7 @@ public class SystemMenuDetailRes {
 
     private Byte sort;
 
-    private Integer parentId;
+    private String parentKey;
 
     private String perms;
 

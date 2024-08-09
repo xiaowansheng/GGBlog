@@ -1,11 +1,12 @@
 package com.wbxnl.blog.infrastructure.persistent.repository;
 
-import com.wbxnl.blog.domain.authority.model.aggregate.RoleMenuAggregate;
-import com.wbxnl.blog.domain.authority.model.aggregate.RoleResourceAggregate;
+import com.wbxnl.blog.domain.authority.model.eneity.UserMenuEntity;
 import com.wbxnl.blog.domain.authority.repository.IUserAuthorityRepository;
 import com.wbxnl.blog.infrastructure.persistent.dao.UserRoleDao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * description: 略
@@ -21,17 +22,12 @@ public class UserAuthorityRepository implements IUserAuthorityRepository {
     private final UserRoleDao userRoleDao;
 
     @Override
-    public boolean updateUserRole(Integer username, Integer roleName) {
+    public boolean updateUserRole(String username, String roleKey) {
         return false;
     }
 
     @Override
-    public RoleMenuAggregate getUserRoleMenu(Integer username) {
-        return null;
-    }
-
-    @Override
-    public RoleResourceAggregate getUserRoleResource(Integer username) {
+    public List<UserMenuEntity> getUserRoleMenu(String username) {
         return null;
     }
 }

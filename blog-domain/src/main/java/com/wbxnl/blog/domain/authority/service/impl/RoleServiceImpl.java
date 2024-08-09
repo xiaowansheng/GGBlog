@@ -106,12 +106,12 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public List<String> getMenuNameList(String roleKey) {
-        return roleRepository.getMenuNameList(roleKey);
+    public List<String> getMenuKeyList(String roleKey) {
+        return roleRepository.getMenuKeyList(roleKey);
     }
 
     @Override
-    public List<String> getResourceNameList(String roleName) {
-        return roleRepository.getResourceNameList(roleName);
+    public List<String> getResourceKeyList(String roleName) {
+        return roleRepository.getResourceKeyList(roleName);
     }
 }

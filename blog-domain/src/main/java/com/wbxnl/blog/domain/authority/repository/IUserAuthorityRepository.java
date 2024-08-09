@@ -1,7 +1,8 @@
 package com.wbxnl.blog.domain.authority.repository;
 
-import com.wbxnl.blog.domain.authority.model.aggregate.RoleMenuAggregate;
-import com.wbxnl.blog.domain.authority.model.aggregate.RoleResourceAggregate;
+import com.wbxnl.blog.domain.authority.model.eneity.UserMenuEntity;
+
+import java.util.List;
 
 /**
  * description: 略
@@ -11,10 +12,8 @@ import com.wbxnl.blog.domain.authority.model.aggregate.RoleResourceAggregate;
  */
 public interface IUserAuthorityRepository {
 
-    boolean updateUserRole(Integer username, Integer roleName);
+    boolean updateUserRole(String username, String roleKey);
 
-    RoleMenuAggregate getUserRoleMenu(Integer username);
-
-    RoleResourceAggregate getUserRoleResource(Integer username);
+    List<UserMenuEntity> getUserRoleMenu(String username);
 
 }

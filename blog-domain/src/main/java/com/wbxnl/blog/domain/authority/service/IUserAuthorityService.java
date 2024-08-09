@@ -1,7 +1,8 @@
 package com.wbxnl.blog.domain.authority.service;
 
-import com.wbxnl.blog.domain.authority.model.aggregate.RoleMenuAggregate;
-import com.wbxnl.blog.domain.authority.model.aggregate.RoleResourceAggregate;
+import com.wbxnl.blog.domain.authority.model.eneity.UserMenuEntity;
+
+import java.util.List;
 
 /**
  * description: 略
@@ -14,22 +15,15 @@ public interface IUserAuthorityService {
     /**
      * 更新用户角色
      * @param username 用户名
-     * @param roleName 角色名
+     * @param roleKey 角色名
      */
-    void updateUserRole(Integer username, Integer roleName);
+    void updateUserRole(String username, String roleKey);
 
     /**
      * 获取用户角色菜单
      * @param username 用户名
      * @return 返回角色菜单
      */
-    RoleMenuAggregate getUserRoleMenu(Integer username);
-
-    /**
-     * 获取用户角色资源
-     * @param username 用户名
-     * @return 返回角色资源
-     */
-    RoleResourceAggregate getUserRoleResource(Integer username);
+    List<UserMenuEntity> getUserMenu(String username);
 
 }

@@ -2,6 +2,8 @@ package com.wbxnl.blog.domain.authority.model.eneity;
 
 import lombok.Data;
 
+import java.util.List;
+
 
 /**
  * description: 略
@@ -28,5 +30,9 @@ public class UserMenuEntity {
 
     private Byte sort;
 
-    private Integer parentId;
+    private String rootKey;
+
+    private String parentKey;
+
+    private List<UserMenuEntity> children;
 }

@@ -25,7 +25,7 @@ public class SystemResourceQueryReq {
 
     private Integer open;
 
-    private Integer parentId;
+    private String parentKey;
 
     private String perms;
 

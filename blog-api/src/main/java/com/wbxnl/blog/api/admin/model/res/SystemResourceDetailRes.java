@@ -25,7 +25,7 @@ public class SystemResourceDetailRes {
 
     private Integer open;
 
-    private Integer parentId;
+    private String parentKey;
 
     private String perms;
 

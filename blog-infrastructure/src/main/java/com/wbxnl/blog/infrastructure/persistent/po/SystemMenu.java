@@ -53,8 +53,8 @@ public class SystemMenu implements Serializable {
     @TableField("sort")
     private Byte sort;
 
-    @TableField("parent_id")
-    private Integer parentId;
+    @TableField("parent_key")
+    private String parentKey;
 
     @TableField("perms")
     private String perms;

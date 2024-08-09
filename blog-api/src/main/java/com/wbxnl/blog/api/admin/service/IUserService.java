@@ -81,5 +81,5 @@ public interface IUserService {
      * @param username 用户名
      * @return 用户登录信息
      */
-    PageData<UserLoginLogDetailRes> getPageUserLoginsByUsername(PageParams pageParams,String username);
+    PageData<UserLoginLogDetailRes> getPageOfUserLoginsByUsername(PageParams pageParams, String username);
 }

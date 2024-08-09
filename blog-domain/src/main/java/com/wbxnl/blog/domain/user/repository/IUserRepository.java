@@ -31,11 +31,11 @@ public interface IUserRepository {
 
     boolean setUserStatus(Integer id, Integer disable);
 
-    PageData<UserDetailAggregate> getPageUserDetails(PageParams pageParams, UserQueryEntity userQueryEntity);
+    PageData<UserDetailAggregate> getPageOfUserDetails(PageParams pageParams, UserQueryEntity userQueryEntity);
 
     boolean addLoginLog(LoginLogVo loginLogVo);
 
-    PageData<UserLoginLogAggregate> getPageUserLoginLog(PageParams pageParams, UserLoginLogQueryEntity userLoginLogQueryEntity);
+    PageData<UserLoginLogAggregate> getPageOfUserLoginLog(PageParams pageParams, UserLoginLogQueryEntity userLoginLogQueryEntity);
 
     String getVerificationCode(String email);
 
@@ -43,4 +43,5 @@ public interface IUserRepository {
 
     boolean updatePassword(String username, String newPassword);
 
+    PageData<UserLoginLogAggregate> getPageUserLoginsByUsername(PageParams pageParams, String username);
 }

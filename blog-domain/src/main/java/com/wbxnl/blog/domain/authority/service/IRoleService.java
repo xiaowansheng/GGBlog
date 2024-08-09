@@ -2,8 +2,6 @@ package com.wbxnl.blog.domain.authority.service;
 
 import com.wbxnl.blog.common.vo.PageData;
 import com.wbxnl.blog.common.vo.PageParams;
-import com.wbxnl.blog.domain.authority.model.aggregate.RoleMenuAggregate;
-import com.wbxnl.blog.domain.authority.model.aggregate.RoleResourceAggregate;
 import com.wbxnl.blog.domain.authority.model.eneity.*;
 import com.wbxnl.blog.domain.authority.model.vo.RoleMenuVo;
 import com.wbxnl.blog.domain.authority.model.vo.RoleResourceVo;
@@ -104,13 +102,13 @@ public interface IRoleService {
      * @param roleKey 角色名称
      * @return 角色菜单集合
      */
-    List<String> getMenuNameList(String roleKey);
+    List<String> getMenuKeyList(String roleKey);
 
     /**
      * 获取角色资源
      * @param roleName 角色名称
      * @return 角色资源集合
      */
-    List<String> getResourceNameList(String roleName);
+    List<String> getResourceKeyList(String roleName);
 
 }

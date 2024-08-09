@@ -59,7 +59,7 @@ public interface IUserService {
      * @param id 用户id
      * @param disable 禁用状态
      */
-    void setUserStatus(Integer id, Integer disable);
+    void updateUserStatus(Integer id, Integer disable);
 
     /**
      * 获取用户信息
@@ -67,7 +67,7 @@ public interface IUserService {
      * @param userQueryEntity 查询信息
      * @return 用户信息
      */
-    PageData<UserDetailAggregate> getPageUserDetails(PageParams pageParams, UserQueryEntity userQueryEntity);
+    PageData<UserDetailAggregate> getPageOfUserDetails(PageParams pageParams, UserQueryEntity userQueryEntity);
 
     /**
      * 获取用户登录信息
@@ -75,6 +75,13 @@ public interface IUserService {
      * @param userLoginLogQueryEntity 查询信息
      * @return 用户登录信息
      */
-    PageData<UserLoginLogAggregate> getPageUserLogins(PageParams pageParams, UserLoginLogQueryEntity userLoginLogQueryEntity);
+    PageData<UserLoginLogAggregate> getPageOfUserLogins(PageParams pageParams, UserLoginLogQueryEntity userLoginLogQueryEntity);
 
+    /**
+     * 获取用户登录日志
+     * @param pageParams 分页参数
+     * @param username 用户名
+     * @return 用户登录日志
+     */
+    PageData<UserLoginLogAggregate> getPageOfUserLoginsByUsername(PageParams pageParams, String username);
 }

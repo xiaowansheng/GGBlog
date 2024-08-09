@@ -19,7 +19,7 @@ public class SystemResourceDataReq {
 
     private Integer open;
 
-    private Integer parentId;
+    private String parentKey;
 
     private String perms;
 

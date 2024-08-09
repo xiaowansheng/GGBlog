@@ -11,6 +11,7 @@ import java.util.List;
  * @author xiaowansheng
  * @since 2024/7/18 15:51
  */
+@Deprecated
 @Data
 public class RoleMenuAggregate {
 

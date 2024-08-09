@@ -22,7 +22,7 @@ public class SystemResourceSimpleEntity {
 
     private String rootId;
 
-    private Integer parentId;
+    private String parentKey;
 
     private String perms;
 

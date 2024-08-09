@@ -43,7 +43,7 @@ public interface IRoleRepository {
 
     List<SystemResourceSimpleEntity> getResourceList();
 
-    List<String> getMenuNameList(String roleKey);
+    List<String> getMenuKeyList(String roleKey);
 
-    List<String> getResourceNameList(String roleKey);
+    List<String> getResourceKeyList(String roleKey);
 }

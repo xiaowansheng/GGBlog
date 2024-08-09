@@ -93,12 +93,12 @@ public class RoleRepository implements IRoleRepository {
     }
 
     @Override
-    public List<String> getMenuNameList(String roleKey) {
+    public List<String> getMenuKeyList(String roleKey) {
         return List.of();
     }
 
     @Override
-    public List<String> getResourceNameList(String roleKey) {
+    public List<String> getResourceKeyList(String roleKey) {
         return List.of();
     }
 }

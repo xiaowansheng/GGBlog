@@ -21,6 +21,6 @@ public class UserResourceEntity {
 
     private String path;
 
-    private Integer parentId;
+    private String parentKey;
 
 }

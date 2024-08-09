@@ -29,7 +29,7 @@ public class SystemMenuQueryReq {
 
     private Integer hidden;
 
-    private Integer parentId;
+    private String parentKey;
 
     private String perms;
 
