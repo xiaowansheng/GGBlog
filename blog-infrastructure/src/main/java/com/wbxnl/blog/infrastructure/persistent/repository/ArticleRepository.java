@@ -111,12 +111,6 @@ public class ArticleRepository implements IArticleRepository {
     }
 
     @Override
-    public ArticleEntity getArticle(Integer id) {
-        Article article = articleDao.selectById(id);
-        return ObjectConvertUtils.convert(article, ArticleEntity.class);
-    }
-
-    @Override
     public ArticleAggregate getArticleDetail(Integer id) {
         // 查询文章
         LambdaQueryWrapper<Article> articleLambdaQueryWrapper = new LambdaQueryWrapper<>();
@@ -203,19 +197,25 @@ public class ArticleRepository implements IArticleRepository {
     }
 
     @Override
-    public PageData<ArticleAggregate> getPageArticleDetails(PageParams pageParams, ArticleQueryEntity articleQueryEntity) {
+    public PageData<ArticleAggregate> getPageOfArticleDetails(PageParams pageParams, ArticleQueryEntity articleQueryEntity) {
+        List<ArticleAggregate> list=articleDao.getPageOfArticleDetails(pageParams, articleQueryEntity);
+        articleDao.getCount(articleQueryEntity);
+        return PageData.<ArticleAggregate>builder()
+                .data(list)
+                .number(pageParams.getNumber())
+                .size(pageParams.getSize())
+                .total(articleDao.getCount(articleQueryEntity))
+                .build();
+    }
+
+    @Override
+    public PageData<ArticleArchiveAggregate> getPageOfArticleDetailsOfArchive(PageParams pageParams, boolean isReverseOrder) {
         // TODO 待实现SQL复杂查询
         return null;
     }
 
     @Override
-    public PageData<ArticleArchiveAggregate> getPageArticleDetailsOfArchive(PageParams pageParams, boolean isReverseOrder) {
-        // TODO 待实现SQL复杂查询
-        return null;
-    }
-
-    @Override
-    public PageData<ArticleAggregate> getPageArticleDetailsByUser(PageParams pageParams, ArticleQueryByVisitorEntity articleQueryByVisitorEntity) {
+    public PageData<ArticleAggregate> getPageOfArticleDetailsByUser(PageParams pageParams, ArticleQueryByVisitorEntity articleQueryByVisitorEntity) {
         // TODO 待实现SQL复杂查询
         return null;
     }

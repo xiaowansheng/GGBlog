@@ -1,8 +1,12 @@
 package com.wbxnl.blog.infrastructure.persistent.dao;
 
+import com.wbxnl.blog.common.vo.PageParams;
+import com.wbxnl.blog.domain.article.model.aggregate.ArticleAggregate;
+import com.wbxnl.blog.domain.article.model.entity.ArticleQueryEntity;
 import com.wbxnl.blog.infrastructure.persistent.dao.base.BaseDao;
 import com.wbxnl.blog.infrastructure.persistent.po.Article;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,6 +20,20 @@ import java.util.List;
  */
 @Mapper
 public interface ArticleDao extends BaseDao<Article> {
+    /**
+     * 管理员分页查询文章列表
+     * @param pageParams 分页参数
+     * @param articleQueryEntity 查询条件
+     * @return 文章分页数据
+     */
+    List<ArticleAggregate> getPageOfArticleDetails(@Param("page") PageParams pageParams,@Param("article") ArticleQueryEntity articleQueryEntity);
+
+    /**
+     * 管理员查询文章数量
+     * @param articleQueryEntity 查询条件
+     * @return 文章数量
+     */
+    long getCount(@Param("article") ArticleQueryEntity articleQueryEntity);
 
 //    /**
 //     * 游客查询文章归档信息

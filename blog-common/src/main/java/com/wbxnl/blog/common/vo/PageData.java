@@ -23,7 +23,7 @@ public class PageData<T> {
 
     private Integer size;
 
-    private Integer total;
+    private Long total;
 
     private List<T> data;
 }

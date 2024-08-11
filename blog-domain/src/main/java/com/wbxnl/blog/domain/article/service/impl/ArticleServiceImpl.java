@@ -251,7 +251,7 @@ public class ArticleServiceImpl implements IArticleService {
 
     @Override
     public PageData<ArticleAggregate> getPageOfArticleDetails(PageParams pageParams, ArticleQueryEntity articleQueryEntity) {
-        return articleRepository.getPageArticleDetails(pageParams, articleQueryEntity);
+        return articleRepository.getPageOfArticleDetails(pageParams, articleQueryEntity);
     }
 
     @Override
@@ -261,12 +261,12 @@ public class ArticleServiceImpl implements IArticleService {
 
     @Override
     public PageData<ArticleArchiveAggregate> getPageArticleDetailsOfArchiveByUser(PageParams pageParams, boolean isReverseOrder) {
-        return articleRepository.getPageArticleDetailsOfArchive(pageParams, isReverseOrder);
+        return articleRepository.getPageOfArticleDetailsOfArchive(pageParams, isReverseOrder);
     }
 
     @Override
     public PageData<ArticleAggregate> getPageArticleDetailsByUser(PageParams pageParams, ArticleQueryByVisitorEntity articleQueryByVisitorEntity) {
-        return articleRepository.getPageArticleDetailsByUser(pageParams, articleQueryByVisitorEntity);
+        return articleRepository.getPageOfArticleDetailsByUser(pageParams, articleQueryByVisitorEntity);
     }
 
     @Override

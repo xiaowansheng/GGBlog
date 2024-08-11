@@ -28,7 +28,7 @@ public class PageUtils {
         PageData<T> pageData = new PageData<>();
         pageData.setNumber(number);
         pageData.setSize(size);
-        pageData.setTotal((int) total);
+        pageData.setTotal(total);
         pageData.setData(data);
         return pageData;
     }

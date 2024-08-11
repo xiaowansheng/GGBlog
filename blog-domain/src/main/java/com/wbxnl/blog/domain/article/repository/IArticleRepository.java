@@ -33,19 +33,17 @@ public interface IArticleRepository {
 
     boolean updateArticleTop(Integer id, Integer top);
 
-    ArticleEntity getArticle(Integer id);
-
     ArticleAggregate getArticleDetail(Integer id);
 
     ArticleAggregate getArticleDetailByUser(Integer id);
 
     Long getArticleQuantityByUser();
 
-    PageData<ArticleAggregate> getPageArticleDetails(PageParams pageParams, ArticleQueryEntity articleQueryEntity);
+    PageData<ArticleAggregate> getPageOfArticleDetails(PageParams pageParams, ArticleQueryEntity articleQueryEntity);
 
-    PageData<ArticleArchiveAggregate> getPageArticleDetailsOfArchive(PageParams pageParams, boolean isReverseOrder);
+    PageData<ArticleArchiveAggregate> getPageOfArticleDetailsOfArchive(PageParams pageParams, boolean isReverseOrder);
 
-    PageData<ArticleAggregate> getPageArticleDetailsByUser(PageParams pageParams, ArticleQueryByVisitorEntity articleQueryByVisitorEntity);
+    PageData<ArticleAggregate> getPageOfArticleDetailsByUser(PageParams pageParams, ArticleQueryByVisitorEntity articleQueryByVisitorEntity);
 
     Long getArticleQuantity();
 }
